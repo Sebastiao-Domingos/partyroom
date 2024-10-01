@@ -1,0 +1,177 @@
+'use client';
+import {
+  HouseIcon,
+  LayoutDashboardIcon,
+  LogOut,
+  Settings,
+  UserCog,
+  Users,
+  Users2,
+} from 'lucide-react';
+import Link from 'next/link';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { usePathname } from 'next/navigation';
+
+const menus = [
+  {
+    title: 'Marketing',
+    menus: [
+      {
+        name: 'Dashboard',
+        icon: <LayoutDashboardIcon size={18} />,
+        link: '/dashboard',
+      },
+      {
+        name: 'Fornecedores',
+        icon: <Users size={18} />,
+        link: '/dashboard/fornecedores',
+        submenu: [
+          {
+            name: 'Criar',
+            link: '/dashboard/fornecedores/criar',
+          },
+        ],
+      },
+      {
+        name: 'Clientes',
+        icon: <Users2 size={18} />,
+        link: '/dashboard/clientes',
+      },
+      {
+        name: 'Salões',
+        icon: <HouseIcon size={18} />,
+        link: '/dashboard/saloes',
+        submenu: [
+          {
+            name: 'Criar',
+            link: '/dashboard/saloes/criar',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: 'Serviços',
+    menus: [
+      {
+        name: 'Administradores',
+        icon: <UserCog size={18} />,
+        link: '/dashboard/administradores',
+        submenu: [
+          {
+            name: 'Tipos de eventos',
+            link: '/dashboard/administradores/tipo-evento',
+          },
+          {
+            name: 'Municípios',
+            link: '/dashboard/administradores/municipios',
+          },
+        ],
+      },
+      {
+        name: 'Definições',
+        icon: <Settings size={18} />,
+        link: '/dashboard/definicoes',
+        submenu: [
+          {
+            name: 'Perfil',
+            link: '/dashboard/definicoes/perfil',
+          },
+        ],
+      },
+    ],
+  },
+];
+
+export default function VerticalMenu() {
+  return (
+    <div className="fixed top-[70px] left-0 bottom-2 rounded shadow w-[200px]">
+      <nav className="pt-3">
+        <ScrollArea className="space-y-8 /mt-1 /overflow-auto h-[calc(100vh-140px)]">
+          <div className="w-full h-max">
+            {menus.map((item, index) => (
+              <BaseItemMenu key={index} menu_data={item} />
+            ))}
+            <ScrollBar orientation="vertical" />
+          </div>
+        </ScrollArea>
+      </nav>
+      <div className="fixed left-0 bottom-0 p-2 bg-slate-50 w-[200px]">
+        <button className="w-full flex gap-2 py-2 hover:text-orange-500">
+          <LogOut size={18} />
+          Log out
+        </button>
+      </div>
+    </div>
+  );
+}
+
+type BaseItemMenuProps = {
+  menu_data: {
+    title: string;
+    menus: {
+      name: string;
+      icon: React.ReactNode;
+      link: string;
+      submenu?: {
+        name: string;
+        link: string;
+      }[];
+    }[];
+  };
+};
+
+function BaseItemMenu({ menu_data }: BaseItemMenuProps) {
+  const path = usePathname();
+  return (
+    <div className="mb-4">
+      <h3 className="font-thin text-sm uppercase text-slate-400 pl-4">
+        {menu_data.title}
+      </h3>
+      <div className="flex flex-col mt-3 space-y-1">
+        {menu_data.menus.map(({ icon, link, name, submenu }, index) => (
+          <div key={index} className="w-full">
+            <div className="w-full relative flex flex-col gap-1 rounded font-thin">
+              <Link
+                href={link}
+                className={`w-full pl-5 flex gap-2 items-center py-2 hover:bg-orange-200 border-l-4 border-l-transparent hover:border-l-orange-300 ${
+                  path?.includes(link) && 'border-l-orange-500'
+                }`}
+              >
+                {icon}
+                <span className="font-thin">{name}</span>
+              </Link>
+              {submenu && (
+                <Accordion type="single" collapsible className="border-b-0">
+                  <AccordionItem value="item-1" className="border-b-0">
+                    <AccordionTrigger className="absolute -top-1 right-1"></AccordionTrigger>
+                    <AccordionContent className="">
+                      <ul className="space-y-1">
+                        {submenu.map((sub, index) => (
+                          <li key={index} className="w-full">
+                            <Link
+                              href={sub.link}
+                              className="w-full pl-8 flex gap-2 items-center py-3 hover:bg-orange-200 border-l-4 border-l-transparent hover:border-l-orange-500"
+                            >
+                              {sub.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
