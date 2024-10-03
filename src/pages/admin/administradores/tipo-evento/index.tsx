@@ -9,12 +9,13 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { ArchiveXIcon, Edit2Icon } from 'lucide-react';
 
 export default function TiposEvento() {
   return (
     <div>
       <div className="">
-        <h1 className="text-orange-500 font-bold border-l pl-2 uppercase">
+        <h1 className="text-primary font-bold border-l pl-2 uppercase">
           Tipos de eventos
         </h1>
         <div className="pl-2 mt-2 text-[12px]">
@@ -52,7 +53,7 @@ export default function TiposEvento() {
       </div>
 
       <div className="mt-8">
-        <fieldset className="border p-4 rounded">
+        <fieldset className="border border-border p-4 rounded">
           <legend className="px-1">Criar novo tipo de evento</legend>
           <form action="">
             <div className="flex gap-4">
@@ -71,14 +72,26 @@ export default function TiposEvento() {
             .map((_, index) => (
               <div
                 key={index}
-                className="w-[32%] p-2 border rounded hover:border-primary/50"
+                className="flex flex-col w-[32%] p-2 border border-border rounded hover:border-primary/50"
               >
-                <span className="flex flex-col">
+                <div className="flex flex-col">
                   <p className="">Nome do evento</p>
-                  <p className="text-sm italic text-slate-400 ml-auto">
+                  <p className="text-sm italic text-slate-400">
                     Data de criação
                   </p>
-                </span>
+                </div>
+                <div className="flex gap-3 ml-auto">
+                  <Button size={'icon'} variant={'outline_edit'}>
+                    <Edit2Icon />
+                  </Button>
+                  <Button
+                    className=""
+                    size={'icon'}
+                    variant="outline_desttructive"
+                  >
+                    <ArchiveXIcon />
+                  </Button>
+                </div>
               </div>
             ))}
         </div>

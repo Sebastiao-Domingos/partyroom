@@ -35,9 +35,9 @@ export default function dashboard() {
           </Breadcrumb>
         </div>
       </div>
-      <ScrollArea className="max-w-[calc(100vw-250px)] mt-6">
+      <ScrollArea>
         {/* <ScrollArea className="h-72 w-full rounded-md border"> */}
-        <div className="w-full h-max flex gap-5 my-3">
+        <div className="w-[700px] flex gap-5 my-3">
           {Array(4)
             .fill('')
             .map((_, index) => (

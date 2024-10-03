@@ -14,7 +14,7 @@ export default function Municipios() {
   return (
     <div>
       <div className="">
-        <h1 className="text-orange-500 font-bold border-l pl-2 uppercase">
+        <h1 className="text-primary font-bold border-l pl-2 uppercase">
           Municípios
         </h1>
         <div className="pl-2 mt-2 text-[12px]">
@@ -71,7 +71,7 @@ export default function Municipios() {
             .map((_, index) => (
               <div
                 key={index}
-                className="w-[32%] p-2 border rounded hover:border-primary/50"
+                className="w-[32%] p-2 border border-border rounded hover:border-primary/50"
               >
                 <span className="flex flex-col">
                   <p className="">Município - {index + 1}</p>
