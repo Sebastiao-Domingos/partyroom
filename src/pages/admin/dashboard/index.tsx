@@ -35,16 +35,17 @@ export default function dashboard() {
           </Breadcrumb>
         </div>
       </div>
-      <ScrollArea className="w-[calc(100vw-250px)] flex gap-3 py-2 mt-6">
-        <div className="w-full flex gap-3">
+      <ScrollArea className="max-w-[calc(100vw-250px)] mt-6">
+        {/* <ScrollArea className="h-72 w-full rounded-md border"> */}
+        <div className="w-full h-max flex gap-5 my-3">
           {Array(4)
             .fill('')
             .map((_, index) => (
               <div
                 key={index}
-                className="relative w-[350px] flex flex-col gap-2 items-center text-center p-4 /bg-slate-100 pt-6 rounded border hover:border-orange-100"
+                className="relative min-w-[350px] bg-card flex flex-col gap-2 items-center text-center p-4 /bg-slate-100 pt-6 rounded border border-border hover:border-primary/40"
               >
-                <div className="absolute border-4 border-slate-100 -top-3 -right-3 size-14 flex justify-center items-center text-white font-bold rounded-full bg-orange-500">
+                <div className="absolute border-4 border-background -top-3 -right-3 size-14 flex justify-center items-center text-white font-bold rounded-full bg-orange-500">
                   0012
                 </div>
                 <Users2Icon size={40} className="text-slate-400" />

@@ -91,9 +91,10 @@ const menus = [
 
 export default function VerticalMenu() {
   return (
-    <div className="fixed top-[70px] left-0 bottom-2 rounded shadow w-[200px]">
-      <nav className="pt-3">
-        <ScrollArea className="space-y-8 /mt-1 /overflow-auto h-[calc(100vh-140px)]">
+    <div className="fixed z-20 bg-background top-0 left-0 bottom-2 rounded shadow shadow-border w-[210px] pt-5">
+      <span className="ml-4 text-3xl">LOGO</span>
+      <nav className="pt-2">
+        <ScrollArea className="space-y-8 h-[calc(100vh-140px)]">
           <div className="w-full h-max">
             {menus.map((item, index) => (
               <BaseItemMenu key={index} menu_data={item} />
@@ -102,7 +103,7 @@ export default function VerticalMenu() {
           </div>
         </ScrollArea>
       </nav>
-      <div className="fixed left-0 bottom-0 p-2 bg-slate-50 w-[200px]">
+      <div className="fixed left-0 bottom-0 p-2 bg-background w-[200px]">
         <button className="w-full flex gap-2 py-2 hover:text-orange-500">
           <LogOut size={18} />
           Log out
@@ -140,8 +141,8 @@ function BaseItemMenu({ menu_data }: BaseItemMenuProps) {
             <div className="w-full relative flex flex-col gap-1 rounded font-thin">
               <Link
                 href={link}
-                className={`w-full pl-5 flex gap-2 items-center py-2 hover:bg-orange-200 border-l-4 border-l-transparent hover:border-l-orange-300 ${
-                  path?.includes(link) && 'border-l-orange-500'
+                className={`w-full pl-5 flex gap-2 items-center py-2 hover:bg-primary/10 border-l-4 border-l-transparent hover:border-l-primary/50 ${
+                  path?.includes(link) && 'border-l-primary'
                 }`}
               >
                 {icon}
@@ -157,7 +158,7 @@ function BaseItemMenu({ menu_data }: BaseItemMenuProps) {
                           <li key={index} className="w-full">
                             <Link
                               href={sub.link}
-                              className="w-full pl-8 flex gap-2 items-center py-3 hover:bg-orange-200 border-l-4 border-l-transparent hover:border-l-orange-500"
+                              className="w-full pl-8 flex gap-2 items-center py-3 hover:bg-primary/10 /hover:bg-orange-200 border-l-4 border-l-transparent hover:border-primary"
                             >
                               {sub.name}
                             </Link>
