@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ArchiveXIcon, Edit2Icon } from 'lucide-react';
+import ListEvent from './list-event';
 
 export default function TiposEvento() {
   return (
@@ -66,35 +66,8 @@ export default function TiposEvento() {
 
       <div className="mt-6">
         <h2 className="text-primary font-semibold">Tipos de eventos</h2>
-        <div className="flex flex-wrap gap-4 mt-4">
-          {Array(7)
-            .fill('')
-            .map((_, index) => (
-              <div
-                key={index}
-                className="flex flex-col w-[32%] p-2 border border-border rounded hover:border-primary/50"
-              >
-                <div className="flex flex-col">
-                  <p className="">Nome do evento</p>
-                  <p className="text-sm italic text-slate-400">
-                    Data de criação
-                  </p>
-                </div>
-                <div className="flex gap-3 ml-auto">
-                  <Button size={'icon'} variant={'outline_edit'}>
-                    <Edit2Icon />
-                  </Button>
-                  <Button
-                    className=""
-                    size={'icon'}
-                    variant="outline_desttructive"
-                  >
-                    <ArchiveXIcon />
-                  </Button>
-                </div>
-              </div>
-            ))}
-        </div>
+
+        <ListEvent />
       </div>
     </div>
   );
