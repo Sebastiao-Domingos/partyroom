@@ -55,7 +55,7 @@ function useGetRoomById(id: number) {
       }
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   return { data, loading, error, sucess };
 }
