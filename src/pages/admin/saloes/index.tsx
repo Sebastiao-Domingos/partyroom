@@ -13,7 +13,7 @@ export default function saloes() {
   return (
     <div>
       <div className="">
-        <h1 className="text-orange-500 font-bold border-l pl-2 uppercase">
+        <h1 className="text-primary font-bold border-l pl-2 uppercase">
           Salões
         </h1>
         <div className="pl-2 mt-2 text-[12px]">

@@ -11,8 +11,10 @@ import {
 } from '@/components/ui/table';
 import { useGetRoom } from '@/hooks/admin/room/useGetRoom';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export function ListRoom() {
+  const navigator = useRouter();
   const { error, data, loading, sucess } = useGetRoom();
 
   if (loading) {
@@ -46,7 +48,11 @@ export function ListRoom() {
         </TableHeader>
         <TableBody>
           {data?.result.map((room) => (
-            <TableRow key={room.id}>
+            <TableRow
+              key={room.id}
+              onClick={() => navigator.push(`/dashboard/saloes/${room.id}`)}
+              className="cursor-pointer"
+            >
               <TableCell className="py-1">
                 <Image
                   src={room.image}
