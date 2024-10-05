@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,9 +9,25 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { useGetRoomById } from '@/hooks/admin/room/useGetRoom';
+import Image from 'next/image';
 
 export default function Salao({ params }: { params: { salao: number } }) {
+  const [image, setImage] = useState({
+    url: '',
+    alt: '',
+    index: 0,
+  });
   const { data, error, loading, sucess } = useGetRoomById(params.salao);
+  useEffect(() => {
+    if (sucess && data?.image) {
+      setImage({
+        alt: data.name,
+        url: data.image,
+        index: 0,
+      });
+    }
+  }, [sucess, data]);
+
   return (
     <div>
       <div className="">
@@ -63,7 +79,136 @@ export default function Salao({ params }: { params: { salao: number } }) {
             {error}
           </div>
         )}
-        {sucess && <div>{data?.name}</div>}
+        {sucess && data && (
+          <div className="flex gap-2">
+            <div className="sticky top-[100px] w-[90%] flex flex-col gap-6">
+              <div>
+                <Image
+                  src={image.url}
+                  alt={image.url}
+                  width={500}
+                  height={600}
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  className={`border p-1 border-border hover:border-primary/50 ${
+                    image.index === 0 && 'border-primary'
+                  }`}
+                  onClick={() =>
+                    setImage({
+                      url: data.image,
+                      alt: data.name,
+                      index: 0,
+                    })
+                  }
+                >
+                  <Image
+                    src={data.image}
+                    width={50}
+                    height={50}
+                    alt={data.name}
+                  />
+                </button>
+                {data.images.map((imag, index) => (
+                  <button
+                    key={imag.id}
+                    className={`border p-1 border-border hover:border-primary/50 ${
+                      image.index === index + 1 && 'border-primary'
+                    }`}
+                    onClick={() =>
+                      setImage({
+                        url: imag.image,
+                        alt: imag.image,
+                        index: index + 1,
+                      })
+                    }
+                  >
+                    <Image
+                      src={imag.image}
+                      width={50}
+                      height={50}
+                      alt={imag.image}
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="w-full space-y-3">
+              <div className="border-b border-border w-full pb-2">
+                <h3>
+                  Informações do salão: #{' '}
+                  <span className="text-primary/80">
+                    {sucess && data?.name}
+                  </span>
+                </h3>
+                <div className="space-y-2 mt-3 font-thin">
+                  <p>Nome : {data?.name}</p>
+                  <p>Capacidade : {data?.capacity}</p>
+                  <p>Hora de abrir : {data?.opening_time}</p>
+                  <p>Horar de fechar : {data?.closing_time}</p>
+                  <p>
+                    Disponibilidade :{' '}
+                    {data?.is_available ? 'Disponível' : 'Indisponível'}
+                  </p>
+                  <p>Preço por hora : {data?.price_per_hour} Kz</p>
+                  <p>Telefone : {data?.owner.phone_number}</p>
+                  <p>
+                    Propetário : {data.owner.first_name} {data.owner.last_name}
+                  </p>
+                </div>
+              </div>
+              <div className="border-b border-border w-full pb-2">
+                <h3>
+                  Endereço do salão: #{' '}
+                  <span className="text-primary/80">
+                    {sucess && data?.name}
+                  </span>
+                </h3>
+                <div className="space-y-2 mt-3 font-thin">
+                  <p>Província : Luanda</p>
+                  <p>Município : {data?.address.city.name}</p>
+                  <p>Distrito : {data?.address.district}</p>
+                  <p>Ponto de referência : {data?.address.land_mark}</p>
+                </div>
+              </div>
+              <div className="border-b border-border w-full pb-2">
+                <h3>
+                  Tipos de eventos do salão: #{' '}
+                  <span className="text-primary/80">{data?.name}</span>
+                </h3>
+                <div className="space-y-2 mt-3 font-thin flex gap-2 flex-wrap">
+                  {data.event_types.length === 0 && <p>Sem Eventos</p>}
+                  {data.event_types.map((event) => (
+                    <p
+                      key={event.id}
+                      className="border-l pl-2 first:border-l-0 first:pl-0"
+                    >
+                      {event.name}
+                    </p>
+                  ))}
+                </div>
+              </div>
+              <div className="w-full pb-2">
+                <h3>
+                  Serviços do salão: #{' '}
+                  <span className="text-primary/80">{data?.name}</span>
+                </h3>
+                <div className="space-y-2 mt-3 font-thin flex gap-2 items-center flex-wrap">
+                  {data.services.length === 0 && <p>Sem Servições</p>}
+                  {data.services.map((service) => (
+                    <p
+                      key={service.id}
+                      className="border-l-2 pl-2 first:border-l-0 first:pl-0"
+                    >
+                      {service.name}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
