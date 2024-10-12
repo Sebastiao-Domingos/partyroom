@@ -18,6 +18,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { useGetAdmin } from '@/hooks/admin/admin/useGetAdmin';
+import Loader from '@/components/loader';
 
 export default function administradores() {
   return (
@@ -59,79 +61,52 @@ export default function administradores() {
   );
 }
 
-const invoices = [
-  {
-    invoice: 'INV001',
-    paymentStatus: 'Paid',
-    totalAmount: '$250.00',
-    paymentMethod: 'Credit Card',
-  },
-  {
-    invoice: 'INV002',
-    paymentStatus: 'Pending',
-    totalAmount: '$150.00',
-    paymentMethod: 'PayPal',
-  },
-  {
-    invoice: 'INV003',
-    paymentStatus: 'Unpaid',
-    totalAmount: '$350.00',
-    paymentMethod: 'Bank Transfer',
-  },
-  {
-    invoice: 'INV004',
-    paymentStatus: 'Paid',
-    totalAmount: '1',
-    paymentMethod: 'Credit Card',
-  },
-  {
-    invoice: 'INV005',
-    paymentStatus: 'Paid',
-    totalAmount: '2',
-    paymentMethod: 'PayPal',
-  },
-  {
-    invoice: 'INV006',
-    paymentStatus: 'Pending',
-    totalAmount: '$200.00',
-    paymentMethod: 'Bank Transfer',
-  },
-  {
-    invoice: 'INV007',
-    paymentStatus: 'Unpaid',
-    totalAmount: '$300.00',
-    paymentMethod: 'Credit Card',
-  },
-];
-
 export function TableDemo() {
-  return (
-    <Table>
-      <TableCaption>Lista dos administradores.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[150px]">Primeiro nome</TableHead>
-          <TableHead>Ultimo nome</TableHead>
-          <TableHead>E-mail</TableHead>
-          <TableHead className="text-right">Nível</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
-            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-            <TableCell>{invoice.paymentStatus}</TableCell>
-            <TableCell>{invoice.paymentMethod}</TableCell>
-            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+  const { data, result } = useGetAdmin();
+
+  if (result.isPending)
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+
+  if (result.isError) {
+    return (
+      <div>
+        <p className="text-red-400">Erro ao carregar os dados!</p>
+      </div>
+    );
+  }
+
+  if (result.isSuccess)
+    return (
+      <Table>
+        <TableCaption>Lista dos administradores.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[150px]">Primeiro nome</TableHead>
+            <TableHead>Ultimo nome</TableHead>
+            <TableHead>E-mail</TableHead>
+            <TableHead className="text-right">Nível</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
-  );
+        </TableHeader>
+        <TableBody>
+          {data?.result.map((admin) => (
+            <TableRow key={admin.first_name}>
+              <TableCell className="font-medium">{admin.last_name}</TableCell>
+              <TableCell>{admin.email}</TableCell>
+              <TableCell>{admin.is_active}</TableCell>
+              <TableCell className="text-right">{admin.user_type}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell className="text-right">$2,500.00</TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    );
 }

@@ -1,33 +1,32 @@
-import { Session, UserData } from '@/services/auth';
-import { useEffect, useState } from 'react';
+import { Session } from '@/services/auth';
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 const service = new Session();
 
 function useGetUserData() {
-  const [data, setData] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [sucess, setSuccess] = useState<boolean>(false);
+  const client = useQueryClient();
+  const { data, status } = useQuery({
+    queryKey: ['user'],
+    queryFn: service.getUseData,
+    placeholderData: keepPreviousData,
+    retry: false,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        setSuccess(false);
-        const response = await service.getUseData();
-        setData(response);
-        setSuccess(true);
-      } catch {
-        setError('Failed to fetch event');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  function refrash() {
+    client
+      .invalidateQueries({
+        queryKey: ['user'],
+      })
+      .then(() => {
+        window.location.href = window.location.pathname;
+      });
+  }
 
-  return { data, loading, error, sucess };
+  return { user: data, status, refrash };
 }
 
 export { useGetUserData };

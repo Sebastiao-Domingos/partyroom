@@ -1,30 +1,44 @@
 'use client';
 import { ModeToggle } from '@/components/theme/ModeToggle';
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import { AlarmClock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UserToggle } from '@/components/user/user-toggle';
 import VerticalMenu from '@/components/menus/vertical-menu';
 import Loader from '@/components/loader';
-import { useRouter } from 'next/navigation';
-import { UserContext, UserProvider } from '@/contexts/useContext';
+import { redirect } from 'next/navigation';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useGetUserData } from '@/hooks/auth/useGetUserData';
+import { useAuth } from '@/hooks/auth/useAuth';
+
+const queryClient = new QueryClient();
 
 export default function layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <UserProvider>
+    <QueryClientProvider client={queryClient}>
       <ScreenLayout> {children}</ScreenLayout>;
-    </UserProvider>
+    </QueryClientProvider>
   );
 }
 
 function ScreenLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const navigator = useRouter();
+  // const navigator = useRouter();
   // const { data, loading } = useGetUserData();
-  const user = useContext(UserContext);
+  const { user, status } = useGetUserData();
+  const { logout } = useAuth();
 
-  if (user?.loading) {
+  useEffect(() => {
+    if (
+      status === 'error' ||
+      (user !== undefined && user.user_type !== 'ADMIN')
+    ) {
+      logout();
+      redirect('/auth/login');
+    }
+  }, [status, user, logout]);
+  if (status === 'pending') {
     return (
       <div className="w-full h-[100vh] flex flex-col">
         <div className="m-auto flex flex-col gap-4">
@@ -34,13 +48,8 @@ function ScreenLayout({ children }: Readonly<{ children: React.ReactNode }>) {
       </div>
     );
   }
-  if (!user?.data) {
-    console.log('login router : ', user?.data);
 
-    navigator.replace('/auth/login');
-  }
-
-  if (user?.data && user.data.user_type == 'ADMIN') {
+  if (user && user.user_type == 'ADMIN' && status === 'success') {
     return (
       <div>
         <header className="sticky z-10 text-foreground bg-background/80 top-0 left-[211px] right-0 w-full shadow py-4 px-8 flex items-center justify-between dark:border-b dark:border-b-gray-800">
@@ -53,7 +62,7 @@ function ScreenLayout({ children }: Readonly<{ children: React.ReactNode }>) {
               </Button>
             </li>
             <li>
-              <UserToggle />
+              <UserToggle name={`${user.first_name}`} />
             </li>
           </ul>
         </header>

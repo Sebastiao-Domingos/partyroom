@@ -9,10 +9,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-export function UserToggle() {
+export function UserToggle({ name }: { name: string }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>Domingos</DropdownMenuTrigger>
+      <DropdownMenuTrigger>{name}</DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem>Perfil</DropdownMenuItem>
         <DropdownMenuItem>Difinições</DropdownMenuItem>

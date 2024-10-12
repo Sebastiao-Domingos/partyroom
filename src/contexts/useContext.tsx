@@ -1,4 +1,3 @@
-import { useGetUserData } from '@/hooks/auth/useGetUserData';
 import { UserData } from '@/services/auth';
 import React, { createContext } from 'react';
 
@@ -10,10 +9,5 @@ export const UserContext = createContext<{
 export const UserProvider = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
-  const { data, loading } = useGetUserData();
-  return (
-    <UserContext.Provider value={{ data: data, loading: loading }}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={null}>{children}</UserContext.Provider>;
 };
