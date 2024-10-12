@@ -177,12 +177,12 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   Tipos de eventos do salão: #{' '}
                   <span className="text-primary/80">{data?.name}</span>
                 </h3>
-                <div className="space-y-2 mt-3 font-thin flex gap-2 flex-wrap">
+                <div className="mt-3 font-thin flex gap-2 flex-wrap">
                   {data.event_types.length === 0 && <p>Sem Eventos</p>}
                   {data.event_types.map((event) => (
                     <p
                       key={event.id}
-                      className="border-l pl-2 first:border-l-0 first:pl-0"
+                      className="border-l-2 pl-2 first:border-l-0 first:pl-0"
                     >
                       {event.name}
                     </p>
@@ -194,7 +194,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   Serviços do salão: #{' '}
                   <span className="text-primary/80">{data?.name}</span>
                 </h3>
-                <div className="space-y-2 mt-3 font-thin flex gap-2 items-center flex-wrap">
+                <div className="mt-3 font-thin flex gap-2 items-center flex-wrap">
                   {data.services.length === 0 && <p>Sem Servições</p>}
                   {data.services.map((service) => (
                     <p

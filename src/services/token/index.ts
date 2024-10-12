@@ -5,25 +5,25 @@ class TokenService {
   private static readonly API_TOKEN_PART2 = '_had';
   private static readonly API_TOKEN_PART3 = '_bouth';
 
-  private constructor() {}
-
   static saveToken(token: string) {
-    const [p1, p2, p3] = token.split(',');
+    const [p1, p2, p3] = token.split('.');
+
+    console.log('token : ', p1, p2, p3);
 
     Cookies.set(TokenService.API_TOKEN_PART1, p1, {
-      httpOnly: true,
+      // httpOnly: true,
       sameSite: 'lax',
       priority: 'medium',
     });
 
     Cookies.set(TokenService.API_TOKEN_PART2, p2, {
-      httpOnly: true,
+      // httpOnly: true,
       sameSite: 'lax',
       priority: 'medium',
     });
 
     Cookies.set(TokenService.API_TOKEN_PART3, p3, {
-      httpOnly: true,
+      // httpOnly: true,
       sameSite: 'lax',
       priority: 'medium',
     });
