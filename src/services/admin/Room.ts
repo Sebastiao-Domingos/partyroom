@@ -81,34 +81,34 @@ export interface Service {
 }
 
 export class RoomService {
-  private base_url = '/partyrooms/';
+  private static base_url = '/partyrooms/';
 
   async get() {
-    const response = await api.get<RoomResponse>(this.base_url);
+    const response = await api.get<RoomResponse>(RoomService.base_url);
     const data = await response.data;
     return data;
   }
 
   async getById(id: number) {
-    const response = await api.get<RoomDetail>(`${this.base_url}${id}`);
+    const response = await api.get<RoomDetail>(`${RoomService.base_url}${id}`);
     const data = await response.data;
     return data;
   }
 
   async create(body: Room) {
-    const response = await api.post<Room>(this.base_url, body);
+    const response = await api.post<Room>(RoomService.base_url, body);
     const data = await response.data;
     return data;
   }
 
   async update(id: number, data: Room) {
-    const response = await api.put<Room>(`${this.base_url}${id}`, data);
+    const response = await api.put<Room>(`${RoomService.base_url}${id}`, data);
     const updatedData = await response.data;
     return updatedData;
   }
 
   async remove(id: number) {
-    await api.delete(`${this.base_url}${id}`);
+    await api.delete(`${RoomService.base_url}${id}`);
 
     return true;
   }

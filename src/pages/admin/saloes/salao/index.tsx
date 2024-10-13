@@ -8,8 +8,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { useGetRoomById } from '@/hooks/admin/room/useGetRoom';
 import Image from 'next/image';
+import { useGetDetailRoom } from '@/hooks/admin/room/useGetRoom';
 
 export default function Salao({ params }: { params: { salao: number } }) {
   const [image, setImage] = useState({
@@ -17,23 +17,26 @@ export default function Salao({ params }: { params: { salao: number } }) {
     alt: '',
     index: 0,
   });
-  const { data, error, loading, sucess } = useGetRoomById(params.salao);
+  const { data, result } = useGetDetailRoom(params.salao);
   useEffect(() => {
-    if (sucess && data?.image) {
+    if (result.isSuccess && data?.image) {
       setImage({
         alt: data.name,
         url: data.image,
         index: 0,
       });
     }
-  }, [sucess, data]);
+  }, [result, data]);
 
   return (
     <div>
       <div className="">
         <h1 className="text-primary font-bold border-l pl-2 uppercase">
           Salões #{' '}
-          <span className="text-primary/80"> {sucess && data?.name}</span>
+          <span className="text-primary/80">
+            {' '}
+            {result.isSuccess && data?.name}
+          </span>
         </h1>
         <div className="pl-2 mt-2 text-[12px]">
           <Breadcrumb>
@@ -60,26 +63,26 @@ export default function Salao({ params }: { params: { salao: number } }) {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbPage className="text-[12px]">
-                {sucess && data?.name}
+                {result.isSuccess && data?.name}
               </BreadcrumbPage>
             </BreadcrumbList>
           </Breadcrumb>
         </div>
       </div>
       <div className="mt-6">
-        {loading && (
+        {result.isLoading && (
           <div className="flex justify-center items-center h-full">
             <div className="spinner-border text-primary" role="status">
               <span className="sr-only">Loading...</span>
             </div>
           </div>
         )}
-        {error && (
+        {result.isError && (
           <div className="text-center text-destructive font-semibold">
-            {error}
+            {result.error.message}
           </div>
         )}
-        {sucess && data && (
+        {result.isSuccess && data && (
           <div className="flex gap-2">
             <div className="sticky top-[100px] w-[90%] flex flex-col gap-6">
               <div>
@@ -110,7 +113,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
                     alt={data.name}
                   />
                 </button>
-                {data.images.map((imag, index) => (
+                {data.images?.map((imag, index) => (
                   <button
                     key={imag.id}
                     className={`border p-1 border-border hover:border-primary/50 ${
@@ -139,7 +142,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
                 <h3>
                   Informações do salão: #{' '}
                   <span className="text-primary/80">
-                    {sucess && data?.name}
+                    {result.isSuccess && data?.name}
                   </span>
                 </h3>
                 <div className="space-y-2 mt-3 font-thin">
@@ -152,9 +155,9 @@ export default function Salao({ params }: { params: { salao: number } }) {
                     {data?.is_available ? 'Disponível' : 'Indisponível'}
                   </p>
                   <p>Preço por hora : {data?.price_per_hour} Kz</p>
-                  <p>Telefone : {data?.owner.phone_number}</p>
+                  <p>Telefone : {data?.owner?.phone_number}</p>
                   <p>
-                    Propetário : {data.owner.first_name} {data.owner.last_name}
+                    Propetário : {data.owner?.first_name} {data.owner.last_name}
                   </p>
                 </div>
               </div>
@@ -162,14 +165,14 @@ export default function Salao({ params }: { params: { salao: number } }) {
                 <h3>
                   Endereço do salão: #{' '}
                   <span className="text-primary/80">
-                    {sucess && data?.name}
+                    {result.isSuccess && data?.name}
                   </span>
                 </h3>
                 <div className="space-y-2 mt-3 font-thin">
                   <p>Província : Luanda</p>
-                  <p>Município : {data?.address.city.name}</p>
-                  <p>Distrito : {data?.address.district}</p>
-                  <p>Ponto de referência : {data?.address.land_mark}</p>
+                  <p>Município : {data?.address?.city.name}</p>
+                  <p>Distrito : {data?.address?.district}</p>
+                  <p>Ponto de referência : {data?.address?.land_mark}</p>
                 </div>
               </div>
               <div className="border-b border-border w-full pb-2">

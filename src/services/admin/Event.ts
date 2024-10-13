@@ -17,34 +17,37 @@ export type EventResponse = {
 };
 
 export class EventService {
-  private base_url = '/eventtypes/';
+  private static base_url = '/eventtypes/';
 
   async get() {
-    const response = await api.get<EventResponse>(this.base_url);
-    const data = await response.data;
+    const response = await api.get<EventResponse>(EventService.base_url);
+    const data = response.data;
     return data;
   }
 
   async getById(id: number) {
-    const response = await api.get<Event>(`${this.base_url}/${id}`);
+    const response = await api.get<Event>(`${EventService.base_url}/${id}`);
     const data = await response.data;
     return data;
   }
 
   async create(body: Event) {
-    const response = await api.post<Event>(this.base_url, body);
+    const response = await api.post<Event>(EventService.base_url, body);
     const data = await response.data;
     return data;
   }
 
   async update(id: number, data: Event) {
-    const response = await api.put<Event>(`${this.base_url}/${id}`, data);
+    const response = await api.put<Event>(
+      `${EventService.base_url}/${id}`,
+      data
+    );
     const updatedData = await response.data;
     return updatedData;
   }
 
   async remove(id: number) {
-    await api.delete(`${this.base_url}/${id}`);
+    await api.delete(`${EventService.base_url}/${id}`);
 
     return true;
   }

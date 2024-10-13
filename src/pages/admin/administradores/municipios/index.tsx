@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import {
   Breadcrumb,
@@ -9,6 +11,8 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useGetCities } from '@/hooks/admin/cities/useGetCities';
+import Loader from '@/components/loader';
 
 export default function Municipios() {
   return (
@@ -62,28 +66,38 @@ export default function Municipios() {
           </form>
         </fieldset>
       </div>
+      <ListCities />
+    </div>
+  );
+}
 
-      <div className="mt-6">
-        <h2 className="text-primary font-semibold">Municípios</h2>
-        <div className="flex flex-wrap gap-4 mt-4">
-          {Array(7)
-            .fill('')
-            .map((_, index) => (
-              <div
-                key={index}
-                className="w-[32%] p-2 border border-border rounded hover:border-primary/50"
-              >
-                <span className="flex flex-col">
-                  <p className="">Município - {index + 1}</p>
-                  <p className="text-sm italic text-slate-400 ml-auto">
-                    Data de criação : {new Date().getFullYear()} /{' '}
-                    {new Date().getMonth().toString().padStart(2, '0')} /
-                    {new Date().getDate().toString().padStart(2, '0')}
-                  </p>
-                </span>
-              </div>
-            ))}
-        </div>
+function ListCities() {
+  const { data, result } = useGetCities();
+
+  return (
+    <div className="mt-6">
+      <h2 className="text-primary font-semibold">Municípios</h2>
+      <div className="flex flex-wrap gap-4 mt-4">
+        {result.isPending && <Loader />}
+        {result.isError && (
+          <p className="text-center text-red-500">Erro ao listar a cidades !</p>
+        )}
+        {result.isSuccess &&
+          data!.result.map((city, index) => (
+            <div
+              key={index}
+              className="w-[32%] p-2 border border-border rounded hover:border-primary/50"
+            >
+              <span className="flex flex-col">
+                <p className=""> {city.name}</p>
+                <p className="text-sm italic text-slate-400 ml-auto">
+                  Data de criação : {new Date(city.created_at!).getDate()} /{' '}
+                  {new Date().getMonth().toString().padStart(2, '0')} /
+                  {new Date().getDate().toString().padStart(2, '0')}
+                </p>
+              </span>
+            </div>
+          ))}
       </div>
     </div>
   );

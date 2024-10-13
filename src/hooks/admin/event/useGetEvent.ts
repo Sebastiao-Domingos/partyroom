@@ -1,32 +1,24 @@
-import { EventResponse, EventService } from '@/services/admin/Event';
-import { useEffect, useState } from 'react';
+import { EventService } from '@/services/admin/Event';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 const service = new EventService();
 
-function useGetEvent() {
-  const [event, setEvent] = useState<EventResponse | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+export function useGetEvents() {
+  const { data, ...result } = useQuery({
+    queryFn: service.get,
+    queryKey: ['events'],
+    placeholderData: keepPreviousData,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const response = await service.get();
-        setEvent(response);
-        console.log(response);
-      } catch {
-        setError('Failed to fetch event');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  return { event, loading, error };
+  return { data, result };
 }
 
-export { useGetEvent };
+export function useGetDetailEvent(id: number) {
+  const { data, ...result } = useQuery({
+    queryKey: ['events'],
+    queryFn: () => service.getById(id),
+    placeholderData: keepPreviousData,
+  });
+
+  return { data, result };
+}

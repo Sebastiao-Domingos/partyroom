@@ -1,62 +1,23 @@
-import { RoomDetail, RoomResponse, RoomService } from '@/services/admin/Room';
-import { useEffect, useState } from 'react';
-
+import { RoomService } from '@/services/admin/Room';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 const service = new RoomService();
 
-function useGetRoom() {
-  const [data, setData] = useState<RoomResponse | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [sucess, setSuccess] = useState(false);
+export function useGetRooms() {
+  const { data, ...result } = useQuery({
+    queryFn: service.get,
+    queryKey: ['rooms'],
+    placeholderData: keepPreviousData,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        setSuccess(false);
-
-        const response = await service.get();
-        setData(response);
-        setSuccess(true);
-      } catch {
-        setError('Failed to fetch event');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  return { data, loading, error, sucess };
+  return { data, result };
 }
 
-function useGetRoomById(id: number) {
-  const [data, setData] = useState<RoomDetail | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [sucess, setSuccess] = useState(false);
+export function useGetDetailRoom(id: number) {
+  const { data, ...result } = useQuery({
+    queryKey: ['rooms'],
+    queryFn: () => service.getById(id),
+    placeholderData: keepPreviousData,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        setSuccess(false);
-
-        const response = await service.getById(id);
-        setData(response);
-
-        setSuccess(true);
-      } catch {
-        setError('Failed to fetch event');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [id]);
-
-  return { data, loading, error, sucess };
+  return { data, result };
 }
-export { useGetRoom, useGetRoomById };

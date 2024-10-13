@@ -9,31 +9,31 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useGetRoom } from '@/hooks/admin/room/useGetRoom';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useGetRooms } from '@/hooks/admin/room/useGetRoom';
+import Loader from '@/components/loader';
 
 export function ListRoom() {
   const navigator = useRouter();
-  const { error, data, loading, sucess } = useGetRoom();
-
-  if (loading) {
+  const { data, result } = useGetRooms();
+  if (result.isPending) {
     return (
       <div className="flex justify-center items-center h-full">
-        <div className="spinner-border text-primary" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
+        <Loader />
       </div>
     );
   }
 
-  if (error) {
+  if (result.isError) {
     return (
-      <div className="text-center text-destructive font-semibold">{error}</div>
+      <div className="text-center text-destructive font-semibold">
+        {result.error.message}
+      </div>
     );
   }
 
-  if (sucess) {
+  if (result.isSuccess) {
     return (
       <Table>
         <TableCaption>Lista dos Salões.</TableCaption>
@@ -65,7 +65,9 @@ export function ListRoom() {
               <TableCell className="font-medium">{room.name}</TableCell>
               <TableCell>{room.opening_time}</TableCell>
               <TableCell>{room.closing_time}</TableCell>
-              <TableCell className="text-left">{room.price_per_hour}</TableCell>
+              <TableCell className="text-left">
+                {room.price_per_hour} , 00 Kz
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
