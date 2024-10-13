@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import {
   Breadcrumb,
@@ -7,10 +8,19 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
-import { ScrollBar } from '@/components/ui/scroll-area';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import Loader from '@/components/loader';
 import { Button } from '@/components/ui/button';
-import { PlusCircle } from 'lucide-react';
+import { useGetSupplier } from '@/hooks/admin/supplier/useGetSupplier';
 
 export default function fornecedores() {
   return (
@@ -44,14 +54,66 @@ export default function fornecedores() {
             </Breadcrumb>
           </div>
         </div>
-        <Button className="space-y-3 bg-orange-500 ml-auto">
-          <PlusCircle className="mr-2" /> Adicionar
-        </Button>
+        <Button className="space-y-3 bg-orange-500 ml-auto">Adicionar</Button>
       </div>
-      <ScrollArea className="w-[calc(100vw-250px)] flex gap-3 py-2 mt-6">
-        <div className="w-full flex gap-3">ola</div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+      <div className="w-full flex gap-3">
+        <TableDemo />
+      </div>
     </div>
   );
+}
+
+export function TableDemo() {
+  const { data, result } = useGetSupplier();
+
+  if (result.isPending)
+    return (
+      <div className="flex justify-center items-center w-full">
+        <Loader />
+      </div>
+    );
+
+  if (result.isError) {
+    return (
+      <div className="w-full flex ">
+        <p className="text-red-400 m-auto">Erro ao carregar os dados!</p>
+      </div>
+    );
+  }
+
+  if (result.isSuccess && data)
+    return (
+      <Table>
+        <TableCaption>Lista dos fornecedores.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[150px]">Primeiro nome</TableHead>
+            <TableHead>Ultimo nome</TableHead>
+            <TableHead>Nº telefone</TableHead>
+            <TableHead>Estado</TableHead>
+
+            <TableHead className="text-right">Tipo de usuário</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.result?.map((admin, index) => (
+            <TableRow key={index}>
+              <TableCell className="font-medium">{admin.last_name}</TableCell>
+              <TableCell className="font-medium">{admin.last_name}</TableCell>
+              <TableCell>{admin.phone_number}</TableCell>
+              <TableCell>{admin.is_active ? 'Ativo' : 'Desativo'}</TableCell>
+              <TableCell className="text-right">{admin.user_type}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell colSpan={2} className="text-right">
+              {data.total.toString().padStart(3, '0')}
+            </TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    );
 }

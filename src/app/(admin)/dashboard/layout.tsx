@@ -10,6 +10,7 @@ import { redirect } from 'next/navigation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useGetUserData } from '@/hooks/auth/useGetUserData';
 import { useAuth } from '@/hooks/auth/useAuth';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ export default function layout({
   return (
     <QueryClientProvider client={queryClient}>
       <ScreenLayout> {children}</ScreenLayout>;
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

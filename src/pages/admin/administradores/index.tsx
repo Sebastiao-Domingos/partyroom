@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import {
   Breadcrumb,
@@ -66,20 +67,20 @@ export function TableDemo() {
 
   if (result.isPending)
     return (
-      <div>
+      <div className="flex justify-center items-center w-full">
         <Loader />
       </div>
     );
 
   if (result.isError) {
     return (
-      <div>
-        <p className="text-red-400">Erro ao carregar os dados!</p>
+      <div className="w-full flex ">
+        <p className="text-red-400 m-auto">Erro ao carregar os dados!</p>
       </div>
     );
   }
 
-  if (result.isSuccess)
+  if (result.isSuccess && data)
     return (
       <Table>
         <TableCaption>Lista dos administradores.</TableCaption>
@@ -88,15 +89,18 @@ export function TableDemo() {
             <TableHead className="w-[150px]">Primeiro nome</TableHead>
             <TableHead>Ultimo nome</TableHead>
             <TableHead>E-mail</TableHead>
-            <TableHead className="text-right">Nível</TableHead>
+            <TableHead>Estado</TableHead>
+
+            <TableHead className="text-right">Tipo de usuário</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.result.map((admin) => (
-            <TableRow key={admin.first_name}>
+          {data.result?.map((admin, index) => (
+            <TableRow key={index}>
+              <TableCell className="font-medium">{admin.last_name}</TableCell>
               <TableCell className="font-medium">{admin.last_name}</TableCell>
               <TableCell>{admin.email}</TableCell>
-              <TableCell>{admin.is_active}</TableCell>
+              <TableCell>{admin.is_active ? 'Ativo' : 'Desativo'}</TableCell>
               <TableCell className="text-right">{admin.user_type}</TableCell>
             </TableRow>
           ))}
@@ -104,7 +108,9 @@ export function TableDemo() {
         <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
+            <TableCell colSpan={2} className="text-right">
+              {data.total.toString().padStart(2, '0')}
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>

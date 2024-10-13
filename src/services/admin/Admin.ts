@@ -1,12 +1,14 @@
 import { api } from '@/infra/api';
 
 export type Admin = {
+  id?: number;
   email: string;
   first_name: string;
   last_name: string;
-  admin_level: number;
+  admin_level: number | string;
   user_type: string;
   is_active: boolean;
+  password?: string;
 };
 export type AdminResponse = {
   links: {
@@ -19,34 +21,39 @@ export type AdminResponse = {
 };
 
 export class AdminService {
-  private base_url = '/administrators/';
+  private static base_url = '/administrators/';
 
-  async get() {
-    const response = await api.get<AdminResponse>(this.base_url);
+  async getAll(): Promise<AdminResponse> {
+    const response = await api.get<AdminResponse>(AdminService.base_url);
+
     const data = await response.data;
+
     return data;
   }
 
   async getById(id: number) {
-    const response = await api.get<Admin>(`${this.base_url}/${id}`);
-    const data = await response.data;
+    const response = await api.get<Admin>(`${AdminService.base_url}/${id}`);
+    const data = response.data;
     return data;
   }
 
   async create(body: Admin) {
-    const response = await api.post<Admin>(this.base_url, body);
-    const data = await response.data;
+    const response = await api.post<Admin>(AdminService.base_url, body);
+    const data = response.data;
     return data;
   }
 
-  async update(id: number, data: Admin) {
-    const response = await api.put<Admin>(`${this.base_url}/${id}`, data);
-    const updatedData = await response.data;
+  async update(data: Admin) {
+    const response = await api.put<Admin>(
+      `${AdminService.base_url}/${data.id}`,
+      data
+    );
+    const updatedData = response.data;
     return updatedData;
   }
 
   async remove(id: number) {
-    await api.delete(`${this.base_url}/${id}`);
+    await api.delete(`${AdminService.base_url}/${id}`);
 
     return true;
   }

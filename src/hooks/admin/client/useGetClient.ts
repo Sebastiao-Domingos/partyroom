@@ -1,22 +1,21 @@
-import { AdminService } from '@/services/admin/Admin';
-
+import { ClientService } from '@/services/admin/Client';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-const service = new AdminService();
+const service = new ClientService();
 
-export function useGetAdmin() {
+export function useGetClients() {
   const { data, ...result } = useQuery({
     queryFn: service.getAll,
-    queryKey: ['administrators'],
+    queryKey: ['clients'],
     placeholderData: keepPreviousData,
   });
 
   return { data, result };
 }
 
-export function useGetDetailAdmin(id: number) {
+export function useGetDetailClient(id: number) {
   const { data, ...result } = useQuery({
-    queryKey: ['administrators'],
+    queryKey: ['clients'],
     queryFn: () => service.getById(id),
     placeholderData: keepPreviousData,
   });
