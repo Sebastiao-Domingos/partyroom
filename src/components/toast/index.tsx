@@ -11,6 +11,7 @@ export const defaultToastOptions: ToastOptions = {
   progress: undefined,
   theme: 'colored',
   transition: Slide,
+  isLoading: false,
 };
 
 type ToastType = 'success' | 'error' | 'info' | 'warning' | 'default';

@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import {
   Breadcrumb,
@@ -13,8 +12,27 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useGetCities } from '@/hooks/admin/cities/useGetCities';
 import Loader from '@/components/loader';
+import { useActionCity } from '@/hooks/admin/cities/useActionCities';
+import { useForm } from 'react-hook-form';
+import { City } from '@/services/admin/City';
+import { Edit2Icon } from 'lucide-react';
+import { Delete } from './delete';
+import { showToast } from '@/components/toast';
 
 export default function Municipios() {
+  const { mutationCreate } = useActionCity();
+  const { register, handleSubmit } = useForm<City>();
+
+  const submit = (data: City) => {
+    mutationCreate.mutate(data);
+  };
+
+  if (mutationCreate.isSuccess) {
+    showToast('success', 'Município cadastrado com sucesso!');
+  }
+  if (mutationCreate.isError) {
+    showToast('error', 'Erro : ' + mutationCreate.error.message);
+  }
   return (
     <div>
       <div className="">
@@ -58,11 +76,21 @@ export default function Municipios() {
       <div className="mt-8">
         <fieldset className="border p-4 rounded">
           <legend className="px-1">Criar novo município</legend>
-          <form action="">
-            <div className="flex gap-4">
-              <Input placeholder="Digitar o nome" className="w-full" />{' '}
-              <Button>Adicionar</Button>
-            </div>
+          <form onSubmit={handleSubmit(submit)}>
+            <fieldset
+              disabled={mutationCreate.isPending}
+              className="flex gap-4"
+            >
+              <Input
+                placeholder="Digitar o nome"
+                className="w-full"
+                {...register('name', { required: true })}
+              />{' '}
+              <Button>
+                {!mutationCreate.isPending && 'Adicionar'}
+                {mutationCreate.isPending && <Loader />}
+              </Button>
+            </fieldset>
           </form>
         </fieldset>
       </div>
@@ -86,16 +114,20 @@ function ListCities() {
           data!.result.map((city, index) => (
             <div
               key={index}
-              className="w-[32%] p-2 border border-border rounded hover:border-primary/50"
+              className="flex flex-col w-[32%] p-2 border border-border rounded hover:border-primary/50"
             >
-              <span className="flex flex-col">
-                <p className=""> {city.name}</p>
-                <p className="text-sm italic text-slate-400 ml-auto">
-                  Data de criação : {new Date(city.created_at!).getDate()} /{' '}
-                  {new Date().getMonth().toString().padStart(2, '0')} /
-                  {new Date().getDate().toString().padStart(2, '0')}
+              <div className="flex flex-col">
+                <p className="">{city.name}</p>
+                <p className="text-sm italic text-slate-400">
+                  {city.created_at?.toString().split('T')[0]}
                 </p>
-              </span>
+              </div>
+              <div className="flex gap-3 ml-auto">
+                <Button size={'icon'} variant={'outline_edit'}>
+                  <Edit2Icon />
+                </Button>
+                <Delete data={city} />
+              </div>
             </div>
           ))}
       </div>

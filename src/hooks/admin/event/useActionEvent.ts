@@ -1,63 +1,27 @@
 'use client';
-import { EventService, Event } from '@/services/admin/Event';
-import { useState } from 'react';
+import { EventService } from '@/services/admin/Event';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const service = new EventService();
 
 export function useActionEvent() {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [sucess, setSuccess] = useState<boolean>(false);
-  const [data, setData] = useState<Event | null>(null);
+  const queryClient = useQueryClient();
+  const mutationCreate = useMutation({
+    mutationFn: service.create,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['events'] });
+    },
+  });
 
-  const create = async (body: Event) => {
-    try {
-      setLoading(true);
-      setError(null);
-      setSuccess(false);
-      const response = await service.create(body).then((response) => response);
-      setData(response);
-    } catch (error) {
-      setError('Erro em criar evento');
-      console.log(error);
-    } finally {
-      setLoading(false);
-      setSuccess(true);
-    }
-  };
+  const mutationUpdate = useMutation({
+    mutationFn: service.update,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['events'] }),
+  });
 
-  const update = async (body: Event) => {
-    try {
-      setLoading(true);
-      setError(null);
-      setSuccess(false);
-      const response = await service
-        .update(body.id!, body)
-        .then((response) => response);
-      setData(response);
-    } catch (error) {
-      setError('Erro em atualizar evento');
-      console.log(error);
-    } finally {
-      setLoading(false);
-      setSuccess(true);
-    }
-  };
+  const mutationDelete = useMutation({
+    mutationFn: service.remove,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['events'] }),
+  });
 
-  const remove = async (id: number) => {
-    try {
-      setLoading(true);
-      setError(null);
-      setSuccess(false);
-      await service.remove(id);
-    } catch (error) {
-      setError('Erro em deletar evento');
-      console.log(error);
-    } finally {
-      setLoading(false);
-      setSuccess(true);
-    }
-  };
-
-  return { create, remove, update, loading, sucess, error, data };
+  return { mutationCreate, mutationUpdate, mutationDelete };
 }

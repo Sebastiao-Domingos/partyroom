@@ -34,14 +34,17 @@ export class CityService {
   }
 
   async create(body: City) {
-    const response = await api.post<City>(CityService.base_url, body);
+    const response = await api.post<City>(
+      `${CityService.base_url}create`,
+      body
+    );
     const data = response.data;
     return data;
   }
 
   async update(data: City) {
     const response = await api.put<City>(
-      `${CityService.base_url}/${data.id}`,
+      `${CityService.base_url}${data.id}`,
       data
     );
     const updatedData = response.data;
@@ -49,7 +52,7 @@ export class CityService {
   }
 
   async remove(id: number) {
-    await api.delete(`${CityService.base_url}/${id}`);
+    await api.delete(`${CityService.base_url}${id}`);
 
     return true;
   }

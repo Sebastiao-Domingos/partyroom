@@ -26,8 +26,6 @@ export default function layout({
 }
 
 function ScreenLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  // const navigator = useRouter();
-  // const { data, loading } = useGetUserData();
   const { user, status } = useGetUserData();
   const { logout } = useAuth();
 

@@ -37,9 +37,9 @@ export class EventService {
     return data;
   }
 
-  async update(id: number, data: Event) {
+  async update(data: Event) {
     const response = await api.put<Event>(
-      `${EventService.base_url}/${id}`,
+      `${EventService.base_url}/${data.id}`,
       data
     );
     const updatedData = await response.data;
@@ -47,7 +47,7 @@ export class EventService {
   }
 
   async remove(id: number) {
-    await api.delete(`${EventService.base_url}/${id}`);
+    await api.delete(`${EventService.base_url}${id}`);
 
     return true;
   }

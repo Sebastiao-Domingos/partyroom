@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import {
   Breadcrumb,
@@ -10,8 +11,25 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import ListEvent from './list-event';
+import { useActionEvent } from '@/hooks/admin/event/useActionEvent';
+import { useForm } from 'react-hook-form';
+import { Event } from '@/services/admin/Event';
+import Loader from '@/components/loader';
+import { showToast } from '@/components/toast';
 
 export default function TiposEvento() {
+  const { mutationCreate } = useActionEvent();
+  const { register, handleSubmit } = useForm<Event>();
+  const submit = (data: Event) => {
+    mutationCreate.mutate(data);
+  };
+
+  if (mutationCreate.isSuccess) {
+    showToast('success', 'Evento criado com sucesso!');
+  }
+  if (mutationCreate.isError) {
+    showToast('error', `Erro : ${mutationCreate.error.message}`);
+  }
   return (
     <div>
       <div className="">
@@ -55,11 +73,21 @@ export default function TiposEvento() {
       <div className="mt-8">
         <fieldset className="border border-border p-4 rounded">
           <legend className="px-1">Criar novo tipo de evento</legend>
-          <form action="">
-            <div className="flex gap-4">
-              <Input placeholder="Digitar o nome" className="w-full" />{' '}
-              <Button>Adicionar</Button>
-            </div>
+          <form onSubmit={handleSubmit(submit)}>
+            <fieldset
+              className="flex gap-4"
+              disabled={mutationCreate.isPending}
+            >
+              <Input
+                placeholder="Digitar o nome"
+                className="w-full"
+                {...register('name', { required: true })}
+              />{' '}
+              <Button>
+                {!mutationCreate.isPending && 'Adicionar'}
+                {mutationCreate.isPending && <Loader />}
+              </Button>
+            </fieldset>
           </form>
         </fieldset>
       </div>

@@ -2,9 +2,10 @@
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
-import { ArchiveXIcon, Edit2Icon } from 'lucide-react';
+import { Edit2Icon } from 'lucide-react';
 import { useGetEvents } from '@/hooks/admin/event/useGetEvent';
 import Loader from '@/components/loader';
+import { Delete } from './delete';
 
 export default function ListEvent() {
   const { data, result } = useGetEvents();
@@ -37,9 +38,7 @@ export default function ListEvent() {
               <Button size={'icon'} variant={'outline_edit'}>
                 <Edit2Icon />
               </Button>
-              <Button className="" size={'icon'} variant="outline_desttructive">
-                <ArchiveXIcon />
-              </Button>
+              <Delete data={item} />
             </div>
           </div>
         ))}
