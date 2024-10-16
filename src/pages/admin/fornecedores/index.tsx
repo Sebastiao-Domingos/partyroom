@@ -19,8 +19,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import Loader from '@/components/loader';
-import { Button } from '@/components/ui/button';
 import { useGetSupplier } from '@/hooks/admin/supplier/useGetSupplier';
+import { Register } from './register';
 
 export default function fornecedores() {
   return (
@@ -54,7 +54,7 @@ export default function fornecedores() {
             </Breadcrumb>
           </div>
         </div>
-        <Button className="space-y-3 bg-orange-500 ml-auto">Adicionar</Button>
+        <Register />
       </div>
       <div className="w-full flex gap-3">
         <TableDemo />
@@ -98,7 +98,7 @@ export function TableDemo() {
         <TableBody>
           {data.result?.map((admin, index) => (
             <TableRow key={index}>
-              <TableCell className="font-medium">{admin.last_name}</TableCell>
+              <TableCell className="font-medium">{admin.first_name}</TableCell>
               <TableCell className="font-medium">{admin.last_name}</TableCell>
               <TableCell>{admin.phone_number}</TableCell>
               <TableCell>{admin.is_active ? 'Ativo' : 'Desativo'}</TableCell>

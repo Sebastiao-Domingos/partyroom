@@ -31,12 +31,12 @@ const menus = [
         name: 'Fornecedores',
         icon: <Users size={18} />,
         link: '/dashboard/fornecedores',
-        submenu: [
-          {
-            name: 'Criar',
-            link: '/dashboard/fornecedores/criar',
-          },
-        ],
+        // submenu: [
+        //   {
+        //     name: 'Criar',
+        //     link: '/dashboard/fornecedores/criar',
+        //   },
+        // ],
       },
       {
         name: 'Clientes',
@@ -47,12 +47,12 @@ const menus = [
         name: 'Salões',
         icon: <HouseIcon size={18} />,
         link: '/dashboard/saloes',
-        submenu: [
-          {
-            name: 'Criar',
-            link: '/dashboard/saloes/criar',
-          },
-        ],
+        // submenu: [
+        //   {
+        //     name: 'Criar',
+        //     link: '/dashboard/saloes/criar',
+        //   },
+        // ],
       },
     ],
   },

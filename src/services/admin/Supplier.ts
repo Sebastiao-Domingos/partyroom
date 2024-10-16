@@ -33,21 +33,24 @@ export class SupplierService {
 
   async getById(id: number) {
     const response = await api.get<Supplier>(
-      `${SupplierService.base_url}/${id}`
+      `${SupplierService.base_url}${id}`
     );
     const data = response.data;
     return data;
   }
 
   async create(body: Supplier) {
-    const response = await api.post<Supplier>(SupplierService.base_url, body);
+    const response = await api.post<Supplier>(
+      `${SupplierService.base_url}create`,
+      body
+    );
     const data = response.data;
     return data;
   }
 
   async update(data: Supplier) {
     const response = await api.put<Supplier>(
-      `${SupplierService.base_url}/${data.id}`,
+      `${SupplierService.base_url}${data.id}`,
       data
     );
     const updatedData = response.data;
