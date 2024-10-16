@@ -17,30 +17,35 @@ import { SessionBody } from '@/services/auth';
 import { useAuth } from '@/hooks/auth/useAuth';
 import Loader from '@/components/loader';
 import { toast } from 'react-toastify';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 export default function Login() {
   return (
     <div className="w-full h-[100vh] flex justify-center items-center">
-      <div>
-        <CardWithForm />
-      </div>
+      <QueryClientProvider client={queryClient}>
+        <div>
+          <CardWithForm />
+        </div>
+      </QueryClientProvider>
     </div>
   );
 }
 
 export function CardWithForm() {
   const { register, handleSubmit } = useForm<SessionBody>();
-  const { login, loading, error, sucess } = useAuth();
+  const { login } = useAuth();
   const onSubmit = (data: SessionBody) => {
-    login(data);
+    login.mutate(data);
   };
 
-  if (sucess) {
+  if (login.isSuccess) {
     toast('Login feito com sucesso', { type: 'success' });
     window.location.href = '/dashboard';
   }
-  if (error) {
-    toast(error, { type: 'error' });
+  if (login.isError) {
+    toast(login.error.message, { type: 'error' });
   }
 
   //   if (sucessGetData) {
@@ -88,8 +93,8 @@ export function CardWithForm() {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button className="w-full" type="submit">
-            {loading && <Loader />}
-            {!loading && 'Login'}
+            {login.isPending && <Loader />}
+            {!login.isPending && 'Login'}
           </Button>
         </CardFooter>
       </form>

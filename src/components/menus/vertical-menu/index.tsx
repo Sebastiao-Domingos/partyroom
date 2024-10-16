@@ -17,6 +17,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { usePathname } from 'next/navigation';
+import { useAuth } from '@/hooks/auth/useAuth';
 
 const menus = [
   {
@@ -90,6 +91,7 @@ const menus = [
 ];
 
 export default function VerticalMenu() {
+  const { logout } = useAuth();
   return (
     <div className="fixed z-20 bg-background top-0 left-0 bottom-2 rounded shadow shadow-border w-[210px] pt-5">
       <span className="ml-4 text-3xl">LOGO</span>
@@ -104,7 +106,10 @@ export default function VerticalMenu() {
         </ScrollArea>
       </nav>
       <div className="fixed left-0 bottom-0 p-2 bg-background w-[200px]">
-        <button className="w-full flex gap-2 py-2 hover:text-orange-500">
+        <button
+          className="w-full flex gap-2 py-2 hover:text-orange-500"
+          onClick={() => logout.mutate()}
+        >
           <LogOut size={18} />
           Log out
         </button>

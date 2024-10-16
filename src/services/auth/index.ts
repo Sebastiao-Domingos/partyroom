@@ -33,10 +33,15 @@ export type UserData = {
 };
 
 export class Session {
-  private base_url = 'session/';
+  private static base_url = 'session/';
 
   async login(body: SessionBody): Promise<DataLogin> {
-    const response = await api.post<SessionResponse>(`${this.base_url}`, body);
+    console.log('service : ', body);
+
+    const response = await api.post<SessionResponse>(
+      `${Session.base_url}`,
+      body
+    );
     const { data, token } = response.data;
     TokenService.saveToken(token);
     return data;

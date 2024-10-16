@@ -34,7 +34,7 @@ function ScreenLayout({ children }: Readonly<{ children: React.ReactNode }>) {
       status === 'error' ||
       (user !== undefined && user.user_type !== 'ADMIN')
     ) {
-      logout();
+      logout.mutate();
       redirect('/auth/login');
     }
   }, [status, user, logout]);
