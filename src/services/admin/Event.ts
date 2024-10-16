@@ -48,7 +48,6 @@ export class EventService {
 
   async remove(id: number) {
     await api.delete(`${EventService.base_url}${id}`);
-
     return true;
   }
 }
