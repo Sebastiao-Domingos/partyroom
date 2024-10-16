@@ -26,7 +26,7 @@ export class EventService {
   }
 
   async getById(id: number) {
-    const response = await api.get<Event>(`${EventService.base_url}/${id}`);
+    const response = await api.get<Event>(`${EventService.base_url}${id}`);
     const data = await response.data;
     return data;
   }
@@ -38,8 +38,8 @@ export class EventService {
   }
 
   async update(data: Event) {
-    const response = await api.put<Event>(
-      `${EventService.base_url}/${data.id}`,
+    const response = await api.patch<Event>(
+      `${EventService.base_url}${data.id}`,
       data
     );
     const updatedData = await response.data;

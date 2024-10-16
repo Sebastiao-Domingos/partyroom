@@ -1,11 +1,10 @@
 'use client';
 import React from 'react';
 
-import { Button } from '@/components/ui/button';
-import { Edit2Icon } from 'lucide-react';
 import { useGetEvents } from '@/hooks/admin/event/useGetEvent';
 import Loader from '@/components/loader';
 import { Delete } from './delete';
+import { Edite } from './update';
 
 export default function ListEvent() {
   const { data, result } = useGetEvents();
@@ -23,22 +22,20 @@ export default function ListEvent() {
       )}
 
       {result.isSuccess &&
-        data?.result.map((item, index) => (
+        data?.result.map((event, index) => (
           <div
             key={index}
             className="flex flex-col w-[32%] p-2 border border-border rounded hover:border-primary/50"
           >
             <div className="flex flex-col">
-              <p className="">{item.name}</p>
+              <p className="">{event.name}</p>
               <p className="text-sm italic text-slate-400">
-                {item.created_at?.split('T')[0]}
+                {event.created_at?.split('T')[0]}
               </p>
             </div>
             <div className="flex gap-3 ml-auto">
-              <Button size={'icon'} variant={'outline_edit'}>
-                <Edit2Icon />
-              </Button>
-              <Delete data={item} />
+              <Edite event={event} />
+              <Delete data={event} />
             </div>
           </div>
         ))}

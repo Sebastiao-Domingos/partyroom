@@ -15,9 +15,9 @@ import Loader from '@/components/loader';
 import { useActionCity } from '@/hooks/admin/cities/useActionCities';
 import { useForm } from 'react-hook-form';
 import { City } from '@/services/admin/City';
-import { Edit2Icon } from 'lucide-react';
 import { Delete } from './delete';
 import { showToast } from '@/components/toast';
+import { Edite } from './update';
 
 export default function Municipios() {
   const { mutationCreate } = useActionCity();
@@ -123,9 +123,7 @@ function ListCities() {
                 </p>
               </div>
               <div className="flex gap-3 ml-auto">
-                <Button size={'icon'} variant={'outline_edit'}>
-                  <Edit2Icon />
-                </Button>
+                <Edite city={city} />
                 <Delete data={city} />
               </div>
             </div>
