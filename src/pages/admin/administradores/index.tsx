@@ -97,7 +97,7 @@ export function TableDemo() {
         <TableBody>
           {data.result?.map((admin, index) => (
             <TableRow key={index}>
-              <TableCell className="font-medium">{admin.last_name}</TableCell>
+              <TableCell className="font-medium">{admin.first_name}</TableCell>
               <TableCell className="font-medium">{admin.last_name}</TableCell>
               <TableCell>{admin.email}</TableCell>
               <TableCell>{admin.is_active ? 'Ativo' : 'Desativo'}</TableCell>

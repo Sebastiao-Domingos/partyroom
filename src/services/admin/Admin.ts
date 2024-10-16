@@ -5,7 +5,7 @@ export type Admin = {
   email: string;
   first_name: string;
   last_name: string;
-  admin_level: number | string;
+  admin_level: number;
   user_type: string;
   is_active: boolean;
   password?: string;
@@ -38,14 +38,17 @@ export class AdminService {
   }
 
   async create(body: Admin) {
-    const response = await api.post<Admin>(AdminService.base_url, body);
+    const response = await api.post<Admin>(
+      `${AdminService.base_url}create`,
+      body
+    );
     const data = response.data;
     return data;
   }
 
   async update(data: Admin) {
     const response = await api.put<Admin>(
-      `${AdminService.base_url}/${data.id}`,
+      `${AdminService.base_url}${data.id}`,
       data
     );
     const updatedData = response.data;

@@ -28,11 +28,17 @@ export function Register() {
   const { mutationCreate } = useActionAdmin();
   const { register, handleSubmit } = useForm<Admin>();
   const [pass, setPass] = useState('');
+  const [nivel, setNivel] = useState('2');
 
   const submit = (data: Admin) => {
     data.user_type = 'ADMIN';
-    console.log(data);
-    mutationCreate.mutate(data);
+    data.admin_level = Number(nivel);
+
+    if (data.password === pass) {
+      mutationCreate.mutate(data);
+    } else {
+      toast.warning('As palavras passes devem ser iguais!');
+    }
     if (mutationCreate.isSuccess) {
       toast.success('Administrador criado com sucesso!');
     }
@@ -63,7 +69,7 @@ export function Register() {
                   <label htmlFor="nivel" className="text-left font-thin">
                     Nível
                   </label>
-                  <Select {...register('admin_level', { required: true })}>
+                  <Select value={nivel} onValueChange={(a) => setNivel(a)}>
                     <SelectTrigger className="w-[100px]">
                       <SelectValue placeholder="Nível" />
                     </SelectTrigger>
