@@ -11,12 +11,12 @@ import {
 } from '@/components/ui/table';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useGetRooms } from '@/hooks/admin/room/useGetRoom';
 import Loader from '@/components/loader';
+import { useGetRoomsSupplier } from '@/hooks/supplier/room/useGetRoom';
 
 export function ListRoom() {
   const navigator = useRouter();
-  const { data, result } = useGetRooms();
+  const { data, result } = useGetRoomsSupplier();
   if (result.isPending) {
     return (
       <div className="flex justify-center items-center h-full">
