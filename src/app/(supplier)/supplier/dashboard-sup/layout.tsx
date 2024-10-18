@@ -4,13 +4,13 @@ import React, { useEffect } from 'react';
 import { AlarmClock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UserToggle } from '@/components/user/user-toggle';
-import VerticalMenu from '@/components/menus/vertical-menu';
 import Loader from '@/components/loader';
 import { redirect } from 'next/navigation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useGetUserData } from '@/hooks/auth/useGetUserData';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useAuth } from '@/hooks/auth/useAuth';
+import VerticalMenuSupplier from '@/components/menus/vertical-menu/menu-supplier';
 
 const queryClient = new QueryClient();
 
@@ -32,10 +32,10 @@ function ScreenLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   useEffect(() => {
     if (
       status === 'error' ||
-      (user !== undefined && user.user_type !== 'ADMIN')
+      (user !== undefined && user.user_type !== 'SUPPLIER')
     ) {
       logout.mutate();
-      redirect('/auth/login');
+      redirect('/supplier/auth/login');
     }
   }, [status, user, logout]);
   if (status === 'pending') {
@@ -49,7 +49,7 @@ function ScreenLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     );
   }
 
-  if (user && user.user_type == 'ADMIN' && status === 'success') {
+  if (user && user.user_type == 'SUPPLIER' && status === 'success') {
     return (
       <div>
         <header className="sticky z-10 text-foreground bg-background/80 top-0 left-[211px] right-0 w-full shadow py-4 px-8 flex items-center justify-between dark:border-b dark:border-b-gray-800">
@@ -66,7 +66,7 @@ function ScreenLayout({ children }: Readonly<{ children: React.ReactNode }>) {
             </li>
           </ul>
         </header>
-        <VerticalMenu />
+        <VerticalMenuSupplier />
         <main className="mt-4 ml-[230px] mr-8 min-h-96 overflow-hidden">
           {children}
         </main>
