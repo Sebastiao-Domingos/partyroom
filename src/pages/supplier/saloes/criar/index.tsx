@@ -20,14 +20,20 @@ import {
 import { imageFileURL } from '@/helpers/imageFileToURL';
 import { useGetCities } from '@/hooks/admin/cities/useGetCities';
 import { useGetEvents } from '@/hooks/admin/event/useGetEvent';
+import { useActionRoom } from '@/hooks/admin/room/useActionRoom';
+import { useGetservices } from '@/hooks/admin/service/useGetServices';
+import { Room } from '@/services/admin/Room';
 import { Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 function Criar_salao() {
   const { data, result } = useGetCities();
   const { data: events } = useGetEvents();
-  const [services, setServices] = useState<string[]>(['']);
+  const { data: servicesData } = useGetservices();
+  const [services, setServices] = useState<string[]>([]);
   const [politicas, setPoliticas] = useState<string[]>(['']);
   const [eventos, setEventos] = useState<string[]>([]);
   const [images, setImages] = useState<FileList[]>([]);
@@ -36,6 +42,23 @@ function Criar_salao() {
   const getImage = useCallback((file: FileList) => {
     setImages((prev) => [...prev, file]);
   }, []);
+
+  const { register, handleSubmit } = useForm<Room>();
+  const { mutationCreate } = useActionRoom();
+
+  const submitHandler = (data: Room) => {
+    data.image = image!;
+    // if(eventos.length > 0){
+    //   data.
+    // }
+
+    if (!image || image.length === 0) {
+      toast('Deves selecionar uma imagem principal', {
+        type: 'warning',
+      });
+      return;
+    }
+  };
 
   return (
     <div>
@@ -76,32 +99,56 @@ function Criar_salao() {
         </div>
       </div>
       <div className="mt-6">
-        <form action="" className="flex flex-col gap-5">
+        <form
+          action=""
+          onSubmit={handleSubmit(submitHandler)}
+          className="flex flex-col gap-5"
+        >
           <fieldset className="border border-border  rounded p-4 flex flex-col gap-5">
             <legend className="mx-2 px-3">Dados do Salão</legend>
             <div className="flex flex-col md:flex-row gap-4">
               <div className="space-y-2 w-full">
                 <label htmlFor="name">Nome do salão</label>
-                <Input type="text" placeholder="Nome do salão" />
+                <Input
+                  type="text"
+                  placeholder="Nome do salão"
+                  {...register('name', { required: true })}
+                />
               </div>
               <div className="space-y-2 w-full">
                 <label htmlFor="name">Capacidade</label>
-                <Input type="number" placeholder="Capacidade" />
+                <Input
+                  type="number"
+                  placeholder="Capacidade"
+                  {...register('capacity', { required: true })}
+                />
               </div>
             </div>
 
             <div className="flex flex-col md:flex-row gap-4">
               <div className="space-y-2 w-full">
                 <label htmlFor="preco">Preço por hora</label>
-                <Input type="number" placeholder="Preço por hora" />
+                <Input
+                  type="number"
+                  placeholder="Preço por hora"
+                  {...register('price_per_hour', { required: true })}
+                />
               </div>
               <div className="space-y-2 w-full">
                 <label htmlFor="name">Hora de abrir</label>
-                <Input type="time" placeholder="Nome de abrir" />
+                <Input
+                  type="time"
+                  placeholder="Nome de abrir"
+                  {...register('opening_time', { required: true })}
+                />
               </div>
               <div className="space-y-2 w-full">
                 <label htmlFor="hora-fechar">Hora de fechar</label>
-                <Input type="time" placeholder="Hora de fechar" />
+                <Input
+                  type="time"
+                  placeholder="Hora de fechar"
+                  {...register('closing_time', { required: true })}
+                />
               </div>
             </div>
           </fieldset>
@@ -109,39 +156,52 @@ function Criar_salao() {
             <legend className="mx-2 px-3">Regras e políticas</legend>
             <div className="flex flex-col md:flex-row gap-4">
               <div className="space-y-2 w-full">
-                <label htmlFor="name">Serviços</label>
+                <label htmlFor="name">Servços</label>
                 <div className="space-y-4">
-                  {services?.map((service, index) => (
-                    <div className="flex gap-2" key={index}>
-                      <Input
-                        type="text"
-                        placeholder="Serviço"
-                        value={service}
-                      />
-                      <Button
-                        type="button"
-                        size={'icon'}
-                        variant={'outline_desttructive'}
-                        onClick={() => {
-                          if (services.length > 1) {
+                  <Select
+                    onValueChange={(e) => {
+                      if (!services.some((evt) => evt === e))
+                        setServices((previes) => [...previes, e]);
+                    }}
+                  >
+                    <SelectTrigger>Serviços</SelectTrigger>
+                    <SelectContent>
+                      {servicesData &&
+                        servicesData.result.map((event, index) => (
+                          <SelectItem key={index} value={event.id!.toString()}>
+                            {event.name}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                  <ul className="list-disc ml-4 space-y-1">
+                    {services?.map((evento, index) => (
+                      <li className="flex items-center gap-2" key={index}>
+                        <div className="size-2 rounded-full bg-primary/20"></div>
+                        <span>
+                          {' '}
+                          {
+                            servicesData?.result.find(
+                              (evt) => evt.id!.toString() === evento
+                            )?.name
+                          }
+                        </span>
+                        <Button
+                          type="button"
+                          size={'icon'}
+                          variant={'outline_desttructive'}
+                          onClick={() => {
                             const last = services;
                             last?.splice(index, 1);
                             setServices(() => [...last]);
-                          }
-                        }}
-                      >
-                        <Minus />
-                      </Button>
-                    </div>
-                  ))}
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setServices((previes) => [...previes, '']);
-                    }}
-                  >
-                    <Plus />
-                  </Button>
+                          }}
+                          className="ml-auto"
+                        >
+                          <Minus />
+                        </Button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
               <div className="space-y-2 w-full">
@@ -180,11 +240,9 @@ function Criar_salao() {
                           size={'icon'}
                           variant={'outline_desttructive'}
                           onClick={() => {
-                            if (eventos.length > 1) {
-                              const last = eventos;
-                              last?.splice(index, 1);
-                              setEventos(() => [...last]);
-                            }
+                            const last = eventos;
+                            last?.splice(index, 1);
+                            setEventos(() => [...last]);
                           }}
                           className="ml-auto"
                         >
@@ -207,6 +265,12 @@ function Criar_salao() {
                         type="text"
                         placeholder="política"
                         value={politica}
+                        onChange={(e) => {
+                          politica = e.target.value;
+                          const pols = politicas;
+                          pols[index] = politica;
+                          setPoliticas(() => [...pols]);
+                        }}
                       />
                       <Button
                         type="button"

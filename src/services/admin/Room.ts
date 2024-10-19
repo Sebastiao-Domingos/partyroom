@@ -4,7 +4,7 @@ import { Event } from './Event';
 export type Room = {
   id: number;
   name: string;
-  image: string;
+  image: FileList;
   owner: number;
   opening_time: string;
   closing_time: string;
@@ -101,8 +101,11 @@ export class RoomService {
     return data;
   }
 
-  async update(id: number, data: Room) {
-    const response = await api.put<Room>(`${RoomService.base_url}${id}`, data);
+  async update(data: Room) {
+    const response = await api.put<Room>(
+      `${RoomService.base_url}${data.id}`,
+      data
+    );
     const updatedData = await response.data;
     return updatedData;
   }
