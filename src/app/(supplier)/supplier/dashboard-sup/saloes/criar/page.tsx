@@ -1,3 +1,3 @@
-import criar_salao from '@/pages/supplier/saloes/criar';
+import Criar_salao from '@/pages/supplier/saloes/criar';
 
-export default criar_salao;
+export default Criar_salao;
