@@ -22,7 +22,7 @@ import { useGetCities } from '@/hooks/admin/cities/useGetCities';
 import { useGetEvents } from '@/hooks/admin/event/useGetEvent';
 import { useActionRoom } from '@/hooks/admin/room/useActionRoom';
 import { useGetservices } from '@/hooks/admin/service/useGetServices';
-import { Room } from '@/services/admin/Room';
+import { RoomCreation } from '@/services/admin/Room';
 import { Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import { useCallback, useState } from 'react';
@@ -38,16 +38,30 @@ function Criar_salao() {
   const [eventos, setEventos] = useState<string[]>([]);
   const [images, setImages] = useState<FileList[]>([]);
   const [image, setImage] = useState<FileList>();
+  const [city, setCity] = useState('');
 
   const getImage = useCallback((file: FileList) => {
     setImages((prev) => [...prev, file]);
   }, []);
 
-  const { register, handleSubmit } = useForm<Room>();
+  const { register, handleSubmit } = useForm<RoomCreation>();
   const { mutationCreate } = useActionRoom();
 
-  const submitHandler = (data: Room) => {
+  const submitHandler = (data: RoomCreation) => {
     data.image = image!;
+    data.images = images!;
+    data.policies = politicas!;
+    data.event_types = [eventos.toString()];
+    data.services = [services.toString()];
+
+    if (city.trim() !== '') data.city = Number(city);
+    else {
+      toast('Deves selecionar um município', {
+        type: 'warning',
+      });
+
+      return;
+    }
     // if(eventos.length > 0){
     //   data.
     // }
@@ -57,6 +71,18 @@ function Criar_salao() {
         type: 'warning',
       });
       return;
+    }
+
+    mutationCreate.mutate(data);
+
+    if (mutationCreate.isError) {
+      console.log(mutationCreate.error);
+
+      toast.error(`Erro : ${mutationCreate.error.message}`);
+    }
+
+    if (mutationCreate.isSuccess) {
+      toast.success('Sucesso, ao cadastrar!');
     }
   };
 
@@ -305,7 +331,7 @@ function Criar_salao() {
             <div className="flex flex-col md:flex-row gap-4">
               <div className="space-y-2 w-full">
                 <label htmlFor="nunicipio">Município</label>
-                <Select>
+                <Select value={city} onValueChange={(e) => setCity(e)}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Municípios" />
                   </SelectTrigger>
@@ -321,18 +347,26 @@ function Criar_salao() {
               </div>
               <div className="space-y-2 w-full">
                 <label htmlFor="name">Distrito</label>
-                <Input type="number" placeholder="Distrito" />
+                <Input
+                  type="text"
+                  placeholder="Distrito"
+                  {...register('district')}
+                />
               </div>
             </div>
 
             <div className="flex flex-col md:flex-row gap-4">
               <div className="space-y-2 w-full">
                 <label htmlFor="preco">Rua</label>
-                <Input type="text" placeholder="Rua" />
+                <Input type="text" placeholder="Rua" {...register('street')} />
               </div>
               <div className="space-y-2 w-full">
                 <label htmlFor="name">Ponto de referência</label>
-                <Input type="text" placeholder="Ponto de referência" />
+                <Input
+                  type="text"
+                  placeholder="Ponto de referência"
+                  {...register('land_mark')}
+                />
               </div>
             </div>
           </fieldset>
@@ -403,8 +437,10 @@ function Criar_salao() {
           </fieldset>
 
           <div className="flex gap-4 ml-auto">
-            <Button variant={'outline'}>Limpar</Button>
-            <Button>Salvar</Button>
+            <Button type="button" variant={'outline'}>
+              Limpar
+            </Button>
+            <Button type="submit">Salvar</Button>
           </div>
         </form>
       </div>

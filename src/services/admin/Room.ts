@@ -11,6 +11,25 @@ export type Room = {
   price_per_hour: string;
   capacity: number;
 };
+
+export type RoomCreation = {
+  id: number;
+  name: string;
+  image: FileList;
+  owner: number;
+  opening_time: string;
+  closing_time: string;
+  price_per_hour: string;
+  capacity: number;
+  images: FileList[];
+  services: string[];
+  event_types: string[];
+  policies: string[];
+  city: number;
+  street: string;
+  district: string;
+  land_mark: string;
+};
 export type RoomResponse = {
   links: {
     next: string | null;
@@ -96,7 +115,40 @@ export class RoomService {
   }
 
   async create(body: Room) {
-    const response = await api.post<Room>(RoomService.base_url, body);
+    const formData = new FormData();
+
+    Object.entries(body).forEach((entry) => {
+      const value = entry[1];
+      if (Array.isArray(value)) {
+        if (entry[0] !== 'images') {
+          formData.append(entry[0], JSON.stringify(value));
+        } else {
+          value.forEach((value) => {
+            if (value instanceof FileList) {
+              formData.append(entry[0], value.item(0)!);
+            }
+          });
+        }
+      } else if (
+        typeof value === 'string' ||
+        typeof value === 'boolean' ||
+        typeof value === 'number'
+      ) {
+        formData.append(entry[0], value.toString());
+      } else if (value !== undefined) {
+        formData.append(entry[0], value.item(0)!);
+      }
+    });
+
+    const response = await api.post<RoomCreation>(
+      `${RoomService.base_url}create`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
     const data = await response.data;
     return data;
   }
