@@ -157,7 +157,8 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   <p>Preço por hora : {data?.price_per_hour} Kz</p>
                   <p>Telefone : {data?.owner?.phone_number}</p>
                   <p>
-                    Propetário : {data.owner?.first_name} {data.owner.last_name}
+                    Propetário : {data.owner?.first_name}{' '}
+                    {data.owner?.last_name}
                   </p>
                 </div>
               </div>
@@ -181,8 +182,8 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   <span className="text-primary/80">{data?.name}</span>
                 </h3>
                 <div className="mt-3 font-thin flex gap-2 flex-wrap">
-                  {data.event_types.length === 0 && <p>Sem Eventos</p>}
-                  {data.event_types.map((event) => (
+                  {data.event_types?.length === 0 && <p>Sem Eventos</p>}
+                  {data.event_types?.map((event) => (
                     <p
                       key={event.id}
                       className="border-l-2 pl-2 first:border-l-0 first:pl-0"
@@ -198,8 +199,8 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   <span className="text-primary/80">{data?.name}</span>
                 </h3>
                 <div className="mt-3 font-thin flex gap-2 items-center flex-wrap">
-                  {data.services.length === 0 && <p>Sem Servições</p>}
-                  {data.services.map((service) => (
+                  {data.services?.length === 0 && <p>Sem Servições</p>}
+                  {data.services?.map((service) => (
                     <p
                       key={service.id}
                       className="border-l-2 pl-2 first:border-l-0 first:pl-0"

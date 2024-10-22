@@ -17,7 +17,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
     alt: '',
     index: 0,
   });
-  const { data, result } = useGetDetailRoom(params.salao);
+  const { data, result } = useGetDetailRoom(Number(params.salao));
   useEffect(() => {
     if (result.isSuccess && data?.image) {
       setImage({
@@ -48,14 +48,17 @@ export default function Salao({ params }: { params: { salao: number } }) {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/dashboard" className="text-[12px]">
+                <BreadcrumbLink
+                  href="/supplier/dashboard-sup"
+                  className="text-[12px]"
+                >
                   Dashboard
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink
-                  href="/dashboard/saloes"
+                  href="/supplier/dashboard-sup/saloes"
                   className="text-[12px]"
                 >
                   Salões
@@ -83,14 +86,15 @@ export default function Salao({ params }: { params: { salao: number } }) {
           </div>
         )}
         {result.isSuccess && data && (
-          <div className="flex gap-2">
-            <div className="sticky top-[100px] w-[90%] flex flex-col gap-6">
-              <div>
+          <div className="flex flex-col md:flex-row gap-2">
+            <div className="sticky top-[100px] w-full md:w-[90%] flex flex-col gap-6">
+              <div className="w-full md:w-auto">
                 <Image
                   src={image.url}
                   alt={image.url}
                   width={500}
                   height={600}
+                  className="w-full md:w-auto"
                 />
               </div>
               <div className="flex gap-2">
@@ -137,7 +141,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
                 ))}
               </div>
             </div>
-            <div className="w-full space-y-3">
+            <div className="w-full mt-6 md:mt-0 space-y-3">
               <div className="border-b border-border w-full pb-2">
                 <h3>
                   Informações do salão: #{' '}
@@ -157,7 +161,8 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   <p>Preço por hora : {data?.price_per_hour} Kz</p>
                   <p>Telefone : {data?.owner?.phone_number}</p>
                   <p>
-                    Propetário : {data.owner?.first_name} {data.owner.last_name}
+                    Propetário : {data.owner?.first_name}{' '}
+                    {data.owner?.last_name}
                   </p>
                 </div>
               </div>
@@ -181,8 +186,8 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   <span className="text-primary/80">{data?.name}</span>
                 </h3>
                 <div className="mt-3 font-thin flex gap-2 flex-wrap">
-                  {data.event_types.length === 0 && <p>Sem Eventos</p>}
-                  {data.event_types.map((event) => (
+                  {data.event_types?.length === 0 && <p>Sem Eventos</p>}
+                  {data.event_types?.map((event) => (
                     <p
                       key={event.id}
                       className="border-l-2 pl-2 first:border-l-0 first:pl-0"
@@ -198,8 +203,8 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   <span className="text-primary/80">{data?.name}</span>
                 </h3>
                 <div className="mt-3 font-thin flex gap-2 items-center flex-wrap">
-                  {data.services.length === 0 && <p>Sem Servições</p>}
-                  {data.services.map((service) => (
+                  {data.services?.length === 0 && <p>Sem Servições</p>}
+                  {data.services?.map((service) => (
                     <p
                       key={service.id}
                       className="border-l-2 pl-2 first:border-l-0 first:pl-0"

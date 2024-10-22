@@ -37,15 +37,15 @@ export default function dashboard_page() {
       </div>
       <ScrollArea>
         {/* <ScrollArea className="h-72 w-full rounded-md border"> */}
-        <div className="w-[700px] flex gap-5 my-3">
+        <div className="w-full md:w-[700px] flex flex-wrap md:flex-nowrap gap-5 my-3">
           {Array(3)
             .fill('')
             .map((_, index) => (
               <div
                 key={index}
-                className="relative min-w-[350px] bg-card flex flex-col gap-2 items-center text-center p-4 /bg-slate-100 pt-6 rounded border border-border hover:border-primary/40"
+                className="relative w-full md:min-w-[330px] bg-card flex flex-col gap-2 items-center text-center p-4 /bg-slate-100 pt-6 rounded border border-border hover:border-primary/40"
               >
-                <div className="absolute border-4 border-background -top-3 -right-3 size-14 flex justify-center items-center text-white font-bold rounded-full bg-orange-500">
+                <div className="absolute border-4 border-background top-3 right-3 size-14 flex justify-center items-center text-white font-bold rounded-full bg-orange-500">
                   0012
                 </div>
                 <Users2Icon size={40} className="text-slate-400" />

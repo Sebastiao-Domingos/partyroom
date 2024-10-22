@@ -50,7 +50,9 @@ export function ListRoom() {
           {data?.result.map((room) => (
             <TableRow
               key={room.id}
-              onClick={() => navigator.push(`/dashboard/saloes/${room.id}`)}
+              onClick={() =>
+                navigator.push(`/supplier/dashboard-sup/saloes/${room.id}`)
+              }
               className="cursor-pointer"
             >
               <TableCell className="py-1">

@@ -49,7 +49,7 @@ const menus = [
 export default function VerticalMenuSupplier() {
   const { logout } = useAuth();
   return (
-    <div className="fixed z-20 bg-background top-0 left-0 bottom-2 rounded shadow shadow-border w-[210px] pt-5">
+    <div className="hidden md:block fixed z-20 bg-background top-0 left-0 bottom-2 rounded shadow shadow-border w-[210px] pt-5">
       <span className="ml-4 text-3xl">LOGO</span>
       <nav className="pt-2">
         <ScrollArea className="space-y-8 h-[calc(100vh-140px)]">

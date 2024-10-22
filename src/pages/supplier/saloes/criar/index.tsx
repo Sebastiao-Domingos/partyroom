@@ -22,16 +22,20 @@ import { useGetCities } from '@/hooks/admin/cities/useGetCities';
 import { useGetEvents } from '@/hooks/admin/event/useGetEvent';
 import { useActionRoom } from '@/hooks/admin/room/useActionRoom';
 import { useGetservices } from '@/hooks/admin/service/useGetServices';
+import { useGetUserData } from '@/hooks/auth/useGetUserData';
 import { RoomCreation } from '@/services/admin/Room';
 import { Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 function Criar_salao() {
+  const navigator = useRouter();
   const { data, result } = useGetCities();
   const { data: events } = useGetEvents();
+  const { user } = useGetUserData();
   const { data: servicesData } = useGetservices();
   const [services, setServices] = useState<string[]>([]);
   const [politicas, setPoliticas] = useState<string[]>(['']);
@@ -53,6 +57,16 @@ function Criar_salao() {
     data.policies = politicas!;
     data.event_types = [eventos.toString()];
     data.services = [services.toString()];
+
+    if (user) {
+      data.owner = user?.id;
+    } else {
+      toast('Deves id do usuário não encontrado', {
+        type: 'warning',
+      });
+
+      return;
+    }
 
     if (city.trim() !== '') data.city = Number(city);
     else {
@@ -350,7 +364,7 @@ function Criar_salao() {
                 <Input
                   type="text"
                   placeholder="Distrito"
-                  {...register('district')}
+                  {...register('district', { required: true })}
                 />
               </div>
             </div>
@@ -358,14 +372,18 @@ function Criar_salao() {
             <div className="flex flex-col md:flex-row gap-4">
               <div className="space-y-2 w-full">
                 <label htmlFor="preco">Rua</label>
-                <Input type="text" placeholder="Rua" {...register('street')} />
+                <Input
+                  type="text"
+                  placeholder="Rua"
+                  {...register('street', { required: true })}
+                />
               </div>
               <div className="space-y-2 w-full">
                 <label htmlFor="name">Ponto de referência</label>
                 <Input
                   type="text"
                   placeholder="Ponto de referência"
-                  {...register('land_mark')}
+                  {...register('land_mark', { required: true })}
                 />
               </div>
             </div>
@@ -436,12 +454,22 @@ function Criar_salao() {
             </div>
           </fieldset>
 
-          <div className="flex gap-4 ml-auto">
-            <Button type="button" variant={'outline'}>
-              Limpar
+          <fieldset
+            className="flex gap-4 ml-auto"
+            disabled={mutationCreate.isPending}
+          >
+            <Button type="submit">Salvar Manter na Página</Button>
+            <Button
+              type="submit"
+              onClick={() => {
+                if (mutationCreate.isSuccess) {
+                  navigator.push('/supplier/dashboard-sup/saloes');
+                }
+              }}
+            >
+              Salvar Sair da Página
             </Button>
-            <Button type="submit">Salvar</Button>
-          </div>
+          </fieldset>
         </form>
       </div>
     </div>

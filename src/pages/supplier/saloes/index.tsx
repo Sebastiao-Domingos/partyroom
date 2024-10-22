@@ -30,7 +30,10 @@ export default function saloes() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/dashboard" className="text-[12px]">
+                  <BreadcrumbLink
+                    href="/supplier/dashboard-sup"
+                    className="text-[12px]"
+                  >
                     Dashboard
                   </BreadcrumbLink>
                 </BreadcrumbItem>

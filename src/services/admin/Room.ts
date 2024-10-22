@@ -121,7 +121,7 @@ export class RoomService {
       const value = entry[1];
       if (Array.isArray(value)) {
         if (entry[0] !== 'images') {
-          formData.append(entry[0], JSON.stringify(value));
+          formData.append(entry[0], value.toString());
         } else {
           value.forEach((value) => {
             if (value instanceof FileList) {
@@ -139,6 +139,8 @@ export class RoomService {
         formData.append(entry[0], value.item(0)!);
       }
     });
+
+    console.log(formData);
 
     const response = await api.post<RoomCreation>(
       `${RoomService.base_url}create`,
