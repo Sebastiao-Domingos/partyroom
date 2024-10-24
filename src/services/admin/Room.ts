@@ -4,7 +4,7 @@ import { Event } from './Event';
 export type Room = {
   id: number;
   name: string;
-  image: FileList;
+  image: string;
   owner: number;
   opening_time: string;
   closing_time: string;
@@ -114,7 +114,7 @@ export class RoomService {
     return data;
   }
 
-  async create(body: Room) {
+  async create(body: RoomCreation) {
     const formData = new FormData();
 
     Object.entries(body).forEach((entry) => {
