@@ -1,5 +1,8 @@
 'use client';
-import { ModeToggle } from '@/components/theme/ModeToggle';
+import {
+  ButtonToggleModeDash,
+  ModeToggle,
+} from '@/components/theme/ModeToggle';
 import React, { useEffect } from 'react';
 import { AlarmClock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -54,7 +57,9 @@ function ScreenLayout({ children }: Readonly<{ children: React.ReactNode }>) {
       <div>
         <header className="sticky z-10 text-foreground bg-background/80 top-0 left-[211px] right-0 w-full shadow py-4 px-8 flex items-center justify-between dark:border-b dark:border-b-gray-800">
           <ul className="flex gap-4 items-center ml-auto">
-            <ModeToggle />
+            <ModeToggle>
+              <ButtonToggleModeDash />
+            </ModeToggle>
             <li>
               <Button variant={'outline'} size={'icon'} className="relative">
                 <span className="absolute -top-1 -right-1 size-2 rounded-full bg-red-500 animate-pulse"></span>

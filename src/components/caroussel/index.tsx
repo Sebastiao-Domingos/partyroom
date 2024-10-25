@@ -4,47 +4,26 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
 } from '@/components/ui/carousel';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
 
 export default function Carrossel() {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on('select', () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
-
-  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
+  const plugin = useRef(Autoplay({ delay: 2000 }));
 
   return (
-    <div className="w-full mx-auto /max-w-xs">
+    <div className="w-full">
       <Carousel
-        setApi={setApi}
-        className="w-full relative"
+        className="w-full"
         plugins={[plugin.current]}
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
       >
-        <CarouselContent className="w-full ">
+        <CarouselContent className="w-full">
           {Array.from({ length: 3 }).map((_, index) => (
             <CarouselItem
               key={index}
-              className="w-full h-[450px] bg-transparent"
+              className="w-full h-[750px] bg-transparent"
             >
               <Image
                 src={`/images/image-${index + 1}.jpg`}
@@ -57,18 +36,7 @@ export default function Carrossel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious
-          size={'lg'}
-          className="hidden md:block text-3xl absolute top-[50%] -translate-y-1/2 /rounded-full p-3 -left-2"
-        />
-        <CarouselNext
-          size={'lg'}
-          className="hidden md:block absolute top-[50%] -translate-y-1/2 /rounded-full p-3 right-0"
-        />
       </Carousel>
-      <div className="py-2 text-center text-sm text-muted-foreground">
-        Slide {current} of {count}
-      </div>
     </div>
   );
 }
