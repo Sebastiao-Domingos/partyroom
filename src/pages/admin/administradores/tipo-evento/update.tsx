@@ -16,7 +16,7 @@ import { DialogClose } from '@radix-ui/react-dialog';
 import { Event } from '@/services/admin/Event';
 import { useActionEvent } from '@/hooks/admin/event/useActionEvent';
 
-export function Edite({ event }: { event: Event }) {
+export default function Edite({ event }: { event: Event }) {
   const { mutationUpdate } = useActionEvent();
   const { register, handleSubmit } = useForm<Event>({
     defaultValues: { name: event.name, id: event.id },

@@ -67,6 +67,69 @@ function ListRoom() {
   const navigator = useRouter();
   return (
     <div className="flex flex-wrap justify-between gap-4 m-auto">
+      {result.isPending &&
+        data?.result.map((room) => (
+          <Card
+            key={room.id}
+            className="/min-w-[180px] md:w-[48%] h-auto md:h-[300px] p-0 overflow-hidden border hover:border-primary/40"
+          >
+            <CardContent className="p-0 flex">
+              <div>
+                <Image
+                  src={room.image}
+                  alt={room.name}
+                  width={400}
+                  height={200}
+                  className="w-full h-[300px]"
+                />
+              </div>
+              <div className="p-2 min-w-[240px] w-[240px] border flex flex-col gap-1 items-center text-foreground ">
+                <p className="uppercase flex gap-1 items-center">
+                  <Stars />
+                  <span>{room.name}</span>
+                </p>
+                <p className="flex items-center gap-1 text-sm">
+                  <Users size={15} /> Capaciade : {room.capacity}
+                </p>
+                <p className="/ml-auto">
+                  <span className="text-sm italic">Preço : </span>
+
+                  <span className="text-2xl text-primary">
+                    {room.price_per_hour}{' '}
+                  </span>
+                  <span className="text-sm italic">Kz</span>
+                </p>
+                <div className="mt-2">
+                  <h3 className="flex gap-1 items-center">
+                    <LocateFixedIcon /> Localidade
+                  </h3>
+                  <ul className="space-y-1 pl-2 list-disc">
+                    <li className="flex items-center gap-1 text-sm">
+                      Cidade : {room?.address?.city?.name}
+                    </li>
+                    <li className="flex items-center gap-1 text-sm">
+                      Distrito : {room?.address?.district}
+                    </li>
+                    <li className="flex items-center gap-1 text-sm">
+                      Rua : {room?.address?.district}
+                    </li>
+                    <li className="flex items-center gap-1 text-sm">
+                      Ponto de referência : {room?.address?.district}
+                    </li>
+                  </ul>
+                </div>
+                <div className="w-full mt-auto border">
+                  <Button
+                    className="w-full"
+                    onClick={() => navigator.push(`/saloes/${room.id}`)}
+                  >
+                    Solicitar
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       {result.isSuccess &&
         data?.result.map((room) => (
           <Card

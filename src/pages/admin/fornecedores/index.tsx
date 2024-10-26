@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/table';
 import Loader from '@/components/loader';
 import { useGetSupplier } from '@/hooks/admin/supplier/useGetSupplier';
-import { Register } from './register';
+import Register from './register';
 
 export default function fornecedores() {
   return (

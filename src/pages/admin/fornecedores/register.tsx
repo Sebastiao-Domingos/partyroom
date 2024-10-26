@@ -18,7 +18,7 @@ import { toast } from 'react-toastify';
 import { useActionSupplier } from '@/hooks/admin/supplier/useACtionSupplier';
 import { Supplier } from '@/services/admin/Supplier';
 
-export function Register() {
+export default function Register() {
   const { mutationCreate } = useActionSupplier();
   const { register, handleSubmit } = useForm<Supplier>();
   const [pass, setPass] = useState('');

@@ -16,7 +16,7 @@ import { showToast } from '@/components/toast';
 import { useActionEvent } from '@/hooks/admin/event/useActionEvent';
 import { Event } from '@/services/admin/Event';
 
-export function Delete({ data }: { data: Event }) {
+export default function Delete({ data }: { data: Event }) {
   const { mutationDelete } = useActionEvent();
 
   if (mutationDelete.isError) {

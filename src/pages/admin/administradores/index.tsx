@@ -8,7 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { Register } from './register';
+import Register from './register';
 import {
   Table,
   TableBody,
@@ -22,7 +22,7 @@ import {
 import { useGetAdmin } from '@/hooks/admin/admin/useGetAdmin';
 import Loader from '@/components/loader';
 
-export default function administradores() {
+function administradores() {
   return (
     <div>
       <div className="flex mb-6">
@@ -62,7 +62,7 @@ export default function administradores() {
   );
 }
 
-export function TableDemo() {
+function TableDemo() {
   const { data, result } = useGetAdmin();
 
   if (result.isPending)
@@ -116,3 +116,5 @@ export function TableDemo() {
       </Table>
     );
 }
+
+export default administradores;

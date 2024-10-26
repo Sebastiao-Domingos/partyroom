@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import { useGetRooms } from '@/hooks/admin/room/useGetRoom';
 import Loader from '@/components/loader';
 
-export function ListRoom() {
+export default function ListRoom() {
   const navigator = useRouter();
   const { data, result } = useGetRooms();
   if (result.isPending) {

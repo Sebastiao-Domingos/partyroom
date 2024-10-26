@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -16,7 +18,7 @@ import { useActionCity } from '@/hooks/admin/cities/useActionCities';
 import { City } from '@/services/admin/City';
 import { showToast } from '@/components/toast';
 
-export function Delete({ data }: { data: City }) {
+export default function Delete({ data }: { data: City }) {
   const { mutationDelete } = useActionCity();
 
   if (mutationDelete.isError) {

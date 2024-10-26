@@ -15,9 +15,9 @@ import Loader from '@/components/loader';
 import { useActionCity } from '@/hooks/admin/cities/useActionCities';
 import { useForm } from 'react-hook-form';
 import { City } from '@/services/admin/City';
-import { Delete } from './delete';
+import Delete from './delete';
 import { showToast } from '@/components/toast';
-import { Edite } from './update';
+import Edite from './update';
 
 export default function Municipios() {
   const { mutationCreate } = useActionCity();

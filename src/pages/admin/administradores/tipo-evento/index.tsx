@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import ListEvent from './list-event';
+import ListEvent from './list_event';
 import { useActionEvent } from '@/hooks/admin/event/useActionEvent';
 import { useForm } from 'react-hook-form';
 import { Event } from '@/services/admin/Event';

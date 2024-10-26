@@ -7,7 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { ListRoom } from './list-room';
+import ListRoom from './list-room';
 
 export default function saloes() {
   return (

@@ -16,7 +16,7 @@ import { useActionCity } from '@/hooks/admin/cities/useActionCities';
 import { Edit2Icon } from 'lucide-react';
 import { DialogClose } from '@radix-ui/react-dialog';
 
-export function Edite({ city }: { city: City }) {
+export default function Edite({ city }: { city: City }) {
   const { mutationUpdate } = useActionCity();
   const { register, handleSubmit } = useForm<City>({
     defaultValues: { name: city.name, id: city.id },

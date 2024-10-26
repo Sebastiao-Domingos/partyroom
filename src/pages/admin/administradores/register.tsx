@@ -24,7 +24,7 @@ import {
 import Loader from '@/components/loader';
 import { toast } from 'react-toastify';
 
-export function Register() {
+function Register() {
   const { mutationCreate } = useActionAdmin();
   const { register, handleSubmit } = useForm<Admin>();
   const [pass, setPass] = useState('');
@@ -150,3 +150,5 @@ export function Register() {
     </Dialog>
   );
 }
+
+export default Register;

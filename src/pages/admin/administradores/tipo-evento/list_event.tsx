@@ -3,8 +3,8 @@ import React from 'react';
 
 import { useGetEvents } from '@/hooks/admin/event/useGetEvent';
 import Loader from '@/components/loader';
-import { Delete } from './delete';
-import { Edite } from './update';
+import Delete from './delete';
+import Edite from './update';
 
 export default function ListEvent() {
   const { data, result } = useGetEvents();
