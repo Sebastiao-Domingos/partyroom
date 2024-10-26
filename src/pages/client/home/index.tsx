@@ -18,15 +18,19 @@ export default function home() {
           <h1 className="text-xl md:text-5xl font-bold">
             Nós podemos realizar os teus sonhos
           </h1>
-          <p>
+          <p className="hidden md:block">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod
             soluta perspiciatis delectus sit distinctio autem veniam! Repellat
             itaque tenetur vitae. Voluptate fugit amet laborum ut consectetur
             dolores soluta itaque repellat!
           </p>
-          <Button className="rounded-full">Saiba sobre nós</Button>
+          <p className="md:hidden block">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod
+            dolores soluta itaque repellat!
+          </p>
+          <Button className="rounded-full">Saiba mais sobre nós</Button>
         </div>
-        <div className="w-full absolute -bottom-16 overflow-hidden leading-none">
+        <div className="w-full hidden md:block absolute -bottom-16 overflow-hidden leading-none">
           <svg
             className="w-full /h-64 fill-current text-background"
             xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +40,7 @@ export default function home() {
           </svg>
         </div>
       </div>
-      <div className="mx-2 md:mx-8 mt-16 space-y-10">
+      <div className="mx-2 md:mx-8 -mt-8 md:mt-16 space-y-10">
         <div className="flex flex-col gap-8">
           <h2 className="uppercase mx-auto border-l text-2xl md:text-4xl pl-2 border-l-primary/30 text-primary">
             Novidades

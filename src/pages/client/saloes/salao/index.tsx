@@ -204,7 +204,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   ))}
                 </div>
               </div>
-              <div className="w-full py-4">
+              <div className="w-full py-4 pr-2">
                 <Button className="w-full">Solicitar</Button>
               </div>
             </div>

@@ -31,7 +31,7 @@ export default function Carrossel() {
                 width={1000}
                 height={1000}
                 loading="lazy"
-                className="w-full"
+                className="w-full h-[100vh] md:h-auto"
               />
             </CarouselItem>
           ))}
