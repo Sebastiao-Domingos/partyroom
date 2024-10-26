@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Facebook, Instagram, Linkedin, PhoneCall } from 'lucide-react';
 
 const queryClient = new QueryClient();
 
@@ -16,7 +17,7 @@ export default function layout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ScreenLayout> {children}</ScreenLayout>;
+      <ScreenLayout> {children}</ScreenLayout>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
@@ -62,10 +63,86 @@ function ScreenLayout({ children }: Readonly<{ children: React.ReactNode }>) {
         </ul>
       </header>
       <main className="min-h-96 overflow-hidden">{children}</main>
-      <footer className="w-full h-[400px] bg-slate-200 flex  mt-8 border-t /border-border">
-        <p className="m-auto text-sm text-slate-400 py-4">
-          Party Room @Copy right, Rangel, CTT
-        </p>
+      <footer className="w-full min-h-[400px] bg-slate-200 flex  mt-8 border-t /border-border">
+        <div className="w-full flex flex-col px-8 pt-8 pb-4">
+          <div className="w-full flex flex-col md:flex-row gap-4 md:justify-between">
+            <div className="space-y-4">
+              <h3 className="text-primary uppercase">Redes sociais</h3>
+              <ul className="flex gap-3">
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    <Instagram />
+                  </Link>
+                </li>
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    <Linkedin />
+                  </Link>
+                </li>
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    <Facebook />
+                  </Link>
+                </li>
+
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    <PhoneCall />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h3 className="text-primary uppercase">Navegação</h3>
+              <ul className="flex flex-col gap-3">
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    Serviços
+                  </Link>
+                </li>
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    Tipos de eventos
+                  </Link>
+                </li>
+
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    Salões
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h3 className="text-primary uppercase">Serviços</h3>
+              <ul className="flex flex-col gap-3">
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    Como podemos te judar?
+                  </Link>
+                </li>
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    Mais informações
+                  </Link>
+                </li>
+                <li>
+                  <Link href={''} className="hover:text-primary/50">
+                    Fale conosco
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <p className="mt-auto text-center text-sm text-slate-400 py-4">
+            Party Room @Copy right, Rangel, CTT
+          </p>
+        </div>
       </footer>
     </div>
   );

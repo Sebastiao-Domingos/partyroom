@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import Image from 'next/image';
 import { useGetDetailRoom } from '@/hooks/admin/room/useGetRoom';
+import { Button } from '@/components/ui/button';
 
 export default function Salao({ params }: { params: { salao: number } }) {
   const [image, setImage] = useState({
@@ -26,11 +27,11 @@ export default function Salao({ params }: { params: { salao: number } }) {
         index: 0,
       });
     }
-  }, [result, data]);
+  }, []);
 
   return (
     <div>
-      <div className="">
+      <div className="mt-[100px] mx-1 md:mx-8">
         <h1 className="text-primary font-bold border-l pl-2 uppercase">
           Salões #{' '}
           <span className="text-primary/80">
@@ -75,14 +76,14 @@ export default function Salao({ params }: { params: { salao: number } }) {
         )}
         {result.isSuccess && data && (
           <div className="flex flex-col md:flex-row gap-2">
-            <div className="sticky top-[100px] w-full md:w-[90%] flex flex-col gap-6">
-              <div className="w-full md:w-auto">
+            <div className="w-full pl-2 md:pl-8 md:w-[65%] flex flex-col gap-6">
+              <div className="w-full /md:w-auto">
                 <Image
                   src={image.url}
                   alt={image.url}
                   width={800}
                   height={600}
-                  className="w-full md:w-auto"
+                  className="w-[100%] /md:w-auto"
                 />
               </div>
               <div className="flex gap-2">
@@ -111,13 +112,14 @@ export default function Salao({ params }: { params: { salao: number } }) {
                     className={`border p-1 border-border hover:border-primary/50 ${
                       image.index === index + 1 && 'border-primary'
                     }`}
-                    onClick={() =>
-                      setImage({
+                    onClick={() => {
+                      const currentImga = {
                         url: imag.image,
                         alt: imag.image,
                         index: index + 1,
-                      })
-                    }
+                      };
+                      setImage(() => currentImga);
+                    }}
                   >
                     <Image
                       src={imag.image}
@@ -129,7 +131,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
                 ))}
               </div>
             </div>
-            <div className="w-full mt-6 md:mt-0 space-y-3">
+            <div className="w-full md:w-auto mt-6 md:mt-0 space-y-3 pl-2 md:pl-4">
               <div className="border-b border-border w-full pb-2">
                 <h3>
                   Informações do salão: #{' '}
@@ -201,6 +203,9 @@ export default function Salao({ params }: { params: { salao: number } }) {
                     </p>
                   ))}
                 </div>
+              </div>
+              <div className="w-full py-4">
+                <Button className="w-full">Solicitar</Button>
               </div>
             </div>
           </div>

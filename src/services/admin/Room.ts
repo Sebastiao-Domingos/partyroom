@@ -10,6 +10,7 @@ export type Room = {
   closing_time: string;
   price_per_hour: string;
   capacity: number;
+  address: Address;
 };
 
 export type RoomCreation = {
