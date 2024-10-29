@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-export default function home() {
+export default function Home() {
   return (
     <div className="flex flex-col /gap-6">
       <div className="relative">

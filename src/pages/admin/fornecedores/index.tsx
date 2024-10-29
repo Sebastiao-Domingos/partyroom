@@ -22,7 +22,7 @@ import Loader from '@/components/loader';
 import { useGetSupplier } from '@/hooks/admin/supplier/useGetSupplier';
 import Register from './register';
 
-export default function fornecedores() {
+export default function Fornecedores() {
   return (
     <div>
       <div className="flex items-center">

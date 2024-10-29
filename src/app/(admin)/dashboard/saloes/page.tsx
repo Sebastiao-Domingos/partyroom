@@ -1,3 +1,3 @@
-import saloes from '@/pages/admin/saloes';
+import Saloes from '@/pages/admin/saloes';
 
-export default saloes;
+export default Saloes;

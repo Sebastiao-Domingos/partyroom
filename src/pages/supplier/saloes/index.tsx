@@ -10,7 +10,7 @@ import {
 import ListRoom from './list-room';
 import Link from 'next/link';
 
-export default function saloes() {
+export default function Saloes() {
   return (
     <div>
       <div className="flex justify-center items-start">

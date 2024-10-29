@@ -21,7 +21,7 @@ import {
 import Loader from '@/components/loader';
 import { useGetClients } from '@/hooks/admin/client/useGetClient';
 
-export default function clientes() {
+export default function Clientes() {
   return (
     <div>
       <div className="">

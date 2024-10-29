@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import ListRoom from './list-room';
 
-export default function saloes() {
+export default function Saloes() {
   return (
     <div>
       <div className="">

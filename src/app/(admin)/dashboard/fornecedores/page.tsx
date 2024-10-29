@@ -1,3 +1,3 @@
-import fornecedores from '@/pages/admin/fornecedores';
+import Fornecedores from '@/pages/admin/fornecedores';
 
-export default fornecedores;
+export default Fornecedores;

@@ -1,3 +1,3 @@
-import administradores from '@/pages/admin/administradores';
+import Administradores from '@/pages/admin/administradores';
 
-export default administradores;
+export default Administradores;
