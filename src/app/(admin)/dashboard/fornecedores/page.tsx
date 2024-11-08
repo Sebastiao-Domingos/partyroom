@@ -1,3 +1,3 @@
-import Fornecedores from '@/pages/admin/fornecedores';
+import Fornecedores from '@/screens/admin/fornecedores';
 
 export default Fornecedores;

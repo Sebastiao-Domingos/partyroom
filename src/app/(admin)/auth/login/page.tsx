@@ -1,3 +1,3 @@
-import Login from '@/pages/admin/login';
+import Login from '@/screens/admin/login';
 
 export default Login;

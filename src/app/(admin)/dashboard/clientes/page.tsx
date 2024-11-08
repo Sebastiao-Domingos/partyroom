@@ -1,3 +1,3 @@
-import Clientes from '@/pages/admin/clientes';
+import Clientes from '@/screens/admin/clientes';
 
 export default Clientes;

@@ -1,3 +1,3 @@
-import Perfil from '@/pages/admin/definicoes/perfil';
+import Perfil from '@/screens/admin/definicoes/perfil';
 
 export default Perfil;

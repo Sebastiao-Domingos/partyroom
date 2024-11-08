@@ -1,3 +1,3 @@
-import Salao from '@/pages/client/saloes/salao';
+import Salao from '@/screens/client/saloes/salao';
 
 export default Salao;

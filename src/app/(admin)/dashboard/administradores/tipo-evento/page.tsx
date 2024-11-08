@@ -1,3 +1,3 @@
-import TiposEvento from '@/pages/admin/administradores/tipo-evento';
+import TiposEvento from '@/screens/admin/administradores/tipo-evento';
 
 export default TiposEvento;

@@ -1,3 +1,3 @@
-import Definicoes from '@/pages/admin/definicoes';
+import Definicoes from '@/screens/admin/definicoes';
 
 export default Definicoes;

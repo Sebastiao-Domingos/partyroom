@@ -1,3 +1,3 @@
-import dashboard_page from '@/pages/supplier/dashboard';
+import dashboard_page from '@/screens/supplier/dashboard';
 
 export default dashboard_page;

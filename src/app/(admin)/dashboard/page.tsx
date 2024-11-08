@@ -1,3 +1,3 @@
-import dashboard from '@/pages/admin/dashboard';
+import dashboard from '@/screens/admin/dashboard';
 
 export default dashboard;
