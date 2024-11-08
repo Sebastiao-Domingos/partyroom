@@ -28,9 +28,9 @@ export default function Home() {
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod
             dolores soluta itaque repellat!
           </p>
-          <Button className="rounded-full">Saiba mais sobre nós</Button>
+          <Button className="rounded-full mt-5">Saiba mais sobre nós</Button>
         </div>
-        <div className="w-full hidden md:block absolute -bottom-16 overflow-hidden leading-none">
+        <div className="w-full bottom-0 hidden md:block absolute /bottom-16 overflow-hidden leading-none">
           <svg
             className="w-full /h-64 fill-current text-background"
             xmlns="http://www.w3.org/2000/svg"
