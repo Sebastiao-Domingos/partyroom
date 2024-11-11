@@ -71,7 +71,7 @@ function ListRoom() {
         data?.result.map((room) => (
           <Card
             key={room.id}
-            className="/min-w-[180px] md:w-[48%] h-auto md:h-[300px] p-0 overflow-hidden border hover:border-primary/40"
+            className="/min-w-[180px] md:w-[50%] h-auto md:h-[300px] p-0 overflow-hidden border hover:border-primary/40"
           >
             <CardContent className="p-0 flex">
               <div>

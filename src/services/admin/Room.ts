@@ -104,8 +104,9 @@ export class RoomService {
   private static base_url = '/partyrooms/';
 
   async get() {
+    // fetch('http://localhost:8000/api/partyrooms/')
     const response = await api.get<RoomResponse>(RoomService.base_url);
-    const data = await response.data;
+    const data = response.data;
     return data;
   }
 
