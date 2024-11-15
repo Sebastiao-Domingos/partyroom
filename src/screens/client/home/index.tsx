@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="flex flex-col /gap-6">
       <div className="relative">
-        <div className="absolute z-10 top-0 left-0 right-0 h-[80%] bg-gradient-to-b from-black/50 to-black/10 "></div>
+        <div className="absolute z-10 top-0 left-0 right-0 bottom-0 /h-[80%] bg-black/40 from-black to-black/50 "></div>
         <Carrossel />
         <div className="absolute z-10 text-center top-1/2 left-1/2 space-y-3 -translate-y-1/2 -translate-x-1/2 text-white">
           <h1 className="text-xl md:text-5xl font-bold">
@@ -30,32 +30,20 @@ export default function Home() {
           </p>
           <Button className="rounded-full mt-5">Saiba mais sobre nós</Button>
         </div>
-        <div className="w-full bottom-0 hidden md:block absolute /bottom-16 overflow-hidden leading-none">
-          <svg
-            className="w-full /h-64 fill-current text-background"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1440 320"
-          >
-            <path d="M0,224L48,213.3C96,203,192,181,288,186.7C384,192,480,224,576,240C672,256,768,256,864,234.7C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-          </svg>
-        </div>
       </div>
-      <div className="mx-2 md:mx-8 -mt-8 md:mt-16 space-y-10">
+      <div className="mx-2 md:mx-8 mt-8 md:mt-16 flex flex-col justify-center items-center gap-6">
         <div className="flex flex-col gap-8">
           <h2 className="uppercase mx-auto border-l text-2xl md:text-4xl pl-2 border-l-primary/30 text-primary">
             Novidades
           </h2>
-          <div className="flex w-full">
-            <ListRoom />
-          </div>
+          <ListRoom />
         </div>
         <div className="flex flex-col gap-8 ">
           <h2 className="uppercase mx-auto border-l text-2xl md:text-4xl pl-2 border-l-primary/30 text-primary">
             Mais procurados
           </h2>
-          <div className="flex w-full">
-            <ListRoom />
-          </div>
+
+          <ListRoom />
         </div>
       </div>
     </div>
@@ -66,12 +54,12 @@ function ListRoom() {
   const { data, result } = useGetRooms();
   const navigator = useRouter();
   return (
-    <div className="flex flex-wrap justify-between gap-4 m-auto">
+    <div className="flex flex-wrap justify-between gap-4 md:gap-6 m-auto">
       {result.isPending &&
         data?.result.map((room) => (
           <Card
             key={room.id}
-            className="/min-w-[180px] md:w-[50%] h-auto md:h-[300px] p-0 overflow-hidden border hover:border-primary/40"
+            className="/min-w-[180px] md:w-[60%] h-auto md:h-[300px] p-0 overflow-hidden border hover:border-primary/40"
           >
             <CardContent className="p-0 flex">
               <div>
