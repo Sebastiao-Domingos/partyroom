@@ -1,3 +1,3 @@
-import home from '@/pages/client/home';
+import Home from '@/screens/client/home';
 
-export default home;
+export default Home;

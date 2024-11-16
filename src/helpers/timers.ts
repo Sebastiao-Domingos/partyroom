@@ -1,0 +1,1 @@
+export const TIME_AUTO_CLOSE_TOAST = 3000;
