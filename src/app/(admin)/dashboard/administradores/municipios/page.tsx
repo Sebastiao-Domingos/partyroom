@@ -1,3 +1,3 @@
-import Municipios from '@/pages/admin/administradores/municipios';
+import Municipios from '@/screens/admin/administradores/municipios';
 
 export default Municipios;
