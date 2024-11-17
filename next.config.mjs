@@ -2,7 +2,7 @@
 
 const nextConfig = {
   images: {
-    domains: ['localhost'], // Adicione localhost como um domínio permitido
+    domains: ['localhost', 'partyroom-api.vercel.app'], // Adicione localhost como um domínio permitido
   },
   reactStrictMode: false,
 };

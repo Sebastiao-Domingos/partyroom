@@ -1,8 +1,8 @@
 import { TokenService } from '@/services/token';
 import axios from 'axios';
-
+//'https://partyroom-api.vercel.app/api/'
 const api = axios.create({
-  baseURL: process.env.BASE_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_BASE_API_URL!,
   headers: {
     Accept: 'application/json', // Utilize "Accept" ao invés de "accept-type"
     'Content-Type': 'application/json',
