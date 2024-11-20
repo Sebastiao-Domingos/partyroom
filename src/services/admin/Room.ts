@@ -104,7 +104,6 @@ export class RoomService {
   private static base_url = '/partyrooms/';
 
   async get() {
-    //const response =fetch('https://partyroom-api.vercel.app/api/partyrooms/')
     const response = await api.get<RoomResponse>(RoomService.base_url);
     const data = response.data;
     return data;
