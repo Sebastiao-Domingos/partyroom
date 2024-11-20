@@ -6,8 +6,7 @@ export type Room = {
   name: string;
   image: string;
   owner: number;
-  opening_time: string;
-  closing_time: string;
+  is_deleted: boolean;
   price_per_hour: string;
   capacity: number;
   address: Address;
@@ -18,8 +17,7 @@ export type RoomCreation = {
   name: string;
   image: FileList;
   owner: number;
-  opening_time: string;
-  closing_time: string;
+  is_deleted: boolean;
   price_per_hour: string;
   capacity: number;
   images: FileList[];
@@ -47,8 +45,7 @@ export interface RoomDetail {
   address: Address;
   services: Service[];
   event_types: Event[];
-  opening_time: string;
-  closing_time: string;
+  is_deleted: boolean;
   created_at: string;
   updated_at: string;
   name: string;

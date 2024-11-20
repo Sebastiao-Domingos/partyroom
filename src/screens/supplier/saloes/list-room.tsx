@@ -13,8 +13,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Loader from '@/components/loader';
 import { useGetRoomsSupplier } from '@/hooks/supplier/room/useGetRoom';
-import { Button } from '@/components/ui/button';
-import { Tractor } from 'lucide-react';
 import Delete from './delete';
 
 export default function ListRoom() {
@@ -44,10 +42,8 @@ export default function ListRoom() {
           <TableRow>
             <TableHead className="w-[150px]">Imagem</TableHead>
             <TableHead>Nome</TableHead>
-            <TableHead>Tempo de abrir</TableHead>
-            <TableHead>Tempo de fechar</TableHead>
             <TableHead className="text-left">Preço por hora</TableHead>
-            <TableHead className="text-left">...Outros</TableHead>
+            <TableHead className="text-right">...Outros</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -75,12 +71,11 @@ export default function ListRoom() {
               >
                 {room.name}
               </TableCell>
-              <TableCell>{room.opening_time}</TableCell>
-              <TableCell>{room.closing_time}</TableCell>
+
               <TableCell className="text-left">
                 {room.price_per_hour} , 00 Kz
               </TableCell>
-              <TableCell>
+              <TableCell className="text-right">
                 <Delete id={room.id} name={room.name} />
               </TableCell>
             </TableRow>

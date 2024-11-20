@@ -41,8 +41,7 @@ export default function ListRoom() {
           <TableRow>
             <TableHead className="w-[150px]">Imagem</TableHead>
             <TableHead>Nome</TableHead>
-            <TableHead>Tempo de abrir</TableHead>
-            <TableHead>Tempo de fechar</TableHead>
+
             <TableHead className="text-left">Preço por hora</TableHead>
           </TableRow>
         </TableHeader>
@@ -63,8 +62,7 @@ export default function ListRoom() {
                 />
               </TableCell>
               <TableCell className="font-medium">{room.name}</TableCell>
-              <TableCell>{room.opening_time}</TableCell>
-              <TableCell>{room.closing_time}</TableCell>
+
               <TableCell className="text-left">
                 {room.price_per_hour} , 00 Kz
               </TableCell>
