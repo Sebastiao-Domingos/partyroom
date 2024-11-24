@@ -7,21 +7,21 @@ export function useActionClient() {
   const mutationCreate = useMutation({
     mutationFn: service.create,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['suppliers'] });
+      queryClient.invalidateQueries({ queryKey: ['clients'] });
     },
   });
 
   const mutationUpdate = useMutation({
     mutationFn: service.update,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['suppliers'] });
+      queryClient.invalidateQueries({ queryKey: ['clients'] });
     },
   });
 
   const mutationDelete = useMutation({
     mutationFn: service.remove,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['suppliers'] });
+      queryClient.invalidateQueries({ queryKey: ['clients'] });
     },
   });
 

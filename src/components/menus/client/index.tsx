@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import MenuMobileClient from './menu-mobile-client';
+import { Button } from '@/components/ui/button';
 
 function Menu_Client() {
   const pathname = usePathname();
@@ -53,11 +54,12 @@ function Menu_Client() {
           </Link>
         </li>
       </ul>
-      <ul className="/hidden md:flex gap-4 items-center ml-auto">
+      <div className="/hidden md:flex gap-4 items-center ml-auto">
         <ModeToggle>
           <ButtonToggleModeClient />
         </ModeToggle>
-      </ul>
+        <Button variant={'secondary'}>Login</Button>
+      </div>
       <MenuMobileClient />
     </header>
   );
