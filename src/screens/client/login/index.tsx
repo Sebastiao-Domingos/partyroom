@@ -22,19 +22,23 @@ import Link from 'next/link';
 
 const queryClient = new QueryClient();
 
-export default function Login() {
+export default function Login({
+  searchParams,
+}: {
+  searchParams: { url?: string };
+}) {
   return (
     <div className="w-full h-[100vh] flex justify-center items-center">
       <QueryClientProvider client={queryClient}>
         <div>
-          <CardWithForm />
+          <CardWithForm url={searchParams.url!} />
         </div>
       </QueryClientProvider>
     </div>
   );
 }
 
-export function CardWithForm() {
+export function CardWithForm({ url }: { url?: string }) {
   const { register, handleSubmit } = useForm<SessionBody>();
   const { login } = useAuth();
   const onSubmit = (data: SessionBody) => {
@@ -43,7 +47,7 @@ export function CardWithForm() {
 
   if (login.isSuccess) {
     toast('Login feito com sucesso', { type: 'success' });
-    window.location.href = '/';
+    window.location.href = decodeURIComponent(url || '/');
   }
   if (login.isError) {
     toast(login.error.message, { type: 'error' });

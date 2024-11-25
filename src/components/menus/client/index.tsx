@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import MenuMobileClient from './menu-mobile-client';
-import { Button } from '@/components/ui/button';
 
 function Menu_Client() {
   const pathname = usePathname();
@@ -27,11 +26,11 @@ function Menu_Client() {
       } text-white top-0 right-0 w-full py-4 px-2 md:px-10 flex items-center justify-between`}
     >
       <span className="block text-3xl">LOGO</span>
-      <ul className="hidden md:flex ml-auto dark:text-slate-50">
+      <ul className="hidden md:flex ml-auto dark:text-slate-50 /text-foreground">
         <li>
           <Link
             href={'/'}
-            className={`p-3 uppercase hover:text-primary ${
+            className={`p-3 uppercase hover:text-primary text-foreground ${
               pathname === '/' && 'text-primary'
             }`}
           >
@@ -39,26 +38,48 @@ function Menu_Client() {
           </Link>
         </li>
         <li>
-          <Link href={''} className="p-3 uppercase hover:text-primary">
+          <Link
+            href={''}
+            className={`p-3 uppercase hover:text-primary text-foreground ${
+              pathname === '/eventos' && 'text-primary'
+            }`}
+          >
             eventos
           </Link>
         </li>
         <li>
-          <Link href={''} className="p-3 uppercase hover:text-primary">
+          <Link
+            href={''}
+            className={`p-3 uppercase hover:text-primary text-foreground ${
+              pathname === '/servicos' && 'text-primary'
+            }`}
+          >
             Serviçõs
           </Link>
         </li>{' '}
         <li>
-          <Link href={''} className="p-3 uppercase hover:text-primary">
+          <Link
+            href={''}
+            className={`p-3 uppercase hover:text-primary text-foreground ${
+              pathname === '/ajuda' && 'text-primary'
+            }`}
+          >
             Ajuda
           </Link>
         </li>
       </ul>
-      <div className="/hidden md:flex gap-4 items-center ml-auto">
+      <div className="/hidden md:flex gap-4 items-center ml-auto text-foreground">
         <ModeToggle>
           <ButtonToggleModeClient />
         </ModeToggle>
-        <Button variant={'secondary'}>Login</Button>
+        <Link
+          href={'/login'}
+          className={`p-3 uppercase hover:text-primary ${
+            pathname === '/login' && 'text-primary'
+          }`}
+        >
+          Login
+        </Link>
       </div>
       <MenuMobileClient />
     </header>

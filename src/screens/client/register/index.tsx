@@ -30,19 +30,23 @@ import { useActionClient } from '@/hooks/admin/client/useActionClient';
 
 const queryClient = new QueryClient();
 
-export default function Register() {
+export default function Register({
+  searchParams,
+}: {
+  searchParams: { url: string };
+}) {
   return (
     <div className="w-full /h-[100vh] flex justify-center items-center">
       <QueryClientProvider client={queryClient}>
         <div className="mt-[120px]">
-          <CardWithForm />
+          <CardWithForm url={searchParams.url!} />
         </div>
       </QueryClientProvider>
     </div>
   );
 }
 
-export function CardWithForm() {
+export function CardWithForm({ url }: { url?: string }) {
   const { register, handleSubmit } = useForm<ClientCreation>();
   const { data, result } = useGetCities();
   const { mutationCreate } = useActionClient();
@@ -50,6 +54,7 @@ export function CardWithForm() {
   const [pass, setPass] = useState('');
 
   const onSubmit = (data: ClientCreation) => {
+    data.city = Number(city);
     if (pass.trim() !== data.password) {
       toast('As palavras-passe devem ser iguais', { type: 'warning' });
       return;
@@ -59,7 +64,7 @@ export function CardWithForm() {
 
   if (mutationCreate.isSuccess) {
     toast('Conta criadas com sucesso', { type: 'success' });
-    window.location.href = '/login';
+    window.location.href = decodeURIComponent(url || '/login');
   }
   if (mutationCreate.isError) {
     toast(mutationCreate.error.message, { type: 'error' });
@@ -192,7 +197,7 @@ export function CardWithForm() {
           </fieldset>
         </CardContent>
         <CardFooter className="flex /justify-between gap-2">
-          <Button className="w-[50%]" type="submit" variant={'outline'}>
+          <Button className="w-[50%]" type="submit">
             {mutationCreate.isPending && <Loader />}
             {!mutationCreate.isPending && 'Cadastrar-se'}
           </Button>
