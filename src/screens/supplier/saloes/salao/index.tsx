@@ -152,8 +152,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
                 <div className="space-y-2 mt-3 font-thin">
                   <p>Nome : {data?.name}</p>
                   <p>Capacidade : {data?.capacity}</p>
-                  <p>Hora de abrir : {data?.opening_time}</p>
-                  <p>Horar de fechar : {data?.closing_time}</p>
+
                   <p>
                     Disponibilidade :{' '}
                     {data?.is_available ? 'Disponível' : 'Indisponível'}

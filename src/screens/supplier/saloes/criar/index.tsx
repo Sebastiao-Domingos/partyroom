@@ -174,22 +174,6 @@ function Criar_salao() {
                   {...register('price_per_hour', { required: true })}
                 />
               </div>
-              <div className="space-y-2 w-full">
-                <label htmlFor="name">Hora de abrir</label>
-                <Input
-                  type="time"
-                  placeholder="Nome de abrir"
-                  {...register('opening_time', { required: true })}
-                />
-              </div>
-              <div className="space-y-2 w-full">
-                <label htmlFor="hora-fechar">Hora de fechar</label>
-                <Input
-                  type="time"
-                  placeholder="Hora de fechar"
-                  {...register('closing_time', { required: true })}
-                />
-              </div>
             </div>
           </fieldset>
           <fieldset className="border border-border  rounded p-4 flex flex-col gap-5">

@@ -8,7 +8,22 @@ export type Client = {
   user_type: string;
   is_active: boolean;
   password?: string;
+  address: string;
 };
+export type ClientCreation = {
+  id?: number;
+  phone_number: string;
+  first_name: string;
+  last_name: string;
+  user_type: string;
+  is_active: boolean;
+  password?: string;
+  street: string;
+  city: number;
+  district: string;
+  land_mark: string;
+};
+
 export type ClientResponse = {
   links: {
     next: string | null;
@@ -36,8 +51,11 @@ export class ClientService {
     return data;
   }
 
-  async create(body: Client) {
-    const response = await api.post<Client>(ClientService.base_url, body);
+  async create(body: ClientCreation) {
+    const response = await api.post<Client>(
+      `${ClientService.base_url}create`,
+      body
+    );
     const data = response.data;
     return data;
   }
