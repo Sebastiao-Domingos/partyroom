@@ -52,7 +52,10 @@ export class ClientService {
   }
 
   async create(body: ClientCreation) {
-    const response = await api.post<Client>(ClientService.base_url, body);
+    const response = await api.post<Client>(
+      `${ClientService.base_url}create`,
+      body
+    );
     const data = response.data;
     return data;
   }
