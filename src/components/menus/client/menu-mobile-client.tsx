@@ -58,7 +58,7 @@ function MenuMobileClient({ user }: { user?: UserData }) {
             <li
               className={cn(
                 `border-l-2 border-l-primary hover:bg-primary/20 /bg-primary/10 ${
-                  path === '/supplier/dashboard-sup' && 'bg-primary/20'
+                  path === '/' && 'bg-primary/20'
                 }`
               )}
             >
@@ -73,13 +73,13 @@ function MenuMobileClient({ user }: { user?: UserData }) {
             <li
               className={cn(
                 `border-l-2 border-l-primary hover:bg-primary/20 ${
-                  path === '/supplier/dashboard-sup/saloes' && 'bg-primary/20'
+                  path === '/saloes' && 'bg-primary/20'
                 }`
               )}
             >
               <SheetClose
                 className="w-full flex items-center gap-1 p-2"
-                onClick={() => navigator.push('/supplier/dashboard-sup/saloes')}
+                onClick={() => navigator.push('/saloes')}
               >
                 <HomeIcon size={20} />
                 Salões
@@ -88,16 +88,13 @@ function MenuMobileClient({ user }: { user?: UserData }) {
             <li
               className={cn(
                 `border-l-2 border-l-primary hover:bg-primary/20 ${
-                  path === '/supplier/dashboard-sup/difinicoes' &&
-                  'bg-primary/20'
+                  path === '/servicos' && 'bg-primary/20'
                 }`
               )}
             >
               <SheetClose
                 className="w-full flex items-center gap-1 p-2 "
-                onClick={() =>
-                  navigator.push('/supplier/dashboard-sup/difinicoes')
-                }
+                onClick={() => navigator.push('/servicos')}
               >
                 <Settings size={20} />
                 Serviços
@@ -106,13 +103,13 @@ function MenuMobileClient({ user }: { user?: UserData }) {
             <li
               className={cn(
                 `border-l-2 border-l-primary hover:bg-primary/20 ${
-                  path === '/supplier/dashboard-sup/perfil' && 'bg-primary/20'
+                  path === '/eventos' && 'bg-primary/20'
                 }`
               )}
             >
               <SheetClose
                 className="w-full flex items-center gap-1 p-2 "
-                onClick={() => navigator.push('/supplier/dashboard-sup/perfil')}
+                onClick={() => navigator.push('/eventos')}
               >
                 <Star size={20} />
                 Tipos de eventos
