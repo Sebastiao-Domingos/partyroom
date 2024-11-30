@@ -54,122 +54,67 @@ function ListRoom() {
   const { data, result } = useGetRooms();
   const navigator = useRouter();
   return (
-    <div className="flex flex-wrap justify-between gap-4 md:gap-6 m-auto">
+    <div className="w-full p-2 md:p-0 flex flex-wrap justify-between gap-4 md:gap-6 m-auto">
       {result.isPending &&
-        data?.result.map((room) => (
-          <Card
-            key={room.id}
-            className="/min-w-[180px] md:w-[60%] h-auto md:h-[300px] p-0 overflow-hidden border hover:border-primary/40"
-          >
-            <CardContent className="p-0 flex">
-              <div>
-                <Image
-                  src={room.image}
-                  alt={room.name}
-                  width={400}
-                  height={200}
-                  className="w-full h-[300px]"
-                />
-              </div>
-              <div className="p-2 min-w-[240px] w-[240px] border flex flex-col gap-1 items-center text-foreground ">
-                <p className="uppercase flex gap-1 items-center">
-                  <Stars />
-                  <span>{room.name}</span>
-                </p>
-                <p className="flex items-center gap-1 text-sm">
-                  <Users size={15} /> Capaciade : {room.capacity}
-                </p>
-                <p className="/ml-auto">
-                  <span className="text-sm italic">Preço : </span>
-
-                  <span className="text-2xl text-primary">
-                    {room.price_per_hour}{' '}
-                  </span>
-                  <span className="text-sm italic">Kz</span>
-                </p>
-                <div className="mt-2">
-                  <h3 className="flex gap-1 items-center">
-                    <LocateFixedIcon /> Localidade
-                  </h3>
-                  <ul className="space-y-1 pl-2 list-disc">
-                    <li className="flex items-center gap-1 text-sm">
-                      Cidade : {room?.address?.city?.name}
-                    </li>
-                    <li className="flex items-center gap-1 text-sm">
-                      Distrito : {room?.address?.district}
-                    </li>
-                    <li className="flex items-center gap-1 text-sm">
-                      Rua : {room?.address?.district}
-                    </li>
-                    <li className="flex items-center gap-1 text-sm">
-                      Ponto de referência : {room?.address?.district}
-                    </li>
-                  </ul>
-                </div>
-                <div className="w-full mt-auto border">
-                  <Button
-                    className="w-full"
-                    onClick={() => navigator.push(`/saloes/${room.id}`)}
-                  >
-                    Solicitar
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        Array(4)
+          .fill('')
+          .map((index) => <SkeletonCard key={index} />)}
       {result.isSuccess &&
         data?.result.map((room) => (
           <Card
             key={room.id}
-            className="/min-w-[180px] md:w-[48%] h-auto md:h-[300px] p-0 overflow-hidden border hover:border-primary/40"
+            className="w-full md:w-[48%] p-3 h-auto md:h-[600px] md:p-0 overflow-hidden border hover:border-primary/40"
           >
-            <CardContent className="p-0 flex">
+            <CardContent className="p-0 flex flex-col">
               <div>
                 <Image
                   src={room.image}
                   alt={room.name}
                   width={400}
                   height={200}
-                  className="w-full h-[300px]"
+                  className="w-full h-auto md:h-[300px]"
                 />
               </div>
-              <div className="p-2 min-w-[240px] w-[240px] border flex flex-col gap-1 items-center text-foreground ">
-                <p className="uppercase flex gap-1 items-center">
-                  <Stars />
-                  <span>{room.name}</span>
-                </p>
-                <p className="flex items-center gap-1 text-sm">
-                  <Users size={15} /> Capaciade : {room.capacity}
-                </p>
-                <p className="/ml-auto">
-                  <span className="text-sm italic">Preço : </span>
-
-                  <span className="text-2xl text-primary">
-                    {room.price_per_hour}{' '}
-                  </span>
-                  <span className="text-sm italic">Kz</span>
-                </p>
-                <div className="mt-2">
-                  <h3 className="flex gap-1 items-center">
-                    <LocateFixedIcon /> Localidade
-                  </h3>
-                  <ul className="space-y-1 pl-2 list-disc">
-                    <li className="flex items-center gap-1 text-sm">
-                      Cidade : {room?.address?.city?.name}
-                    </li>
-                    <li className="flex items-center gap-1 text-sm">
-                      Distrito : {room?.address?.district}
-                    </li>
-                    <li className="flex items-center gap-1 text-sm">
-                      Rua : {room?.address?.district}
-                    </li>
-                    <li className="flex items-center gap-1 text-sm">
-                      Ponto de referência : {room?.address?.district}
-                    </li>
-                  </ul>
+              <div className="p-2 w-full flex flex-col h-full gap-2 justify-between text-foreground ">
+                <div className="flex flex-col md:flex-row gap-3 min-h-[220px]">
+                  <div className="p-4 space-y-3 md:px-4">
+                    <p className="uppercase flex gap-1 items-center md:text-2xl">
+                      <Stars />
+                      <span>{room.name}</span>
+                    </p>
+                    <p className="flex items-center gap-1 text-sm md:text-xl">
+                      <Users size={15} /> Capaciade : {room.capacity}
+                    </p>
+                    <p className="/ml-auto">
+                      <span className="text-2xl md:text-4xl text-primary">
+                        {room.price_per_hour}{' '}
+                      </span>
+                      <span className="text-sm italic">
+                        Kz/<span className="text-sm italic">Por hora</span>
+                      </span>
+                    </p>
+                  </div>
+                  <div className="/mt-2 pl-4 space-y-3 py-4 md:border-l">
+                    <h3 className="flex gap-1 items-center">
+                      <LocateFixedIcon /> Localidade
+                    </h3>
+                    <ul className="space-y-1 pl-2 list-disc">
+                      <li className="flex items-center gap-1 text-sm">
+                        Cidade : {room?.address?.city?.name}
+                      </li>
+                      <li className="flex items-center gap-1 text-sm">
+                        Distrito : {room?.address?.district}
+                      </li>
+                      <li className="flex items-center gap-1 text-sm">
+                        Rua : {room?.address?.district}
+                      </li>
+                      <li className="flex items-center gap-1 text-sm">
+                        Ponto de referência : {room?.address?.district}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="w-full mt-auto border">
+                <div className="w-full md:w-[300px] m-auto pb-3">
                   <Button
                     className="w-full"
                     onClick={() => navigator.push(`/saloes/${room.id}`)}
@@ -181,6 +126,41 @@ function ListRoom() {
             </CardContent>
           </Card>
         ))}
+    </div>
+  );
+}
+
+import { Skeleton } from '@/components/ui/skeleton';
+
+export function SkeletonCard() {
+  return (
+    <div className="w-full min-w-[300px] rounded-xl md:w-[48%] h-auto border flex flex-col space-y-3">
+      <Skeleton className="md:h-[600px] h-[200px] w-full rounded-xl " />
+      <div className="p-2 w-full flex flex-col h-full gap-2 justify-between text-foreground ">
+        <div className="flex flex-col md:flex-row gap-3 min-h-[220px]">
+          <div className="w-full space-y-3 md:pt-8">
+            {Array(4)
+              .fill('ola')
+              .map((index) => (
+                <Skeleton key={index} className="h-6 w-full" />
+              ))}
+          </div>
+          <div className="w-full pl-4 space-y-3 py-4 md:border-l">
+            <Skeleton className="h-6 w-full" />
+
+            <div className="space-y-2 flex flex-col gap-2">
+              {Array(4)
+                .fill('0')
+                .map((index) => (
+                  <Skeleton key={index} className="h-5 w-full" />
+                ))}
+            </div>
+          </div>
+        </div>
+        <div className="w-full md:w-[300px] m-auto pb-3">
+          <Skeleton className="h-8 w-full" />
+        </div>
+      </div>
     </div>
   );
 }
