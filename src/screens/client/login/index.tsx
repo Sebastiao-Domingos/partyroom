@@ -30,7 +30,7 @@ export default function Login({
   return (
     <div className="w-full h-[100vh] flex justify-center items-center">
       <QueryClientProvider client={queryClient}>
-        <div>
+        <div className="mx-2 md:mx-0">
           <CardWithForm url={searchParams.url!} />
         </div>
       </QueryClientProvider>
@@ -54,7 +54,7 @@ export function CardWithForm({ url }: { url?: string }) {
   }
 
   return (
-    <Card className="w-[380px] border-none">
+    <Card className="w-full md:w-[380px] border-none px-3 md:px-4">
       <CardHeader>
         <CardTitle className="text-center text-primary">
           {' '}
@@ -64,8 +64,11 @@ export function CardWithForm({ url }: { url?: string }) {
           Faça o login para ter acesso ao teus dados.
         </CardDescription>
       </CardHeader>
-      <form onSubmit={handleSubmit(onSubmit)} className="text-foreground">
-        <CardContent>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full text-foreground"
+      >
+        <CardContent className="px-2">
           <Input
             id="type"
             placeholder="E-mail"
@@ -94,7 +97,7 @@ export function CardWithForm({ url }: { url?: string }) {
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col gap-3">
+        <CardFooter className="flex flex-col gap-3 px-3">
           <Button className="w-full" type="submit">
             {login.isPending && <Loader />}
             {!login.isPending && 'Login'}

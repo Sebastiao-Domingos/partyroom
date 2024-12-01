@@ -8,8 +8,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import MenuMobileClient from './menu-mobile-client';
 import { useGetUserData } from '@/hooks/auth/useGetUserData';
-import { Button } from '@/components/ui/button';
-import { UserIcon } from 'lucide-react';
 import { Avatar } from '@/components/ui/avatar';
 import { UserModelDefinition } from './drop-down-menu';
 import { DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
