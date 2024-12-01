@@ -40,10 +40,10 @@ export function UserModelDefinition({
             <Link href={'/perfil'}>Perfil</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={'definicoes'}>Definições</Link>
+            <Link href={'/definicoes'}>Definições</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <button onClick={() => logout}>Log out</button>
+            <button onClick={() => logout.mutate()}>Log out</button>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
