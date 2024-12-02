@@ -51,7 +51,7 @@ export default function Home() {
 }
 
 function ListRoom() {
-  const { data, result } = useGetRooms();
+  const { data, result } = useGetRooms({});
   const navigator = useRouter();
   return (
     <div className="w-full p-2 md:p-0 flex flex-wrap justify-between gap-4 md:gap-6 m-auto">
