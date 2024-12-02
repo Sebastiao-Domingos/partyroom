@@ -2,7 +2,7 @@
 
 import { Card } from '@/components/ui/card';
 import { useGetservices } from '@/hooks/admin/service/useGetServices';
-import { LocateIcon, Settings } from 'lucide-react';
+import { Settings } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function Servicos() {
