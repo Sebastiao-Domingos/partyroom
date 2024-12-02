@@ -12,6 +12,29 @@ import { Avatar } from '@/components/ui/avatar';
 import { UserModelDefinition } from './drop-down-menu';
 import { DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
+const links_menu = [
+  {
+    title: 'Home',
+    url: '/',
+  },
+  {
+    title: 'Salões de festas',
+    url: '/saloes',
+  },
+  {
+    title: 'Eventos',
+    url: '/eventos',
+  },
+  {
+    title: 'Serviçõs',
+    url: '/servicos',
+  },
+  {
+    title: 'Ajuda',
+    url: '/ajuda',
+  },
+];
+
 function Menu_Client() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -32,46 +55,18 @@ function Menu_Client() {
     >
       <span className="block text-3xl">LOGO</span>
       <ul className="hidden md:flex ml-auto dark:text-slate-50 /text-foreground">
-        <li>
-          <Link
-            href={'/'}
-            className={`p-3 uppercase hover:text-primary text-foreground ${
-              pathname === '/' && 'text-primary'
-            }`}
-          >
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link
-            href={''}
-            className={`p-3 uppercase hover:text-primary text-foreground ${
-              pathname === '/eventos' && 'text-primary'
-            }`}
-          >
-            eventos
-          </Link>
-        </li>
-        <li>
-          <Link
-            href={''}
-            className={`p-3 uppercase hover:text-primary text-foreground ${
-              pathname === '/servicos' && 'text-primary'
-            }`}
-          >
-            Serviçõs
-          </Link>
-        </li>{' '}
-        <li>
-          <Link
-            href={''}
-            className={`p-3 uppercase hover:text-primary text-foreground ${
-              pathname === '/ajuda' && 'text-primary'
-            }`}
-          >
-            Ajuda
-          </Link>
-        </li>
+        {links_menu.map(({ title, url }, index) => (
+          <li key={index}>
+            <Link
+              href={url}
+              className={`p-3 uppercase hover:text-primary text-foreground ${
+                pathname === url && 'text-primary'
+              }`}
+            >
+              {title}
+            </Link>
+          </li>
+        ))}
       </ul>
       <div className="/hidden md:flex gap-6 items-center ml-auto text-foreground">
         <ModeToggle>
