@@ -38,7 +38,6 @@ export default function Saloes() {
   const submit = (query: SearchParamsRooms) => {
     query.city = Number(city);
     query.event = Number(event);
-
     filtro(query);
   };
 
@@ -155,7 +154,6 @@ export default function Saloes() {
                       </p>
                       <div className="flex justify-center items-center">
                         <p className="text-[14px] flex gap-2 justify-center items-center">
-                          <LocateIcon size={20} />
                           <span>{item.address.city.name}</span>
                         </p>
                       </div>
