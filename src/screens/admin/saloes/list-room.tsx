@@ -16,7 +16,7 @@ import Loader from '@/components/loader';
 
 export default function ListRoom() {
   const navigator = useRouter();
-  const { data, result } = useGetRooms();
+  const { data, result } = useGetRooms({});
   if (result.isPending) {
     return (
       <div className="flex justify-center items-center h-full">

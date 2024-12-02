@@ -97,18 +97,40 @@ export interface Service {
   price: string;
 }
 
+export type SearchParamsRooms = {
+  name: string;
+  city: number;
+  capacity_max: number;
+  capacity_min: number;
+  price_per_hour_min: number;
+  price_per_hour_max: number;
+  event: number;
+  ordering: string;
+  page: number;
+  page_size: number;
+};
+
 export class RoomService {
   private static base_url = '/partyrooms/';
 
-  async get() {
-    const response = await api.get<RoomResponse>(RoomService.base_url);
+  async get(seachParams: Partial<SearchParamsRooms>) {
+    const params = new URLSearchParams();
+
+    Object.entries(seachParams).forEach((entry) => {
+      if (entry[1]) {
+        params.append(entry[0], entry[1].toString());
+      }
+    });
+    const response = await api.get<RoomResponse>(
+      `${RoomService.base_url}?${params.toString()}`
+    );
     const data = response.data;
     return data;
   }
 
   async getById(id: number) {
     const response = await api.get<RoomDetail>(`${RoomService.base_url}${id}`);
-    const data = await response.data;
+    const data = response.data;
     return data;
   }
 
@@ -158,7 +180,7 @@ export class RoomService {
       `${RoomService.base_url}${data.id}`,
       data
     );
-    const updatedData = await response.data;
+    const updatedData = response.data;
     return updatedData;
   }
 
