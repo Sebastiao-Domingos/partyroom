@@ -4,8 +4,8 @@ import React from 'react';
 
 function Footer_Client() {
   return (
-    <footer className="w-full min-h-[400px] bg-slate-200 dark:bg-background flex  mt-8 border-t /border-border">
-      <div className="w-full flex flex-col px-8 pt-8 pb-4">
+    <footer className="w-full min-h-[400px] bg-slate-200 dark:bg-background flex  mt-8 mx-2 md:mx-0 border-t /border-border">
+      <div className="w-full flex flex-col px-0 md:px-8 pt-8 pb-4">
         <div className="w-full flex flex-col md:flex-row gap-4 md:justify-between">
           <div className="space-y-4">
             <h3 className="text-primary uppercase">Redes sociais</h3>

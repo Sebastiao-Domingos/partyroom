@@ -64,7 +64,7 @@ function MenuMobileClient({ user }: { user?: UserData }) {
             >
               <SheetClose
                 className="w-full flex items-center gap-1 p-2"
-                onClick={() => navigator.push('/supplier/dashboard-sup')}
+                onClick={() => navigator.push('/')}
               >
                 <BookDashed size={20} />
                 Home
@@ -82,7 +82,7 @@ function MenuMobileClient({ user }: { user?: UserData }) {
                 onClick={() => navigator.push('/saloes')}
               >
                 <HomeIcon size={20} />
-                Salões
+                Salões de festas
               </SheetClose>
             </li>
             <li
@@ -97,7 +97,7 @@ function MenuMobileClient({ user }: { user?: UserData }) {
                 onClick={() => navigator.push('/servicos')}
               >
                 <Settings size={20} />
-                Serviços
+                Tipos Serviços
               </SheetClose>
             </li>
             <li
