@@ -1,10 +1,12 @@
 import { api } from '@/infra/api';
+import { Room } from './Room';
 
 export type Event = {
   id?: number;
   name: string;
   created_at?: string;
   updated_at?: string;
+  partyroom?: Room[];
 };
 export type EventResponse = {
   links: {
@@ -26,14 +28,16 @@ export class EventService {
   }
 
   async getById(id: number) {
-    const response = await api.get<Event>(`${EventService.base_url}${id}`);
-    const data = await response.data;
+    const response = await api.get<Event>(
+      `${EventService.base_url}${id}/detail`
+    );
+    const data = response.data;
     return data;
   }
 
   async create(body: Event) {
     const response = await api.post<Event>(EventService.base_url, body);
-    const data = await response.data;
+    const data = response.data;
     return data;
   }
 
@@ -42,7 +46,7 @@ export class EventService {
       `${EventService.base_url}${data.id}`,
       data
     );
-    const updatedData = await response.data;
+    const updatedData = response.data;
     return updatedData;
   }
 
