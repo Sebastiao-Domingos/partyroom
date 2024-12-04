@@ -26,7 +26,7 @@ const links_menu = [
     url: '/eventos',
   },
   {
-    title: 'Serviçõs',
+    title: 'Serviços',
     url: '/servicos',
   },
   {
@@ -60,7 +60,8 @@ function Menu_Client() {
             <Link
               href={url}
               className={`p-3 uppercase hover:text-primary text-foreground ${
-                pathname === url && 'text-primary'
+                pathname === url ||
+                (pathname.includes(url) && url !== '/' && 'text-primary')
               }`}
             >
               {title}

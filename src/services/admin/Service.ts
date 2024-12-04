@@ -1,4 +1,5 @@
 import { api } from '@/infra/api';
+import { Room } from './Room';
 
 export type Service = {
   id?: number;
@@ -7,6 +8,7 @@ export type Service = {
   name: string;
   description: string;
   price: number;
+  partyroom?: Room[];
 };
 export type ServiceResponse = {
   links: {
@@ -30,7 +32,15 @@ export class ServiceService {
   }
 
   async getById(id: number) {
-    const response = await api.get<Service>(`${ServiceService.base_url}/${id}`);
+    const response = await api.get<Service>(`${ServiceService.base_url}${id}`);
+    const data = response.data;
+    return data;
+  }
+
+  async getByIdClient(id: number) {
+    const response = await api.get<Service>(
+      `${ServiceService.base_url}${id}/detail`
+    );
     const data = response.data;
     return data;
   }
