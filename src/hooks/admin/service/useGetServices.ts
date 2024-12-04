@@ -14,10 +14,20 @@ export function useGetservices() {
   return { data, result };
 }
 
-export function useGetDetailAdmin(id: number) {
+export function useGetServiceDetailAdmin(id: number) {
   const { data, ...result } = useQuery({
     queryKey: ['services'],
     queryFn: () => service.getById(id),
+    placeholderData: keepPreviousData,
+  });
+
+  return { data, result };
+}
+
+export function useGetServiceById(id: number) {
+  const { data, ...result } = useQuery({
+    queryKey: ['services'],
+    queryFn: () => service.getByIdClient(id),
     placeholderData: keepPreviousData,
   });
 

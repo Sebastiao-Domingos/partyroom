@@ -15,7 +15,7 @@ import { useGetEvents } from '@/hooks/admin/event/useGetEvent';
 import { useGetRooms } from '@/hooks/admin/room/useGetRoom';
 import { useGetservices } from '@/hooks/admin/service/useGetServices';
 import { SearchParamsRooms } from '@/services/admin/Room';
-import { LocateIcon, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
