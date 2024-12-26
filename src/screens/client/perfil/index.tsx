@@ -12,12 +12,15 @@ import { useGetUserData } from "@/hooks/auth/useGetUserData";
 import Loader from "@/components/loader";
 import { Card } from "@/components/ui/card";
 import { Map, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Perfil() {
+  const navigator = useRouter();
   const { user, status } = useGetUserData();
 
   if (status === "error" || user === undefined) {
-    window.location.href = "/login";
+    // window.location.href = "/login";
+    navigator.push("/login");
   }
 
   if (user && status === "success") {
