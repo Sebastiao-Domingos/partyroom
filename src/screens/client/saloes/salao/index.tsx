@@ -1,5 +1,5 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,35 +7,37 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import Image from 'next/image';
-import { useGetDetailRoom } from '@/hooks/admin/room/useGetRoom';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/breadcrumb";
+import Image from "next/image";
+import { useGetDetailRoom } from "@/hooks/admin/room/useGetRoom";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function Salao({ params }: { params: { salao: number } }) {
+  const navigator = useRouter();
   const [image, setImage] = useState({
-    url: '',
-    alt: '',
+    url: "",
+    alt: "",
     index: 0,
   });
   const { data, result } = useGetDetailRoom(Number(params.salao));
   useEffect(() => {
-    if (result.isSuccess && data?.image) {
+    if (data?.image) {
       setImage({
         alt: data.name,
         url: data.image,
         index: 0,
       });
     }
-  }, [setImage, result, data]);
+  }, [data]);
 
   return (
     <div>
       <div className="mt-[100px] mx-1 md:mx-8">
         <h1 className="text-primary font-bold border-l pl-2 uppercase">
-          Salões #{' '}
+          Salões #{" "}
           <span className="text-primary/80">
-            {' '}
+            {" "}
             {result.isSuccess && data?.name}
           </span>
         </h1>
@@ -84,12 +86,13 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   width={800}
                   height={600}
                   className="w-[100%] /md:w-auto"
+                  loading="lazy"
                 />
               </div>
               <div className="flex gap-2">
                 <button
                   className={`border p-1 border-border hover:border-primary/50 ${
-                    image.index === 0 && 'border-primary'
+                    image.index === 0 && "border-primary"
                   }`}
                   onClick={() =>
                     setImage({
@@ -104,13 +107,14 @@ export default function Salao({ params }: { params: { salao: number } }) {
                     width={50}
                     height={50}
                     alt={data.name}
+                    loading="lazy"
                   />
                 </button>
                 {data.images?.map((imag, index) => (
                   <button
                     key={imag.id}
                     className={`border p-1 border-border hover:border-primary/50 ${
-                      image.index === index + 1 && 'border-primary'
+                      image.index === index + 1 && "border-primary"
                     }`}
                     onClick={() => {
                       const currentImga = {
@@ -134,7 +138,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
             <div className="w-full md:w-auto mt-6 md:mt-0 space-y-3 pl-2 md:pl-4">
               <div className="border-b border-border w-full pb-2">
                 <h3>
-                  Informações do salão: #{' '}
+                  Informações do salão: #{" "}
                   <span className="text-primary/80">
                     {result.isSuccess && data?.name}
                   </span>
@@ -144,20 +148,20 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   <p>Capacidade : {data?.capacity}</p>
 
                   <p>
-                    Disponibilidade :{' '}
-                    {data?.is_available ? 'Disponível' : 'Indisponível'}
+                    Disponibilidade :{" "}
+                    {data?.is_available ? "Disponível" : "Indisponível"}
                   </p>
                   <p>Preço por hora : {data?.price_per_hour} Kz</p>
                   <p>Telefone : {data?.owner?.phone_number}</p>
                   <p>
-                    Propetário : {data.owner?.first_name}{' '}
+                    Propetário : {data.owner?.first_name}{" "}
                     {data.owner?.last_name}
                   </p>
                 </div>
               </div>
               <div className="border-b border-border w-full pb-2">
                 <h3>
-                  Endereço do salão: #{' '}
+                  Endereço do salão: #{" "}
                   <span className="text-primary/80">
                     {result.isSuccess && data?.name}
                   </span>
@@ -171,7 +175,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
               </div>
               <div className="border-b border-border w-full pb-2">
                 <h3>
-                  Tipos de eventos do salão: #{' '}
+                  Tipos de eventos do salão: #{" "}
                   <span className="text-primary/80">{data?.name}</span>
                 </h3>
                 <div className="mt-3 font-thin flex gap-2 flex-wrap">
@@ -188,7 +192,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
               </div>
               <div className="w-full pb-2">
                 <h3>
-                  Serviços do salão: #{' '}
+                  Serviços do salão: #{" "}
                   <span className="text-primary/80">{data?.name}</span>
                 </h3>
                 <div className="mt-3 font-thin flex gap-2 items-center flex-wrap">
@@ -203,9 +207,20 @@ export default function Salao({ params }: { params: { salao: number } }) {
                   ))}
                 </div>
               </div>
-              <div className="w-full py-4 pr-2">
-                <Button className="w-full">Solicitar</Button>
-              </div>
+              {data.is_available && (
+                <div className="w-full py-4 pr-2">
+                  <Button
+                    className="w-full"
+                    onClick={() => {
+                      console.log("ola");
+
+                      navigator.push(`/saloes/${data.id}/solicitacao`);
+                    }}
+                  >
+                    Fazer uma Reserva
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         )}
