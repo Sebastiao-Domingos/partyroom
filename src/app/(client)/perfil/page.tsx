@@ -1,3 +1,3 @@
-import Perfil from '@/screens/client/perfil';
+import Perfil from "@/screens/client/perfil";
 
 export default Perfil;
