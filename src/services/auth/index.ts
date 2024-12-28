@@ -1,10 +1,11 @@
-import { api } from '@/infra/api';
-import { TokenService } from '../token';
+import { api } from "@/infra/api";
+import { TokenService } from "../token";
+import { Address } from "../supplier/Room";
 
 export type SessionBody = {
   contact: string;
   password: string;
-  type: 'ADMIN' | 'SUPPLIER' | 'CLIENT';
+  type: "ADMIN" | "SUPPLIER" | "CLIENT";
 };
 
 export type SessionResponse = {
@@ -17,7 +18,7 @@ export type DataLogin = {
   id: number;
   first_name: string;
   last_name: string;
-  type: 'ADMIN' | 'SUPPLIER' | 'CLIENT';
+  type: "ADMIN" | "SUPPLIER" | "CLIENT";
 };
 
 export type UserData = {
@@ -29,15 +30,15 @@ export type UserData = {
   user_type: string;
   phone_number?: string;
   is_active: boolean;
-  address?: string;
+  address?: Address;
   company_name?: string;
 };
 
 export class Session {
-  private static base_url = 'session/';
+  private static base_url = "session/";
 
   async login(body: SessionBody): Promise<DataLogin> {
-    console.log('service : ', body);
+    console.log("service : ", body);
 
     const response = await api.post<SessionResponse>(
       `${Session.base_url}`,
@@ -53,7 +54,7 @@ export class Session {
   }
 
   async getUseData(): Promise<UserData> {
-    const response = await api.get<UserData>(`${'userdata/'}`);
+    const response = await api.get<UserData>(`${"userdata/"}`);
     return response.data;
   }
 }

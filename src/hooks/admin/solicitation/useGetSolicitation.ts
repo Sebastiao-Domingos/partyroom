@@ -33,3 +33,13 @@ export function useGetSolicitationId(id: number) {
 
   return { data, result };
 }
+
+export function useGetClientSolicitations() {
+  const { data, ...result } = useQuery({
+    queryKey: ["solicitations"],
+    queryFn: service.getClientSolicitations,
+    placeholderData: keepPreviousData,
+  });
+
+  return { data, result };
+}
