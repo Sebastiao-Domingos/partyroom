@@ -10,29 +10,43 @@ import {
 
 import { useGetUserData } from "@/hooks/auth/useGetUserData";
 import Loader from "@/components/loader";
-import { Card } from "@/components/ui/card";
-import { Map, User } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/auth/useAuth";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
+import MeusDados from "./meus-dados";
+import Solicitacoes from "./solicitacoes";
 
 export default function Perfil() {
+  const [perfil, setPerfil] = useState("Meus Dados");
   const navigator = useRouter();
   const { user, status } = useGetUserData();
+  const { logout } = useAuth();
 
-  if (status === "error" || user === undefined) {
-    // window.location.href = "/login";
+  if (
+    status === "error" ||
+    user === undefined ||
+    user.user_type.toUpperCase() !== "CLIENT"
+  ) {
+    logout.mutate();
     navigator.push("/login");
   }
 
-  if (user && status === "success") {
+  if (
+    user &&
+    status === "success" &&
+    user.user_type.toUpperCase() === "CLIENT"
+  ) {
     return (
       <div className="w-full flex flex-col">
         <div className="mt-[100px] mx-1 md:mx-8">
           <h1 className="text-primary font-bold border-l pl-2 uppercase">
             Perfil #{" "}
-            <span className="text-primary/80">
+            <span className="text-slate-400 font-thin">
               {" "}
               {user?.first_name}-{user.last_name}
             </span>
+            # <span className="text-slate-400 font-thin"> {perfil}</span>
           </h1>
           <div className="pl-2 mt-2 text-[12px]">
             <Breadcrumb>
@@ -49,57 +63,31 @@ export default function Perfil() {
             </Breadcrumb>
           </div>
         </div>
-        <div className="mt-6 mx-1 md:mx-8 flex gap-4 flex-col md:flex-row md:justify-between">
-          <Card className="p-2 md:p-4 md:w-[48%]">
-            <h2 className="flex gap-1 items-center">
-              <User size={18} />
-              Dados pessoais
-            </h2>
-
-            <ul className="text-sm space-y-3 mt-4">
-              <li>
-                <span className="">Nome</span>
-
-                <span className="border-l pl-3 ml-3">
-                  {user.first_name} {user.last_name}
-                </span>
-              </li>
-              <li>
-                Contacto
-                <span className="border-l pl-3 ml-3">{user.phone_number}</span>
-              </li>
-              <li>
-                Estado da conta
-                <span className="border-l pl-3 ml-3">
-                  {user.is_active ? "Activa" : "Desactiva"}
-                </span>
-              </li>
-            </ul>
-          </Card>
-          <Card className="p-2 md:p-4 md:w-[48%]">
-            <h2 className="flex items-center gap-1">
-              <Map size={18} />
-              Endereço
-            </h2>
-
-            <ul className="text-sm space-y-3 mt-4">
-              <li>
-                <span className="">Província</span>
-
-                <span className="border-l pl-3 ml-3">{user.address}</span>
-              </li>
-              <li>
-                Município
-                <span className="border-l pl-3 ml-3">{user.phone_number}</span>
-              </li>
-              <li>
-                Distrito
-                <span className="border-l pl-3 ml-3">
-                  {user.is_active ? "Activa" : "Desactiva"}
-                </span>
-              </li>
-            </ul>
-          </Card>
+        <div className="mt-6 mx-1 md:mx-8">
+          <Tabs
+            defaultValue="perfil"
+            className="w-full space-y-4"
+            onValueChange={(e) => {
+              if (e === "perfil") {
+                setPerfil("Meus Dados");
+              } else if (e === "solicitacoes") {
+                setPerfil("Minhas Solicitações");
+              }
+            }}
+          >
+            <TabsList>
+              <TabsTrigger value="perfil">Meus Dados</TabsTrigger>
+              <TabsTrigger value="solicitacoes">
+                Minhas Solicitações
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="perfil">
+              <MeusDados user={user} />
+            </TabsContent>
+            <TabsContent value="solicitacoes">
+              <Solicitacoes />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     );

@@ -60,6 +60,14 @@ export class SolicitationService {
     return data;
   }
 
+  async getClientSolicitations(): Promise<SolicitationResponse> {
+    const response = await api.get<SolicitationResponse>(
+      `${SolicitationService.base_url}client`
+    );
+    const data = response.data;
+    return data;
+  }
+
   async update(data: Solicitation) {
     const response = await api.put<Solicitation>(
       `${SolicitationService.base_url}${data.id}`,
