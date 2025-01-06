@@ -16,7 +16,7 @@ export function useGetSolicitations() {
 
 export function useGetSolicitationDetail(id: number) {
   const { data, ...result } = useQuery({
-    queryKey: ["solicitations"],
+    queryKey: ["solicitation"],
     queryFn: () => service.getById(id),
     placeholderData: keepPreviousData,
   });
@@ -27,7 +27,7 @@ export function useGetSolicitationDetail(id: number) {
 export function useGetSolicitationId(id: number) {
   const { data, ...result } = useQuery({
     queryKey: ["solicitations"],
-    queryFn: () => service.getByIdClient(id),
+    queryFn: () => service.getSolicitationById(id),
     placeholderData: keepPreviousData,
   });
 
@@ -38,6 +38,16 @@ export function useGetClientSolicitations() {
   const { data, ...result } = useQuery({
     queryKey: ["solicitations"],
     queryFn: service.getClientSolicitations,
+    placeholderData: keepPreviousData,
+  });
+
+  return { data, result };
+}
+
+export function useGetSupplierSolicitations() {
+  const { data, ...result } = useQuery({
+    queryKey: ["solicitations"],
+    queryFn: service.getSupplierSolicitions,
     placeholderData: keepPreviousData,
   });
 

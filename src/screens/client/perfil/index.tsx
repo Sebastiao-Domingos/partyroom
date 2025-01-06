@@ -7,11 +7,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-
 import { useGetUserData } from "@/hooks/auth/useGetUserData";
 import Loader from "@/components/loader";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/auth/useAuth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import MeusDados from "./meus-dados";
@@ -19,24 +16,9 @@ import Solicitacoes from "./solicitacoes";
 
 export default function Perfil() {
   const [perfil, setPerfil] = useState("Meus Dados");
-  const navigator = useRouter();
   const { user, status } = useGetUserData();
-  const { logout } = useAuth();
 
-  if (
-    status === "error" ||
-    user === undefined ||
-    user.user_type.toUpperCase() !== "CLIENT"
-  ) {
-    logout.mutate();
-    navigator.push("/login");
-  }
-
-  if (
-    user &&
-    status === "success" &&
-    user.user_type.toUpperCase() === "CLIENT"
-  ) {
+  if (user && status === "success") {
     return (
       <div className="w-full flex flex-col">
         <div className="mt-[100px] mx-1 md:mx-8">

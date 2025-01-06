@@ -20,7 +20,10 @@ import { formatPerPrice } from "@/helpers/format-price";
 import { Button } from "@/components/ui/button";
 import { useActionSolicitation } from "@/hooks/admin/solicitation/useActionSolicitation";
 import { useForm } from "react-hook-form";
-import { Solicitation } from "@/services/admin/Solicitation";
+import {
+  Solicitation,
+  SolicitationCreate,
+} from "@/services/admin/Solicitation";
 import { toast } from "react-toastify";
 import { useGetUserData } from "@/hooks/auth/useGetUserData";
 import { useRouter } from "next/navigation";
@@ -33,7 +36,7 @@ export default function Solicitacao({ params }: { params: { salao: number } }) {
   const [evento, setEvento] = useState(-1);
   const { data, result } = useGetDetailRoom(Number(params.salao));
   const { mutationCreate } = useActionSolicitation();
-  const { register, handleSubmit } = useForm<Solicitation>();
+  const { register, handleSubmit } = useForm<SolicitationCreate>();
   const { user, status } = useGetUserData();
   const navigator = useRouter();
 
@@ -46,7 +49,7 @@ export default function Solicitacao({ params }: { params: { salao: number } }) {
   }
 
   if (user && status === "success") {
-    const handle_solicitation = (data: Solicitation) => {
+    const handle_solicitation = (data: SolicitationCreate) => {
       data.state = "pending";
 
       if (evento === -1) {
@@ -60,7 +63,6 @@ export default function Solicitacao({ params }: { params: { salao: number } }) {
       data.price = preco;
       data.partyroom = Number(params.salao);
       data.ammount_hours = horas;
-      console.log(data);
 
       mutationCreate.mutate(data);
     };
