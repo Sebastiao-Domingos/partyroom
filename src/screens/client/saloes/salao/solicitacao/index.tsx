@@ -20,10 +20,7 @@ import { formatPerPrice } from "@/helpers/format-price";
 import { Button } from "@/components/ui/button";
 import { useActionSolicitation } from "@/hooks/admin/solicitation/useActionSolicitation";
 import { useForm } from "react-hook-form";
-import {
-  Solicitation,
-  SolicitationCreate,
-} from "@/services/admin/Solicitation";
+import { SolicitationCreate } from "@/services/admin/Solicitation";
 import { toast } from "react-toastify";
 import { useGetUserData } from "@/hooks/auth/useGetUserData";
 import { useRouter } from "next/navigation";
