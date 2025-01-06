@@ -1,44 +1,55 @@
-'use client';
-import { HouseIcon, LayoutDashboardIcon, LogOut, Settings } from 'lucide-react';
-import Link from 'next/link';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+"use client";
+import {
+  ChartBarIcon,
+  HouseIcon,
+  LayoutDashboardIcon,
+  LogOut,
+  Settings,
+} from "lucide-react";
+import Link from "next/link";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { usePathname } from 'next/navigation';
-import { useAuth } from '@/hooks/auth/useAuth';
+} from "@/components/ui/accordion";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 const menus = [
   {
-    title: 'Marketing',
+    title: "Marketing",
     menus: [
       {
-        name: 'Dashboard',
+        name: "Dashboard",
         icon: <LayoutDashboardIcon size={18} />,
-        link: '/supplier/dashboard-sup',
+        link: "/supplier/dashboard-sup",
       },
 
       {
-        name: 'Salões',
+        name: "Salões",
         icon: <HouseIcon size={18} />,
-        link: '/supplier/dashboard-sup/saloes',
+        link: "/supplier/dashboard-sup/saloes",
+      },
+      {
+        name: "Solicitações",
+        icon: <ChartBarIcon size={18} />,
+        link: "/supplier/dashboard-sup/solicitacoes",
       },
     ],
   },
   {
-    title: 'Serviços',
+    title: "Serviços",
     menus: [
       {
-        name: 'Definições',
+        name: "Definições",
         icon: <Settings size={18} />,
-        link: '/supplier/dashboard-sup/definicoes',
+        link: "/supplier/dashboard-sup/definicoes",
         submenu: [
           {
-            name: 'Perfil',
-            link: '/supplier/dashboard-sup/definicoes/perfil',
+            name: "Perfil",
+            link: "/supplier/dashboard-sup/definicoes/perfil",
           },
         ],
       },
@@ -103,7 +114,7 @@ function BaseItemMenu({ menu_data }: BaseItemMenuProps) {
               <Link
                 href={link}
                 className={`w-full pl-5 flex gap-2 items-center py-2 hover:bg-primary/10 border-l-4 border-l-transparent hover:border-l-primary/50 ${
-                  path?.includes(link) && 'border-l-primary'
+                  path?.includes(link) && "border-l-primary"
                 }`}
               >
                 {icon}

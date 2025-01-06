@@ -1,5 +1,5 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -8,12 +8,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import Loader from '@/components/loader';
-import { useGetRoomsSupplier } from '@/hooks/supplier/room/useGetRoom';
-import Delete from './delete';
+} from "@/components/ui/table";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Loader from "@/components/loader";
+import { useGetRoomsSupplier } from "@/hooks/supplier/room/useGetRoom";
+import Delete from "./delete";
 
 export default function ListRoom() {
   const navigator = useRouter();
@@ -47,8 +47,8 @@ export default function ListRoom() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.result.map((room) => (
-            <TableRow key={room.id}>
+          {data?.result.map((room, index) => (
+            <TableRow key={index}>
               <TableCell
                 onClick={() =>
                   navigator.push(`/supplier/dashboard-sup/saloes/${room.id}`)
