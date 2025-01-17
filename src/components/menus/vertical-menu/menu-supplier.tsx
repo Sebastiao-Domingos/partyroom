@@ -114,7 +114,7 @@ function BaseItemMenu({ menu_data }: BaseItemMenuProps) {
               <Link
                 href={link}
                 className={`w-full pl-5 flex gap-2 items-center py-2 hover:bg-primary/10 border-l-4 border-l-transparent hover:border-l-primary/50 ${
-                  path?.includes(link) && "border-l-primary"
+                  path === link && "border-l-primary/100"
                 }`}
               >
                 {icon}

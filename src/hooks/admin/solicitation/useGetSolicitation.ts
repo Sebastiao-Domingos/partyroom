@@ -1,6 +1,10 @@
-import { SolicitationService } from "@/services/admin/Solicitation";
+import {
+  SolicitationSearch,
+  SolicitationService,
+} from "@/services/admin/Solicitation";
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const service = new SolicitationService();
 
@@ -44,12 +48,19 @@ export function useGetClientSolicitations() {
   return { data, result };
 }
 
-export function useGetSupplierSolicitations() {
+export function useGetSupplierSolicitations(
+  params?: Partial<SolicitationSearch>
+) {
+  const [query, setQuery] = useState(params);
   const { data, ...result } = useQuery({
-    queryKey: ["solicitations"],
-    queryFn: service.getSupplierSolicitions,
+    queryKey: ["solicitations", query],
+    queryFn: () => service.getSupplierSolicitions(query),
     placeholderData: keepPreviousData,
   });
 
-  return { data, result };
+  function filtro(filter: Partial<SolicitationSearch>) {
+    setQuery((prev) => ({ ...prev, ...filter }));
+  }
+
+  return { data, result, filtro };
 }

@@ -53,6 +53,18 @@ export type SolicitationResponse = {
   result: Solicitation[];
 };
 
+export interface SolicitationSearch {
+  id?: number;
+  state?: string;
+  data?: string;
+  begining_hour?: string;
+  ammount_hours?: number;
+  price?: number;
+  owner?: number;
+  partyroom?: number;
+  event?: number;
+}
+
 export class SolicitationService {
   private static base_url = "/solicitations/";
 
@@ -98,9 +110,19 @@ export class SolicitationService {
     return data;
   }
 
-  async getSupplierSolicitions(): Promise<SolicitationResponse> {
+  async getSupplierSolicitions(
+    seachParams?: Partial<SolicitationSearch>
+  ): Promise<SolicitationResponse> {
+    const params = new URLSearchParams();
+
+    Object.entries(seachParams!).forEach((entry) => {
+      if (entry[1]) {
+        params.append(entry[0], entry[1].toString());
+      }
+    });
+
     const response = await api.get<SolicitationResponse>(
-      `${SolicitationService.base_url}supplier`
+      `${SolicitationService.base_url}supplier?${params.toString()}`
     );
 
     const data = response.data;
@@ -108,10 +130,11 @@ export class SolicitationService {
     return data;
   }
 
-  async update(data: Solicitation) {
-    const response = await api.put<Solicitation>(
-      `${SolicitationService.base_url}${data.id}`,
-      data
+  async update(data: Partial<Solicitation>) {
+    const { id, ...rest } = data;
+    const response = await api.patch<Solicitation>(
+      `${SolicitationService.base_url}${id}/update`,
+      rest
     );
     const updatedData = response.data;
     return updatedData;

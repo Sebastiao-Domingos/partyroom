@@ -1,5 +1,6 @@
 'use client';
 import {
+  ChartBarIcon,
   HouseIcon,
   LayoutDashboardIcon,
   LogOut,
@@ -54,6 +55,11 @@ const menus = [
         //     link: '/dashboard/saloes/criar',
         //   },
         // ],
+      },
+      {
+        name: 'Solicitações',
+        icon: <ChartBarIcon size={18} />,
+        link: '/dashboard/solicitacoes',
       },
     ],
   },

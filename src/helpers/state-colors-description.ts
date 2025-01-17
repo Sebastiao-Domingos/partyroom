@@ -18,7 +18,7 @@ const data = [
   },
   {
     state: "pending",
-    color: "text-red-200",
+    color: "text-red-700",
     description: "Pendente",
   },
 ];
