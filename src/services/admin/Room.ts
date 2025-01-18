@@ -1,5 +1,5 @@
-import { api } from '@/infra/api';
-import { Event } from './Event';
+import { api } from "@/infra/api";
+import { Event } from "./Event";
 
 export type Room = {
   id: number;
@@ -54,6 +54,7 @@ export interface RoomDetail {
   price_per_hour: string;
   rating: string;
   is_available: boolean;
+  calendar: Calendar[];
 }
 
 export interface Owner {
@@ -110,8 +111,19 @@ export type SearchParamsRooms = {
   page_size: number;
 };
 
+export interface Calendar {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  date: Date;
+  start_time: string;
+  end_time: string;
+  is_available: boolean;
+  partyroom: number;
+}
+
 export class RoomService {
-  private static base_url = '/partyrooms/';
+  private static base_url = "/partyrooms/";
 
   async get(seachParams: Partial<SearchParamsRooms>) {
     const params = new URLSearchParams();
@@ -140,7 +152,7 @@ export class RoomService {
     Object.entries(body).forEach((entry) => {
       const value = entry[1];
       if (Array.isArray(value)) {
-        if (entry[0] !== 'images') {
+        if (entry[0] !== "images") {
           formData.append(entry[0], value.toString());
         } else {
           value.forEach((value) => {
@@ -150,9 +162,9 @@ export class RoomService {
           });
         }
       } else if (
-        typeof value === 'string' ||
-        typeof value === 'boolean' ||
-        typeof value === 'number'
+        typeof value === "string" ||
+        typeof value === "boolean" ||
+        typeof value === "number"
       ) {
         formData.append(entry[0], value.toString());
       } else if (value !== undefined) {
@@ -167,7 +179,7 @@ export class RoomService {
       formData,
       {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       }
     );
