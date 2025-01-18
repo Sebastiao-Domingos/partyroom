@@ -1,6 +1,10 @@
-import { SolicitationService } from "@/services/admin/Solicitation";
+import {
+  SolicitationSearch,
+  SolicitationService,
+} from "@/services/admin/Solicitation";
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const service = new SolicitationService();
 
@@ -16,7 +20,7 @@ export function useGetSolicitations() {
 
 export function useGetSolicitationDetail(id: number) {
   const { data, ...result } = useQuery({
-    queryKey: ["solicitations"],
+    queryKey: ["solicitation"],
     queryFn: () => service.getById(id),
     placeholderData: keepPreviousData,
   });
@@ -27,7 +31,7 @@ export function useGetSolicitationDetail(id: number) {
 export function useGetSolicitationId(id: number) {
   const { data, ...result } = useQuery({
     queryKey: ["solicitations"],
-    queryFn: () => service.getByIdClient(id),
+    queryFn: () => service.getSolicitationById(id),
     placeholderData: keepPreviousData,
   });
 
@@ -42,4 +46,21 @@ export function useGetClientSolicitations() {
   });
 
   return { data, result };
+}
+
+export function useGetSupplierSolicitations(
+  params?: Partial<SolicitationSearch>
+) {
+  const [query, setQuery] = useState(params);
+  const { data, ...result } = useQuery({
+    queryKey: ["solicitations", query],
+    queryFn: () => service.getSupplierSolicitions(query),
+    placeholderData: keepPreviousData,
+  });
+
+  function filtro(filter: Partial<SolicitationSearch>) {
+    setQuery((prev) => ({ ...prev, ...filter }));
+  }
+
+  return { data, result, filtro };
 }

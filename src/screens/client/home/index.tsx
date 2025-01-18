@@ -1,12 +1,12 @@
-'use client';
-import Carrossel from '@/components/caroussel';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { useGetRooms } from '@/hooks/admin/room/useGetRoom';
-import { LocateFixedIcon, Stars, Users } from 'lucide-react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+"use client";
+import Carrossel from "@/components/caroussel";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { useGetRooms } from "@/hooks/admin/room/useGetRoom";
+import { LocateFixedIcon, Stars, Users } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 export default function Home() {
   return (
@@ -57,12 +57,12 @@ function ListRoom() {
     <div className="w-full p-2 md:p-0 flex flex-wrap justify-between gap-4 md:gap-6 m-auto">
       {result.isPending &&
         Array(4)
-          .fill('')
+          .fill("")
           .map((index) => <SkeletonCard key={index} />)}
       {result.isSuccess &&
-        data?.result.map((room) => (
+        data?.result.map((room, index) => (
           <Card
-            key={room.id}
+            key={index}
             className="w-full md:w-[48%] p-3 h-auto md:h-[600px] md:p-0 overflow-hidden border hover:border-primary/40"
           >
             <CardContent className="p-0 flex flex-col">
@@ -87,7 +87,7 @@ function ListRoom() {
                     </p>
                     <p className="/ml-auto">
                       <span className="text-2xl md:text-4xl text-primary">
-                        {room.price_per_hour}{' '}
+                        {room.price_per_hour}{" "}
                       </span>
                       <span className="text-sm italic">
                         Kz/<span className="text-sm italic">Por hora</span>
@@ -130,7 +130,7 @@ function ListRoom() {
   );
 }
 
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function SkeletonCard() {
   return (
@@ -140,7 +140,7 @@ export function SkeletonCard() {
         <div className="flex flex-col md:flex-row gap-3 min-h-[220px]">
           <div className="w-full space-y-3 md:pt-8">
             {Array(4)
-              .fill('ola')
+              .fill("ola")
               .map((index) => (
                 <Skeleton key={index} className="h-6 w-full" />
               ))}
@@ -150,7 +150,7 @@ export function SkeletonCard() {
 
             <div className="space-y-2 flex flex-col gap-2">
               {Array(4)
-                .fill('0')
+                .fill("0")
                 .map((index) => (
                   <Skeleton key={index} className="h-5 w-full" />
                 ))}

@@ -8,15 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatPerPrice } from "@/helpers/format-price";
 import { stateColorDescription } from "@/helpers/state-colors-description";
-import { useGetClientSolicitations } from "@/hooks/admin/solicitation/useGetSolicitation";
-import { cn } from "@/lib/utils";
+import { useGetSolicitations } from "@/hooks/admin/solicitation/useGetSolicitation";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function Solicitacoes() {
-  const { data, result } = useGetClientSolicitations();
+export default function ListaSolicitacoes() {
+  const { data, result } = useGetSolicitations();
   const navigator = useRouter();
   if (result.isError) {
     return <div>Error ao carregar as solicitações.</div>;
@@ -51,7 +49,7 @@ export default function Solicitacoes() {
             <TableRow key={index}>
               <TableCell
                 onClick={() =>
-                  navigator.push(`/perfil/solicitacoes/${solicitation.id}`)
+                  navigator.push(`/dashboard/solicitacoes/${solicitation.id}`)
                 }
                 className="cursor-pointer py-1"
               >
@@ -59,7 +57,7 @@ export default function Solicitacoes() {
               </TableCell>
               <TableCell
                 onClick={() =>
-                  navigator.push(`/perfil/solicitacoes/${solicitation.id}`)
+                  navigator.push(`/dashboard/solicitacoes/${solicitation.id}`)
                 }
                 className="cursor-pointer font-medium"
               >
@@ -67,14 +65,9 @@ export default function Solicitacoes() {
               </TableCell>
 
               <TableCell className="text-left">
-                {formatPerPrice(solicitation.price)} Kz
+                {solicitation.price} , 00 Kz
               </TableCell>
-              <TableCell
-                className={cn(
-                  "text-right",
-                  stateColorDescription(solicitation.state).color
-                )}
-              >
+              <TableCell className="text-right">
                 {stateColorDescription(solicitation.state).description}
               </TableCell>
             </TableRow>
