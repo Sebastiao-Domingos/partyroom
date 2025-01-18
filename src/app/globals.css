@@ -76,3 +76,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* styles/globals.css */
+.fc-toolbar {
+  background-color: transparent; /* Tailwind: bg-gray-800 */
+  color: #f6803b; /* Tailwind: text-white */
+  border-radius: 0.375rem; /* Tailwind: rounded-md */
+}
+
+.fc-daygrid-event {
+  background-color: #f6803b; /* Tailwind: bg-blue-500 */
+  border: none;
+  color: #ffffff; /* Tailwind: text-white */
+}
+
+.fc-day:hover {
+  background-color: #f6803b52; /* Tailwind: bg-gray-200 */
+}
+
+.fc .fc-button {
+  background-color: #f6803b; /* Tailwind: bg-blue-500 */
+  border: none;
+  color: white;
+  border-radius: 0.375rem; /* Tailwind: rounded-md */
+}
+
+.fc .fc-button:hover {
+  background-color: #f6803b; /* Tailwind: bg-blue-600 */
+}

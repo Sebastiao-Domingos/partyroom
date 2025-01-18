@@ -26,6 +26,7 @@ import { useGetUserData } from "@/hooks/auth/useGetUserData";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/loader";
 import { SelectValue } from "@radix-ui/react-select";
+import { ModalCalendar } from "../calendar";
 
 export default function Solicitacao({ params }: { params: { salao: number } }) {
   const [horas, setHoras] = useState(0);
@@ -281,6 +282,7 @@ export default function Solicitacao({ params }: { params: { salao: number } }) {
                     o
                   </Button>
                 </div>
+                <ModalCalendar />
               </form>
             </div>
           )}
