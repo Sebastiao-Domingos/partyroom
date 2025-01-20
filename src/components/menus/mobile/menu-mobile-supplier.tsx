@@ -1,5 +1,5 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 import {
   Sheet,
   SheetClose,
@@ -9,20 +9,21 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
+} from "@/components/ui/sheet";
 import {
   BookDashed,
+  ChartBarIcon,
   HomeIcon,
   LogOut,
   MenuIcon,
   PhoneCall,
   Settings,
   User,
-} from 'lucide-react';
-import { UserData } from '@/services/auth';
-import { usePathname, useRouter } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { useAuth } from '@/hooks/auth/useAuth';
+} from "lucide-react";
+import { UserData } from "@/services/auth";
+import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 function MenuMobileSupplier({ user }: { user: UserData }) {
   const path = usePathname();
@@ -49,13 +50,13 @@ function MenuMobileSupplier({ user }: { user: UserData }) {
             <li
               className={cn(
                 `border-l-2 border-l-primary hover:bg-primary/20 /bg-primary/10 ${
-                  path === '/supplier/dashboard-sup' && 'bg-primary/20'
+                  path === "/supplier/dashboard-sup" && "bg-primary/20"
                 }`
               )}
             >
               <SheetClose
                 className="w-full flex items-center gap-1 p-2"
-                onClick={() => navigator.push('/supplier/dashboard-sup')}
+                onClick={() => navigator.push("/supplier/dashboard-sup")}
               >
                 <BookDashed size={20} />
                 Dashboard
@@ -64,30 +65,50 @@ function MenuMobileSupplier({ user }: { user: UserData }) {
             <li
               className={cn(
                 `border-l-2 border-l-primary hover:bg-primary/20 ${
-                  path === '/supplier/dashboard-sup/saloes' && 'bg-primary/20'
+                  path === "/supplier/dashboard-sup/saloes" && "bg-primary/20"
                 }`
               )}
             >
               <SheetClose
                 className="w-full flex items-center gap-1 p-2"
-                onClick={() => navigator.push('/supplier/dashboard-sup/saloes')}
+                onClick={() => navigator.push("/supplier/dashboard-sup/saloes")}
               >
                 <HomeIcon size={20} />
                 Salões
               </SheetClose>
             </li>
+
             <li
               className={cn(
                 `border-l-2 border-l-primary hover:bg-primary/20 ${
-                  path === '/supplier/dashboard-sup/difinicoes' &&
-                  'bg-primary/20'
+                  path === "/supplier/dashboard-sup/solicitacoes" &&
+                  "bg-primary/20"
+                }`
+              )}
+            >
+              <SheetClose
+                className="w-full flex items-center gap-1 p-2"
+                onClick={() =>
+                  navigator.push("/supplier/dashboard-sup/solicitacoes")
+                }
+              >
+                <ChartBarIcon size={18} />
+                Solicitações
+              </SheetClose>
+            </li>
+
+            <li
+              className={cn(
+                `border-l-2 border-l-primary hover:bg-primary/20 ${
+                  path === "/supplier/dashboard-sup/difinicoes" &&
+                  "bg-primary/20"
                 }`
               )}
             >
               <SheetClose
                 className="w-full flex items-center gap-1 p-2 "
                 onClick={() =>
-                  navigator.push('/supplier/dashboard-sup/difinicoes')
+                  navigator.push("/supplier/dashboard-sup/difinicoes")
                 }
               >
                 <Settings size={20} />
@@ -97,13 +118,13 @@ function MenuMobileSupplier({ user }: { user: UserData }) {
             <li
               className={cn(
                 `border-l-2 border-l-primary hover:bg-primary/20 ${
-                  path === '/supplier/dashboard-sup/perfil' && 'bg-primary/20'
+                  path === "/supplier/dashboard-sup/perfil" && "bg-primary/20"
                 }`
               )}
             >
               <SheetClose
                 className="w-full flex items-center gap-1 p-2 "
-                onClick={() => navigator.push('/supplier/dashboard-sup/perfil')}
+                onClick={() => navigator.push("/supplier/dashboard-sup/perfil")}
               >
                 <User size={20} />
                 Perfil
@@ -126,7 +147,7 @@ function MenuMobileSupplier({ user }: { user: UserData }) {
           <div className="space-y-2 pt-2">
             <SheetClose
               className="flex text-left items-center gap-1"
-              onClick={() => navigator.push('/supplier/dashboard-sup/perfil')}
+              onClick={() => navigator.push("/supplier/dashboard-sup/perfil")}
             >
               <User size={16} />
               Perfil
