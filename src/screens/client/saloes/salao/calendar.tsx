@@ -4,10 +4,13 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction"; // needed for dayClick
 import allLocales from "@fullcalendar/core/locales-all"; // Import all locales
+import timeGridPlugin from "@fullcalendar/timegrid"; // Week/day view with time slots
 
 interface Event {
   title: string;
-  date: string;
+  date?: string;
+  start?: string;
+  end?: string;
 }
 
 interface PartyRoomCalendarProps {
@@ -39,13 +42,21 @@ const PartyRoomCalendar: React.FC<PartyRoomCalendarProps> = ({
   return (
     <div className="w-full p-4 bg-white rounded shadow-lg">
       <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
+        ref={calendarRef} // Reference to the calendar
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} // Include TimeGridPlugin
+        initialView="timeGridWeek" // Default to week view with hours
         events={events}
+        locales={allLocales} // Import all locales
+        locale={initialLocale} // Set the initial locale
         height="auto"
+        slotMinTime="00:00:00" // Earliest time slot
+        slotMaxTime="23:59:00" // Latest time slot
+        slotDuration="00:30:00"
         dateClick={handleDate}
-        locale={initialLocale}
-        locales={allLocales}
+        slotLabelClassNames={
+          "text-[12px] md:text-[18px] font-bold text-primary"
+        }
+        eventClassNames={"text-[12px] md:text-[18px] bg-primary/60"}
       />
     </div>
   );

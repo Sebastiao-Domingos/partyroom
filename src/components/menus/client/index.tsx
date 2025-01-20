@@ -54,7 +54,7 @@ function Menu_Client() {
       } text-white top-0 right-0 w-full py-4 px-2 md:px-10 flex items-center justify-between`}
     >
       <span className="block text-3xl text-primary font-bold italic">
-        Salão-Find
+        SBODAS
       </span>
       <ul className="hidden md:flex ml-auto dark:text-slate-50 /text-foreground">
         {links_menu.map(({ title, url }, index) => (
