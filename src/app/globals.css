@@ -104,3 +104,27 @@
 .fc .fc-button:hover {
   background-color: #f6803b; /* Tailwind: bg-blue-600 */
 }
+
+.fc-toolbar-title {
+  @apply text-xs font-bold; /* Tamanho padrão */
+}
+
+@media (min-width: 768px) {
+  .fc-toolbar-title {
+    @apply text-xl; /* Tamanho maior em telas médias */
+  }
+}
+
+@media (min-width: 1024px) {
+  .fc-toolbar-title {
+    @apply text-2xl; /* Tamanho maior em telas grandes */
+  }
+}
+
+.fc-event {
+  @apply bg-blue-500 text-white rounded-lg p-2;
+}
+
+.fc-timegrid-slot {
+  @apply text-xs sm:text-sm md:text-base lg:text-lg; /* Tamanho do texto responsivo */
+}

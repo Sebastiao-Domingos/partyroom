@@ -40,7 +40,7 @@ const PartyRoomCalendar: React.FC<PartyRoomCalendarProps> = ({
     }
   }, [initialLocale]);
   return (
-    <div className="w-full p-4 bg-white rounded shadow-lg">
+    <div className="p-4 bg-white rounded shadow-lg xs:min-w-[400px] xs:mr-[40px] w-full overflow-auto max-h-screen sm:max-h-[500px] lg:max-h-[700px]">
       <FullCalendar
         ref={calendarRef} // Reference to the calendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} // Include TimeGridPlugin
@@ -49,6 +49,17 @@ const PartyRoomCalendar: React.FC<PartyRoomCalendarProps> = ({
         locales={allLocales} // Import all locales
         locale={initialLocale} // Set the initial locale
         height="auto"
+        headerToolbar={{
+          start: "prev,next",
+          center: "title",
+          end: "",
+          // end: "dayGridMonth,timeGridWeek,timeGridDay",
+        }}
+        slotLabelFormat={{
+          hour: "2-digit",
+          minute: "2-digit",
+          meridiem: false,
+        }}
         slotMinTime="00:00:00" // Earliest time slot
         slotMaxTime="23:59:00" // Latest time slot
         slotDuration="00:30:00"
@@ -57,6 +68,22 @@ const PartyRoomCalendar: React.FC<PartyRoomCalendarProps> = ({
           "text-[12px] md:text-[18px] font-bold text-primary"
         }
         eventClassNames={"text-[12px] md:text-[18px] bg-primary/60"}
+        viewClassNames={"min-w-[600px"}
+        views={{
+          timeGridWeek: {
+            duration: { days: 7 }, // Padrão para telas maiores
+          },
+          timeGridDay: {
+            duration: { days: 1 }, // Padrão para telas menores
+          },
+        }}
+        windowResize={(arg) => {
+          if (window.innerWidth < 768) {
+            arg.view.calendar.changeView("timeGridDay"); // Tela pequena: apenas 1 dia
+          } else {
+            arg.view.calendar.changeView("timeGridWeek"); // Tela maior: 1 semana
+          }
+        }}
       />
     </div>
   );
