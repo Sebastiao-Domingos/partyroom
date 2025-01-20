@@ -282,7 +282,6 @@ export default function Solicitacao({ params }: { params: { salao: number } }) {
                     o
                   </Button>
                 </div>
-                <ModalCalendar />
               </form>
             </div>
           )}

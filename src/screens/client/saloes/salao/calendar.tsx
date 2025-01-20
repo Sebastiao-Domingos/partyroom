@@ -56,6 +56,7 @@ const PartyRoomCalendar: React.FC<PartyRoomCalendarProps> = ({
         slotLabelClassNames={
           "text-[12px] md:text-[18px] font-bold text-primary"
         }
+        eventClassNames={"text-[12px] md:text-[18px] bg-primary/60"}
       />
     </div>
   );

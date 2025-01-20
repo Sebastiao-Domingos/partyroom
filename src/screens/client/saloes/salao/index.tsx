@@ -13,6 +13,7 @@ import { useGetDetailRoom } from "@/hooks/admin/room/useGetRoom";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import PartyRoomCalendar from "./calendar";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 export default function Salao({ params }: { params: { salao: number } }) {
   const navigator = useRouter();
@@ -209,7 +210,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
                     ))}
                   </div>
                 </div>
-                {data.is_available && (
+                {/* {data.is_available && (
                   <div className="w-full py-4 pr-2">
                     <Button
                       className="w-full"
@@ -222,24 +223,42 @@ export default function Salao({ params }: { params: { salao: number } }) {
                       Fazer uma Reserva
                     </Button>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
             <div className="mt-6 mx-2 md:mx-8 space-y-4">
               <h2 className="text-xl font-bold text-primary">
                 Calendário das reservas do {data?.name}
               </h2>
-              <PartyRoomCalendar
-                initialLocale="pt-br"
-                events={
-                  data?.calendar?.map((event) => ({
-                    title: "Reservado",
-                    date: event.date.toString(),
-                    start: event.start_time,
-                    end: event.end_time,
-                  })) ?? []
-                }
-              />
+              <div>
+                <ScrollArea className="h-[600px] min-w-[500px] overflow-y-auto">
+                  <PartyRoomCalendar
+                    initialLocale="pt-br"
+                    events={
+                      data?.calendar?.map((event) => ({
+                        title: "Reservado",
+                        date: event.date.toString(),
+                        start: event.start_time,
+                        end: event.end_time,
+                      })) ?? []
+                    }
+                  />
+                </ScrollArea>
+                {data.is_available && (
+                  <div className="w-full text-right py-8 pr-2">
+                    <Button
+                      className="w-full md:w-[300px]"
+                      onClick={() => {
+                        console.log("ola");
+
+                        navigator.push(`/saloes/${data.id}/solicitacao`);
+                      }}
+                    >
+                      Fazer uma Reserva
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </>
         )}
