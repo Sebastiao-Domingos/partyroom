@@ -226,15 +226,17 @@ export default function Salao({ params }: { params: { salao: number } }) {
               </div>
             </div>
             <div className="mt-6 mx-2 md:mx-8 space-y-4">
-              <h2 className="text-2xl font-bold">
+              <h2 className="text-xl font-bold text-primary">
                 Calendário das reservas do {data?.name}
               </h2>
               <PartyRoomCalendar
                 initialLocale="pt-br"
                 events={
-                  data?.calendar.map((event) => ({
+                  data?.calendar?.map((event) => ({
                     title: "Reservado",
                     date: event.date.toString(),
+                    start: event.start_time,
+                    end: event.end_time,
                   })) ?? []
                 }
               />

@@ -1,5 +1,5 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,14 +7,15 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import Image from 'next/image';
-import { useGetDetailRoom } from '@/hooks/admin/room/useGetRoom';
+} from "@/components/ui/breadcrumb";
+import Image from "next/image";
+import { useGetDetailRoom } from "@/hooks/admin/room/useGetRoom";
+import PartyRoomCalendar from "@/screens/client/saloes/salao/calendar";
 
 export default function Salao({ params }: { params: { salao: number } }) {
   const [image, setImage] = useState({
-    url: '',
-    alt: '',
+    url: "",
+    alt: "",
     index: 0,
   });
   const { data, result } = useGetDetailRoom(params.salao);
@@ -32,9 +33,9 @@ export default function Salao({ params }: { params: { salao: number } }) {
     <div>
       <div className="">
         <h1 className="text-primary font-bold border-l pl-2 uppercase">
-          Salões #{' '}
+          Salões #{" "}
           <span className="text-primary/80">
-            {' '}
+            {" "}
             {result.isSuccess && data?.name}
           </span>
         </h1>
@@ -83,134 +84,152 @@ export default function Salao({ params }: { params: { salao: number } }) {
           </div>
         )}
         {result.isSuccess && data && (
-          <div className="flex gap-2">
-            <div className="sticky top-[100px] w-[90%] flex flex-col gap-6">
-              <div>
-                <Image
-                  src={image.url}
-                  alt={image.url}
-                  width={500}
-                  height={600}
-                />
-              </div>
-              <div className="flex gap-2">
-                <button
-                  className={`border p-1 border-border hover:border-primary/50 ${
-                    image.index === 0 && 'border-primary'
-                  }`}
-                  onClick={() =>
-                    setImage({
-                      url: data.image,
-                      alt: data.name,
-                      index: 0,
-                    })
-                  }
-                >
+          <>
+            <div className="flex gap-2">
+              <div className="sticky top-[100px] w-[90%] flex flex-col gap-6">
+                <div>
                   <Image
-                    src={data.image}
-                    width={50}
-                    height={50}
-                    alt={data.name}
+                    src={image.url}
+                    alt={image.url}
+                    width={500}
+                    height={600}
                   />
-                </button>
-                {data.images?.map((imag, index) => (
+                </div>
+                <div className="flex gap-2">
                   <button
-                    key={imag.id}
                     className={`border p-1 border-border hover:border-primary/50 ${
-                      image.index === index + 1 && 'border-primary'
+                      image.index === 0 && "border-primary"
                     }`}
                     onClick={() =>
                       setImage({
-                        url: imag.image,
-                        alt: imag.image,
-                        index: index + 1,
+                        url: data.image,
+                        alt: data.name,
+                        index: 0,
                       })
                     }
                   >
                     <Image
-                      src={imag.image}
+                      src={data.image}
                       width={50}
                       height={50}
-                      alt={imag.image}
+                      alt={data.name}
                     />
                   </button>
-                ))}
+                  {data.images?.map((imag, index) => (
+                    <button
+                      key={imag.id}
+                      className={`border p-1 border-border hover:border-primary/50 ${
+                        image.index === index + 1 && "border-primary"
+                      }`}
+                      onClick={() =>
+                        setImage({
+                          url: imag.image,
+                          alt: imag.image,
+                          index: index + 1,
+                        })
+                      }
+                    >
+                      <Image
+                        src={imag.image}
+                        width={50}
+                        height={50}
+                        alt={imag.image}
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="w-full space-y-3">
-              <div className="border-b border-border w-full pb-2">
-                <h3>
-                  Informações do salão: #{' '}
-                  <span className="text-primary/80">
-                    {result.isSuccess && data?.name}
-                  </span>
-                </h3>
-                <div className="space-y-2 mt-3 font-thin">
-                  <p>Nome : {data?.name}</p>
-                  <p>Capacidade : {data?.capacity}</p>
+              <div className="w-full space-y-3">
+                <div className="border-b border-border w-full pb-2">
+                  <h3>
+                    Informações do salão: #{" "}
+                    <span className="text-primary/80">
+                      {result.isSuccess && data?.name}
+                    </span>
+                  </h3>
+                  <div className="space-y-2 mt-3 font-thin">
+                    <p>Nome : {data?.name}</p>
+                    <p>Capacidade : {data?.capacity}</p>
 
-                  <p>
-                    Disponibilidade :{' '}
-                    {data?.is_available ? 'Disponível' : 'Indisponível'}
-                  </p>
-                  <p>Preço por hora : {data?.price_per_hour} Kz</p>
-                  <p>Telefone : {data?.owner?.phone_number}</p>
-                  <p>
-                    Propetário : {data.owner?.first_name}{' '}
-                    {data.owner?.last_name}
-                  </p>
-                </div>
-              </div>
-              <div className="border-b border-border w-full pb-2">
-                <h3>
-                  Endereço do salão: #{' '}
-                  <span className="text-primary/80">
-                    {result.isSuccess && data?.name}
-                  </span>
-                </h3>
-                <div className="space-y-2 mt-3 font-thin">
-                  <p>Província : Luanda</p>
-                  <p>Município : {data?.address?.city.name}</p>
-                  <p>Distrito : {data?.address?.district}</p>
-                  <p>Ponto de referência : {data?.address?.land_mark}</p>
-                </div>
-              </div>
-              <div className="border-b border-border w-full pb-2">
-                <h3>
-                  Tipos de eventos do salão: #{' '}
-                  <span className="text-primary/80">{data?.name}</span>
-                </h3>
-                <div className="mt-3 font-thin flex gap-2 flex-wrap">
-                  {data.event_types?.length === 0 && <p>Sem Eventos</p>}
-                  {data.event_types?.map((event) => (
-                    <p
-                      key={event.id}
-                      className="border-l-2 pl-2 first:border-l-0 first:pl-0"
-                    >
-                      {event.name}
+                    <p>
+                      Disponibilidade :{" "}
+                      {data?.is_available ? "Disponível" : "Indisponível"}
                     </p>
-                  ))}
-                </div>
-              </div>
-              <div className="w-full pb-2">
-                <h3>
-                  Serviços do salão: #{' '}
-                  <span className="text-primary/80">{data?.name}</span>
-                </h3>
-                <div className="mt-3 font-thin flex gap-2 items-center flex-wrap">
-                  {data.services?.length === 0 && <p>Sem Servições</p>}
-                  {data.services?.map((service) => (
-                    <p
-                      key={service.id}
-                      className="border-l-2 pl-2 first:border-l-0 first:pl-0"
-                    >
-                      {service.name}
+                    <p>Preço por hora : {data?.price_per_hour} Kz</p>
+                    <p>Telefone : {data?.owner?.phone_number}</p>
+                    <p>
+                      Propetário : {data.owner?.first_name}{" "}
+                      {data.owner?.last_name}
                     </p>
-                  ))}
+                  </div>
+                </div>
+                <div className="border-b border-border w-full pb-2">
+                  <h3>
+                    Endereço do salão: #{" "}
+                    <span className="text-primary/80">
+                      {result.isSuccess && data?.name}
+                    </span>
+                  </h3>
+                  <div className="space-y-2 mt-3 font-thin">
+                    <p>Província : Luanda</p>
+                    <p>Município : {data?.address?.city.name}</p>
+                    <p>Distrito : {data?.address?.district}</p>
+                    <p>Ponto de referência : {data?.address?.land_mark}</p>
+                  </div>
+                </div>
+                <div className="border-b border-border w-full pb-2">
+                  <h3>
+                    Tipos de eventos do salão: #{" "}
+                    <span className="text-primary/80">{data?.name}</span>
+                  </h3>
+                  <div className="mt-3 font-thin flex gap-2 flex-wrap">
+                    {data.event_types?.length === 0 && <p>Sem Eventos</p>}
+                    {data.event_types?.map((event) => (
+                      <p
+                        key={event.id}
+                        className="border-l-2 pl-2 first:border-l-0 first:pl-0"
+                      >
+                        {event.name}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                <div className="w-full pb-2">
+                  <h3>
+                    Serviços do salão: #{" "}
+                    <span className="text-primary/80">{data?.name}</span>
+                  </h3>
+                  <div className="mt-3 font-thin flex gap-2 items-center flex-wrap">
+                    {data.services?.length === 0 && <p>Sem Servições</p>}
+                    {data.services?.map((service) => (
+                      <p
+                        key={service.id}
+                        className="border-l-2 pl-2 first:border-l-0 first:pl-0"
+                      >
+                        {service.name}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+            <div className="mt-6 mx-2 md:mx-8 space-y-4">
+              <h2 className="text-xl font-bold text-primary">
+                Calendário das reservas do {data?.name}
+              </h2>
+              <PartyRoomCalendar
+                initialLocale="pt-br"
+                events={
+                  data?.calendar?.map((event) => ({
+                    title: `${data.owner.first_name} ${data.owner.last_name}`,
+                    date: event.date.toString(),
+                    start: event.start_time,
+                    end: event.end_time,
+                  })) ?? []
+                }
+              />
+            </div>
+          </>
         )}
       </div>
     </div>
