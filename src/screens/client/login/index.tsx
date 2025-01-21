@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionBody } from "@/services/auth";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,8 @@ export default function Login({
 }: {
   searchParams: { url?: string };
 }) {
+  const searchParam = useSearchParams();
+  searchParam.get("url");
   return (
     <div className="w-full h-[100vh] flex justify-center items-center">
       <QueryClientProvider client={queryClient}>
@@ -41,6 +44,7 @@ export default function Login({
 export function CardWithForm({ url }: { url?: string }) {
   const { register, handleSubmit } = useForm<SessionBody>();
   const { login } = useAuth();
+
   const onSubmit = (data: SessionBody) => {
     login.mutate(data);
   };

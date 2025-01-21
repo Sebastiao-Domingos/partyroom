@@ -231,7 +231,7 @@ export default function Salao({ params }: { params: { salao: number } }) {
                 Calendário das reservas do {data?.name}
               </h2>
               <div>
-                <ScrollArea className="h-[600px] min-w-[500px] overflow-y-auto">
+                <ScrollArea className="/h-[600px] /min-w-[500px] /overflow-y-auto">
                   <PartyRoomCalendar
                     initialLocale="pt-br"
                     events={

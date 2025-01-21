@@ -2,7 +2,7 @@
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useGetUserData } from "@/hooks/auth/useGetUserData";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 
 export default function Layout({
   children,

@@ -40,7 +40,7 @@ const PartyRoomCalendar: React.FC<PartyRoomCalendarProps> = ({
     }
   }, [initialLocale]);
   return (
-    <div className="p-4 bg-white rounded shadow-lg xs:min-w-[400px] xs:mr-[40px] w-full overflow-auto max-h-screen sm:max-h-[500px] lg:max-h-[700px]">
+    <ScrollArea className="p-4 bg-white rounded shadow-lg xs:min-w-[400px] xs:mr-[40px] w-full overflow-auto max-h-screen sm:max-h-[500px] lg:max-h-[700px]">
       <FullCalendar
         ref={calendarRef} // Reference to the calendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} // Include TimeGridPlugin
@@ -85,7 +85,7 @@ const PartyRoomCalendar: React.FC<PartyRoomCalendarProps> = ({
           }
         }}
       />
-    </div>
+    </ScrollArea>
   );
 };
 
